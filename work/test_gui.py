@@ -5,7 +5,7 @@ import stdout_test
 class Std_redirector(object):
     def __init__(self,widget):
         self.widget = widget
-     
+
     def write(self,string):
         if not exit_thread:
             self.widget.insert(Tk.END,string)
@@ -13,7 +13,7 @@ class Std_redirector(object):
 
 main_window = tk.Tk()
 main_window.title('Windows OTM/Patch build Control Panel')
-main_window.geometry('455x540+5+5',)
+main_window.geometry('455x540+5+53',)
 
 var_2400 = tk.IntVar()
 var_2401c2p = tk.IntVar()
