@@ -2,18 +2,34 @@ import Tkinter as tk
 import sys
 import stdout_test
 
+class StdError_redirector(object):
+    def __init__(self,widget):
+        self.widget = widget
+
+    def write(self,string):
+        self.widget.config(fg='red')
+        self.widget.insert(tk.END,string)
+        self.widget.see(tk.END)
+
 class Std_redirector(object):
     def __init__(self,widget):
         self.widget = widget
 
     def write(self,string):
-        if not exit_thread:
-            self.widget.insert(Tk.END,string)
-            self.widget.see(Tk.END)
+        self.widget.config(fg='blue')
+        self.widget.insert(tk.END,string)
+        self.widget.see(tk.END)
+
+
 
 main_window = tk.Tk()
 main_window.title('Windows OTM/Patch build Control Panel')
-main_window.geometry('455x540+5+53',)
+main_window.geometry('600x900+5+5',)
+main_window.grid_rowconfigure(18,weight=1)
+main_window.grid_rowconfigure(19,weight=1)
+main_window.grid_columnconfigure(1,weight=1)
+main_window.grid_columnconfigure(4,weight=1)
+
 
 var_2400 = tk.IntVar()
 var_2401c2p = tk.IntVar()
@@ -23,9 +39,7 @@ var_2600 = tk.IntVar()
 def GURP():
     var = t_date.get('0.0','end-1c')
     text = t_date.get('0.0','end')
-    print 'shit'
-    t_outputBox.insert('insert',text)
-    t_outputBox.insert('insert')
+    stdout_test.stdout_test()
     t_outputBox.yview('end')
 
 def movePackages():
@@ -87,19 +101,22 @@ l_rowSpacer3  = tk.Label(main_window, text = ' ').grid(row=11,column=0,columnspa
 l_rowSpacer4  = tk.Label(main_window, text = ' ').grid(row=17,column=0,columnspan=5)
 
 t_date = tk.Text(width=20,height=1)
-t_date.grid(row=2,column=1)
-t_hour = tk.Text(width=20,height=1).grid(row=3,column=1)
-t_irci = tk.Text(width=20,height=1).grid(row=4,column=1)
+t_date.grid(row=2,column=1,sticky='w')
+t_hour = tk.Text(width=20,height=1).grid(row=3,column=1,sticky='w')
+t_irci = tk.Text(width=20,height=1).grid(row=4,column=1,sticky='w')
 t_agent = tk.Text(width=20,height=1).grid(row=2,column=4,columnspan=2,sticky='w')
 t_buildLabel = tk.Text(width=20,height=1).grid(row=3,column=4,columnspan=2,sticky='w')
-t_OTMremotePath = tk.Text(width=20,height=1).grid(row=6,column=1)
-t_OTMlocalPath = tk.Text(width=20,height=1).grid(row=7,column=1)
-t_PTremotePath = tk.Text(width=20,height=1).grid(row=6,column=4,)
-t_PTlocalPath = tk.Text(width=20,height=1).grid(row=7,column=4)
-t_outputBox = tk.Text(width=10,height=10)
-t_outputBox.grid(row=18,column=0,columnspan=5,sticky='ew')
+t_OTMremotePath = tk.Text(height=1).grid(row=6,column=1,sticky='w')
+t_OTMlocalPath = tk.Text(height=1).grid(row=7,column=1,sticky='w')
+t_PTremotePath = tk.Text(height=1).grid(row=6,column=4,sticky='w')
+t_PTlocalPath = tk.Text(height=1).grid(row=7,column=4,sticky='w')
+t_outputBox = tk.Text()
+t_outputBox.grid(row=18,column=0,columnspan=5,sticky='ewns')
+t_outputBoxError = tk.Text()
+t_outputBoxError.grid(row=19,column=0,columnspan=5,sticky='ewns')
 
-b_GURP = tk.Button(main_window,text='Get Unzip Rename Packages', command=GURP).grid(row=9,column=0,columnspan=2,sticky='we')
+
+b_GURP = tk.Button(main_window,text='Get Unzip Rename Packages', command=GURP, width=10).grid(row=9,column=0,columnspan=2,sticky='we')
 b_movePackages = tk.Button(main_window,text='Move CSS', command=movePackages).grid(row=10,column=0,columnspan=2,sticky='we')
 b_getPackages = tk.Button(main_window,text='Get Packages', command=getPackages).grid(row=14,column=3,columnspan=2,sticky='we')
 b_activeUnzip = tk.Button(main_window,text='Active Unzip', command=activeUnzip).grid(row=15,column=3,columnspan=2,sticky='we')
@@ -109,7 +126,7 @@ b_buildBYT = tk.Button(main_window,text='Build BYT', command=buildBYT).grid(row=
 b_buildBXT = tk.Button(main_window,text='Build BXT', command=buildBXT).grid(row=14,column=0,columnspan=2,sticky='we')
 b_buildCHTC2P = tk.Button(main_window,text='Build CHT CSI2PLUS', command=buildCHTC2P).grid(row=15,column=0,columnspan=2,sticky='we')
 b_buildSKC = tk.Button(main_window,text='Build SKC', command=buildSKC).grid(row=16,column=0,columnspan=2,sticky='we')
-b_exit = tk.Button(main_window,text='Exit', command=exit).grid(row=19,column=4,pady=4,sticky='we')
+b_exit = tk.Button(main_window,text='Exit', command=exit,width=10).grid(row=20,column=0,pady=4,sticky='we')
 
 c_2400 = tk.Checkbutton(main_window,text = '2400',variable=var_2400)
 c_2400.grid(row=10,column=3,sticky='w')
@@ -120,9 +137,14 @@ c_2600 = tk.Checkbutton(main_window,text = '2600',variable=var_2600).grid(row=11
 scrollbar = tk.Scrollbar(main_window)
 scrollbar.config(command=t_outputBox.yview)
 scrollbar.grid(row=18,column=5,sticky='ns')
+scrollbarError = tk.Scrollbar(main_window)
+scrollbarError.config(command=t_outputBoxError.yview)
+scrollbarError.grid(row=19,column=5,sticky='ns')
 t_outputBox.config(yscrollcommand=scrollbar.set)
+t_outputBoxError.config(yscrollcommand=scrollbarError.set)
 
-
+sys.stderr = StdError_redirector(t_outputBoxError)
+sys.stdout = Std_redirector(t_outputBox)
 main_window.mainloop()
 
 ##test
