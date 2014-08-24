@@ -1,6 +1,5 @@
 import Tkinter as tk
 import sys
-import stdout_test
 
 class StdError_redirector(object):
     def __init__(self,widget):
@@ -24,7 +23,7 @@ class Std_redirector(object):
 
 main_window = tk.Tk()
 main_window.title('Windows OTM/Patch build Control Panel')
-main_window.geometry('600x900+5+5',)
+main_window.geometry('600x900+5+5')
 main_window.grid_rowconfigure(18,weight=1)
 main_window.grid_rowconfigure(19,weight=1)
 main_window.grid_columnconfigure(1,weight=1)
@@ -39,7 +38,6 @@ var_2600 = tk.IntVar()
 def GURP():
     var = t_date.get('0.0','end-1c')
     text = t_date.get('0.0','end')
-    stdout_test.stdout_test()
     t_outputBox.yview('end')
 
 def movePackages():
@@ -100,7 +98,7 @@ l_packages2build = tk.Label(main_window, text = 'Package(s) to be downloaded and
 l_rowSpacer3  = tk.Label(main_window, text = ' ').grid(row=11,column=0,columnspan=2)
 l_rowSpacer4  = tk.Label(main_window, text = ' ').grid(row=17,column=0,columnspan=5)
 
-t_date = tk.Text(width=20,height=1)
+t_date = tk.Text(main_window,width=20,height=1)
 t_date.grid(row=2,column=1,sticky='w')
 t_hour = tk.Text(width=20,height=1).grid(row=3,column=1,sticky='w')
 t_irci = tk.Text(width=20,height=1).grid(row=4,column=1,sticky='w')
