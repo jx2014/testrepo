@@ -1,9 +1,36 @@
 import Tkinter as tk
+import ConfigParser
 import sys
+
+class StdError_redirector(object):
+    def __init__(self,widget):
+        self.widget = widget
+
+    def write(self,string):
+        self.widget.config(fg='red')
+        self.widget.insert(tk.END,string)
+        self.widget.see(tk.END)
+
+class Std_redirector(object):
+    def __init__(self,widget):
+        self.widget = widget
+
+    def write(self,string):
+        self.widget.config(fg='blue')
+        self.widget.insert(tk.END,string)
+        self.widget.see(tk.END)
 
 class controlPanel(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
+        config = ConfigParser.ConfigParser()
+        config.read(r'C:\Users\ChilleeChillee\git\testrepo\work\path_config.ini')
+        self.daily_folder = config.get('DailyPatch', 'daily_folder')
+        self.irci = config.get('DailyPatch', 'irci')
+        #package_date = config.get('DailyPatch', 'package_date')
+        self.package_hr = config.get('DailyPatch', 'package_hr')
+        self.remote_path = config.get('DailyPatch', 'remote_path')
+        self.local_path = config.get('DailyPatch', 'local_path')
         self.parent = parent
         self.constructUI()
 
@@ -38,27 +65,30 @@ class controlPanel(tk.Frame):
         l_OTMlocalPath = tk.Label(self, text='Local path').grid(row=7, column=0, sticky='w')
         l_PTremotePath = tk.Label(self, text='Remote path').grid(row=6, column=3, sticky='w')
         l_PTlocalPath = tk.Label(self, text='Local path').grid(row=7, column=3, sticky='w')
-        l_rowSpacer2  = tk.Label(self, text=' ').grid(row=8, column=0, columnspan=4)
+        l_OTMsourcePath  = tk.Label(self, text='Source path').grid(row=8, column=0, sticky='w')
+        l_PTsourcePath  = tk.Label(self, text='Source path').grid(row=8, column=3, sticky='w')
         l_packages2build = tk.Label(self, text='Package(s) to be downloaded and built').grid(row=9, column=3, columnspan=2, sticky='w')
         l_rowSpacer3  = tk.Label(self, text=' ').grid(row=11, column=0, columnspan=2)
         l_rowSpacer4  = tk.Label(self, text=' ').grid(row=17, column=0, columnspan=5)
 
-        t_date = tk.Text(self, width=20, height=1)
-        t_date.grid(row=2, column=1, sticky='we')
-        t_hour = tk.Text(self, width=20, height=1).grid(row=3, column=1, sticky='w')
-        t_irci = tk.Text(self, width=20, height=1).grid(row=4, column=1, sticky='w')
-        t_agent = tk.Text(self, width=20, height=1).grid(row=2, column=4, columnspan=2, sticky='we')
-        t_buildLabel = tk.Text(self, height=1).grid(row=3, column=4, columnspan=2, sticky='w')
-        t_OTMremotePath = tk.Text(self, height=1).grid(row=6, column=1, sticky='w')
-        t_OTMlocalPath = tk.Text(self, height=1).grid(row=7, column=1, sticky='w')
-        t_PTremotePath = tk.Text(self, height=1).grid(row=6, column=4, sticky='w')
-        t_PTlocalPath = tk.Text(self, height=1).grid(row=7, column=4, sticky='w')
+        self.t_date = tk.Text(self, width=20, height=1)
+        self.t_date.grid(row=2, column=1, sticky='w')
+        self.t_hour = tk.Text(self, width=20, height=1).grid(row=3, column=1, sticky='w')
+        self.t_irci = tk.Text(self, width=20, height=1).grid(row=4, column=1, sticky='w')
+        self.t_agent = tk.Text(self, width=20, height=1).grid(row=2, column=4, sticky='w')
+        self.t_buildLabel = tk.Text(self, width=20, height=1).grid(row=3, column=4, sticky='w')
+        self.t_OTMremotePath = tk.Text(self, height=1).grid(row=6, column=1, sticky='we')
+        self.t_OTMlocalPath = tk.Text(self, height=1).grid(row=7, column=1, sticky='we')
+        self.t_OTMsourcePath = tk.Text(self, height=1).grid(row=8, column=1, sticky='we')
+        self.t_PTremotePath = tk.Text(self, height=1).grid(row=6, column=4, sticky='we')
+        self.t_PTlocalPath = tk.Text(self, height=1).grid(row=7, column=4, sticky='we')
+        self.t_PTsourcePath = tk.Text(self, height=1).grid(row=8, column=4, sticky='we')
         self.t_outputBox = tk.Text(self)
         self.t_outputBox.grid(row=18, column=0, columnspan=5, sticky='nsew')
         self.t_outputBoxError = tk.Text(self)
         self.t_outputBoxError.grid(row=19, column=0, columnspan=5, sticky='nsew')
 
-        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=9, column=0, columnspan=2, sticky='we')
+        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=9, column=0, columnspan=2, pady=2, sticky='we')
         self.b_movePackages = tk.Button(self, text='Move CSS', command=self.movePackages).grid(row=10, column=0, columnspan=2, sticky='we')
         self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages).grid(row=14, column=3, columnspan=2, sticky='we')
         self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip).grid(row=15, column=3, columnspan=2, sticky='we')
@@ -88,31 +118,32 @@ class controlPanel(tk.Frame):
     def GURP(self):
         var = self.t_date.get('0.0','end-1c')
         text = self.t_date.get('0.0','end')
+        print var
         self.t_outputBox.yview('end')
 
     def movePackages(self):
-        pass
+        print 'move packages'
 
     def getPackages(self):
-        self.t_outputBox.insert('insert','Selected packages to be built\n')
+        print 'insert','Selected packages to be built'
         if self.var_2400.get() == 1:
-            self.t_outputBox.insert('insert','2400\n')
+            print 2400
         if self.var_2401c2p.get() == 1:
-            self.t_outputBox.insert('insert','2401_csi2plus\n')
+            print '2401_csi2plus'
         if self.var_2500.get() == 1:
-            self.t_outputBox.insert('insert','2500\n')
+            print '2500'
         if self.var_2600.get() == 1:
-            self.t_outputBox.insert('insert','2600\n')
+            print '2600'
         self.t_outputBox.yview('end')
 
     def activeUnzip(self):
-        pass
+        print 'active unzip'
 
     def movePackages2(self):
-        pass
+        print 'move packages2'
 
     def build4packages(self):
-        pass
+        print 'build 4 packages'
 
     def buildBYT(self):
         pass
@@ -132,10 +163,11 @@ class controlPanel(tk.Frame):
 
 def main():
     root = tk.Tk()
-    root.geometry('600x900+5+5')
+    root.geometry('600x700+5+5')
     root.title('Windows OTM/Patch build Control Panel II')
-
-    controlPanel(root)
+    app = controlPanel(root)
+    sys.stderr = StdError_redirector(app.t_outputBoxError)
+    sys.stdout = Std_redirector(app.t_outputBox)
     root.mainloop()
 
 

@@ -4,3 +4,6 @@ css
 skycam
 func
 regex
+nsew
+unzip
+ns

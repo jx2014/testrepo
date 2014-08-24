@@ -2,7 +2,7 @@ from file_construct import fc
 import ConfigParser
 
 config = ConfigParser.ConfigParser()
-config.read('C:\Users\zjxuex\My Documents\LiClipse Workspace\work\path_config.ini')
+config.read(r'C:\Users\ChilleeChillee\git\testrepo\work\path_config.ini')
 
 daily_folder = config.get('DailyPatch', 'daily_folder')
 irci = config.get('DailyPatch', 'irci')
