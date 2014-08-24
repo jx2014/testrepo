@@ -1,3 +1,6 @@
 .pyc
 work/*.pyc
+File_Construct/*.pyc
+ARCHIVE/*.pyc
 .project
+.pydevproject
