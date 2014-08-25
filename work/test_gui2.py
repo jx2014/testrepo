@@ -29,6 +29,7 @@ class controlPanel(tk.Frame):
         self.constructUI()
         self.parent = parent
 
+    #get parameters from config file and save to local variables
     def getPara(self):
         with open(self.ConfigFile) as dcf:
             config = ConfigParser.ConfigParser()
@@ -48,9 +49,78 @@ class controlPanel(tk.Frame):
             self.PTagent = config.get('ci_gerrit', 'agent')
             self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
 
+    def getUIpara(self):
+        index1 = 0.0
+        index2 = 'end-1c'
+
+        self.daily_folder = self.t_date.get(index1, index2)
+        self.irci = self.t_irci.get(index1, index2)
+        self.package_hr = self.t_date.get(index1, index2)
+        self.OTMlocal_path = self.t_OTMlocalPath.get(index1, index2)
+        self.OTMremote_path = self.t_OTMremotePath.get(index1, index2)
+        self.OTMsource_path = self.t_OTMsourcePath.get(index1, index2)
+        self.PTagent = self.t_agent.get(index1, index2)
+        self.PTbulidLabel = self.t_buildLabel.get(index1, index2)
+        self.PTlocal_path = self.t_PTlocalPath.get(index1, index2)
+        self.PTremote_path = self.t_PTremotePath.get(index1, index2)
+        self.PTsource_path = self.t_PTsourcePath.get(index1, index2)
+
+
     def writePara(self):
         config = ConfigParser.ConfigParser()
-        pass
+
+        DailyPatch_info = {
+                           'daily_folder':self.t_date.get(0.0,'end-1c'),
+                            'irci':self.t_irci.get(0.0,'end-1c'),
+                            'package_hr':self.t_hour.get(0.0,'end-1c'),
+                            'remote_path':self.t_OTMremotePath.get(0.0,'end-1c'),
+                            'local_path':self.t_OTMlocalPath.get(0.0,'end-1c'),
+                            'source_path':self.t_OTMsourcePath.get(0.0,'end-1c')
+                            }
+
+        ci_gerrit_info = {
+                            'remote_path':self.t_PTremotePath.get(0.0,'end-1c'),
+                            'local_path':self.t_PTlocalPath.get(0.0,'end-1c'),
+                            'source_path':self.t_PTsourcePath.get(0.0,'end-1c'),
+                            'agent':self.t_agent.get(0.0,'end-1c'),
+                            'build_label':self.t_buildLabel.get(0.0,'end-1c')
+                            }
+
+        config.add_section('DailyPatch')
+        for key in DailyPatch_info.keys():
+            config.set('DailyPatch', key, DailyPatch_info.get(key))
+
+        config.add_section('ci_gerrit')
+        for key in ci_gerrit_info.keys():
+            config.set('ci_gerrit', key, ci_gerrit_info.get(key))
+
+        with open(self.ConfigFile,'w+') as cfs:
+            config.write(cfs)
+
+    def refreshUI(self):
+        self.t_date.delete(0.0, 'end')
+        self.t_hour.delete(0.0, 'end')
+        self.t_irci.delete(0.0, 'end')
+        self.t_agent.delete(0.0, 'end')
+        self.t_buildLabel.delete(0.0, 'end')
+        self.t_OTMremotePath.delete(0.0, 'end')
+        self.t_OTMlocalPath.delete(0.0, 'end')
+        self.t_OTMsourcePath.delete(0.0, 'end')
+        self.t_PTremotePath.delete(0.0, 'end')
+        self.t_PTlocalPath.delete(0.0, 'end')
+        self.t_PTsourcePath.delete(0.0, 'end')
+
+        self.t_date.insert('insert', self.daily_folder)
+        self.t_hour.insert('insert', self.package_hr)
+        self.t_irci.insert('insert', self.irci)
+        self.t_agent.insert('insert', self.PTagent)
+        self.t_buildLabel.insert('insert', self.PTbulidLabel)
+        self.t_OTMremotePath.insert('insert', self.OTMremote_path)
+        self.t_OTMlocalPath.insert('insert', self.OTMlocal_path)
+        self.t_OTMsourcePath.insert('insert', self.OTMsource_path)
+        self.t_PTremotePath.insert('insert', self.PTremote_path)
+        self.t_PTlocalPath.insert('insert', self.PTlocal_path)
+        self.t_PTsourcePath.insert('insert', self.PTsource_path)
 
     def constructUI(self):
         self.pack(fill='both', expand=1)
@@ -227,12 +297,18 @@ class controlPanel(tk.Frame):
         try:
             self.ConfigFile = self.t_configFile.get('0.0', 'end-1c')
             self.getPara()
-            print 'load ' + self.ConfigFile
+            self.refreshUI()
+            print 'loaded from ' + self.ConfigFile
         except:
-            print 'Unable to load {}'.format(self.ConfigFile)
+            print 'Unable to load from {}'.format(self.ConfigFile)
 
     def save(self):
-        print 'save'
+        try:
+            self.ConfigFile = self.t_configFile.get(0.0, 'end-1c')
+            self.writePara()
+            print 'saved to ' + self.ConfigFile
+        except:
+            print 'Unable to save to {}'.format(self.ConfigFile)
 
     def exit(self):
         self.parent.destroy()
