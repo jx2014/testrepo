@@ -25,12 +25,61 @@ class controlPanel(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
         self.ConfigFile = os.getcwd() + '\\' + 'path_config.ini'
-        self.getPara()
+        self.File2Memory()
         self.constructUI()
         self.parent = parent
 
-    #get parameters from config file and save to local variables
-    def getPara(self):
+    #from UI to memory
+    def UI2Memory(self):
+        index1 = 0.0
+        index2 = 'end-1c'
+
+        self.daily_folder = self.t_date.get(index1, index2)
+        self.irci = self.t_irci.get(index1, index2)
+        self.package_hr = self.t_date.get(index1, index2)
+        self.OTMlocal_path = self.t_OTMlocalPath.get(index1, index2)
+        self.OTMremote_path = self.t_OTMremotePath.get(index1, index2)
+        self.OTMsource_path = self.t_OTMsourcePath.get(index1, index2)
+        self.PTagent = self.t_agent.get(index1, index2)
+        self.PTbulidLabel = self.t_buildLabel.get(index1, index2)
+        self.PTlocal_path = self.t_PTlocalPath.get(index1, index2)
+        self.PTremote_path = self.t_PTremotePath.get(index1, index2)
+        self.PTsource_path = self.t_PTsourcePath.get(index1, index2)
+
+    #from UI to file
+    def UI2File(self):
+        config = ConfigParser.ConfigParser()
+
+        DailyPatch_info = {
+                           'daily_folder':self.t_date.get(),
+                            'irci':self.t_irci.get(),
+                            'package_hr':self.t_hour.get(),
+                            'remote_path':self.t_OTMremotePath.get(),
+                            'local_path':self.t_OTMlocalPath.get(),
+                            'source_path':self.t_OTMsourcePath.get()
+                            }
+
+        ci_gerrit_info = {
+                            'remote_path':self.t_PTremotePath.get(),
+                            'local_path':self.t_PTlocalPath.get(),
+                            'source_path':self.t_PTsourcePath.get(),
+                            'agent':self.t_agent.get(),
+                            'build_label':self.t_buildLabel.get()
+                            }
+
+        config.add_section('DailyPatch')
+        for key in DailyPatch_info.keys():
+            config.set('DailyPatch', key, DailyPatch_info.get(key))
+
+        config.add_section('ci_gerrit')
+        for key in ci_gerrit_info.keys():
+            config.set('ci_gerrit', key, ci_gerrit_info.get(key))
+
+        with open(self.ConfigFile,'w+') as cfs:
+            config.write(cfs)
+
+    #from file to memory
+    def File2Memory(self):
         with open(self.ConfigFile) as dcf:
             config = ConfigParser.ConfigParser()
             config.readfp(dcf)
@@ -49,79 +98,33 @@ class controlPanel(tk.Frame):
             self.PTagent = config.get('ci_gerrit', 'agent')
             self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
 
-    def getUIpara(self):
-        index1 = 0.0
-        index2 = 'end-1c'
+    #from memory to UI
+    def Memory2UI(self):
+        self.t_date.delete(0, 'end')
+        self.t_hour.delete(0, 'end')
+        self.t_irci.delete(0, 'end')
+        self.t_agent.delete(0, 'end')
+        self.t_buildLabel.delete(0, 'end')
+        self.t_OTMremotePath.delete(0, 'end')
+        self.t_OTMlocalPath.delete(0, 'end')
+        self.t_OTMsourcePath.delete(0, 'end')
+        self.t_PTremotePath.delete(0, 'end')
+        self.t_PTlocalPath.delete(0, 'end')
+        self.t_PTsourcePath.delete(0, 'end')
 
-        self.daily_folder = self.t_date.get(index1, index2)
-        self.irci = self.t_irci.get(index1, index2)
-        self.package_hr = self.t_date.get(index1, index2)
-        self.OTMlocal_path = self.t_OTMlocalPath.get(index1, index2)
-        self.OTMremote_path = self.t_OTMremotePath.get(index1, index2)
-        self.OTMsource_path = self.t_OTMsourcePath.get(index1, index2)
-        self.PTagent = self.t_agent.get(index1, index2)
-        self.PTbulidLabel = self.t_buildLabel.get(index1, index2)
-        self.PTlocal_path = self.t_PTlocalPath.get(index1, index2)
-        self.PTremote_path = self.t_PTremotePath.get(index1, index2)
-        self.PTsource_path = self.t_PTsourcePath.get(index1, index2)
+        self.t_date.insert(0, self.daily_folder)
+        self.t_hour.insert(0, self.package_hr)
+        self.t_irci.insert(0, self.irci)
+        self.t_agent.insert(0, self.PTagent)
+        self.t_buildLabel.insert(0, self.PTbulidLabel)
+        self.t_OTMremotePath.insert(0, self.OTMremote_path)
+        self.t_OTMlocalPath.insert(0, self.OTMlocal_path)
+        self.t_OTMsourcePath.insert(0, self.OTMsource_path)
+        self.t_PTremotePath.insert(0, self.PTremote_path)
+        self.t_PTlocalPath.insert(0, self.PTlocal_path)
+        self.t_PTsourcePath.insert(0, self.PTsource_path)
 
-
-    def writePara(self):
-        config = ConfigParser.ConfigParser()
-
-        DailyPatch_info = {
-                           'daily_folder':self.t_date.get(0.0,'end-1c'),
-                            'irci':self.t_irci.get(0.0,'end-1c'),
-                            'package_hr':self.t_hour.get(0.0,'end-1c'),
-                            'remote_path':self.t_OTMremotePath.get(0.0,'end-1c'),
-                            'local_path':self.t_OTMlocalPath.get(0.0,'end-1c'),
-                            'source_path':self.t_OTMsourcePath.get(0.0,'end-1c')
-                            }
-
-        ci_gerrit_info = {
-                            'remote_path':self.t_PTremotePath.get(0.0,'end-1c'),
-                            'local_path':self.t_PTlocalPath.get(0.0,'end-1c'),
-                            'source_path':self.t_PTsourcePath.get(0.0,'end-1c'),
-                            'agent':self.t_agent.get(0.0,'end-1c'),
-                            'build_label':self.t_buildLabel.get(0.0,'end-1c')
-                            }
-
-        config.add_section('DailyPatch')
-        for key in DailyPatch_info.keys():
-            config.set('DailyPatch', key, DailyPatch_info.get(key))
-
-        config.add_section('ci_gerrit')
-        for key in ci_gerrit_info.keys():
-            config.set('ci_gerrit', key, ci_gerrit_info.get(key))
-
-        with open(self.ConfigFile,'w+') as cfs:
-            config.write(cfs)
-
-    def refreshUI(self):
-        self.t_date.delete(0.0, 'end')
-        self.t_hour.delete(0.0, 'end')
-        self.t_irci.delete(0.0, 'end')
-        self.t_agent.delete(0.0, 'end')
-        self.t_buildLabel.delete(0.0, 'end')
-        self.t_OTMremotePath.delete(0.0, 'end')
-        self.t_OTMlocalPath.delete(0.0, 'end')
-        self.t_OTMsourcePath.delete(0.0, 'end')
-        self.t_PTremotePath.delete(0.0, 'end')
-        self.t_PTlocalPath.delete(0.0, 'end')
-        self.t_PTsourcePath.delete(0.0, 'end')
-
-        self.t_date.insert('insert', self.daily_folder)
-        self.t_hour.insert('insert', self.package_hr)
-        self.t_irci.insert('insert', self.irci)
-        self.t_agent.insert('insert', self.PTagent)
-        self.t_buildLabel.insert('insert', self.PTbulidLabel)
-        self.t_OTMremotePath.insert('insert', self.OTMremote_path)
-        self.t_OTMlocalPath.insert('insert', self.OTMlocal_path)
-        self.t_OTMsourcePath.insert('insert', self.OTMsource_path)
-        self.t_PTremotePath.insert('insert', self.PTremote_path)
-        self.t_PTlocalPath.insert('insert', self.PTlocal_path)
-        self.t_PTsourcePath.insert('insert', self.PTsource_path)
-
+    #initialize from File to UI
     def constructUI(self):
         self.pack(fill='both', expand=1)
         for i in range(10,23):
@@ -130,7 +133,7 @@ class controlPanel(tk.Frame):
         self.grid_rowconfigure(20,weight=1)
         self.grid_columnconfigure(1,weight=1)
         self.grid_columnconfigure(4,weight=1)
-#
+
         self.var_2400 = tk.IntVar()
         self.var_2401c2p = tk.IntVar()
         self.var_2500 = tk.IntVar()
@@ -162,61 +165,61 @@ class controlPanel(tk.Frame):
 
         #l_rowSpacer4  = tk.Label(self, text=' ').grid(row=18, column=0, columnspan=5)
 
-        self.t_date = tk.Text(self, height=1)
-        self.t_date.insert('insert', self.daily_folder)
+        self.t_date = tk.Entry(self)
+        self.t_date.insert(0, self.daily_folder)
         self.t_date.grid(row=3, column=1, sticky='w')
 
-        self.t_hour = tk.Text(self, height=1)
-        self.t_hour.insert('insert', self.package_hr)
+        self.t_hour = tk.Entry(self)
+        self.t_hour.insert(0, self.package_hr)
         self.t_hour.grid(row=4, column=1, sticky='w')
 
-        self.t_irci = tk.Text(self, height=1)
-        self.t_irci.insert('insert', self.irci)
+        self.t_irci = tk.Entry(self)
+        self.t_irci.insert(0, self.irci)
         self.t_irci.grid(row=5, column=1, sticky='w')
 
-        self.t_agent = tk.Text(self, height=1)
-        self.t_agent.insert('insert', self.PTagent)
+        self.t_agent = tk.Entry(self)
+        self.t_agent.insert(0, self.PTagent)
         self.t_agent.grid(row=3, column=4, sticky='w')
 
-        self.t_buildLabel = tk.Text(self, height=1)
-        self.t_buildLabel.insert('insert', self.PTbulidLabel)
+        self.t_buildLabel = tk.Entry(self)
+        self.t_buildLabel.insert(0, self.PTbulidLabel)
         self.t_buildLabel.grid(row=4, column=4, sticky='w')
 
-        self.t_OTMremotePath = tk.Text(self, height=1)
-        self.t_OTMremotePath.insert('insert', self.OTMremote_path)
+        self.t_OTMremotePath = tk.Entry(self)
+        self.t_OTMremotePath.insert(0, self.OTMremote_path)
         self.t_OTMremotePath.grid(row=7, column=1, sticky='we')
 
-        self.t_OTMlocalPath = tk.Text(self, height=1)
-        self.t_OTMlocalPath.insert('insert', self.OTMlocal_path)
+        self.t_OTMlocalPath = tk.Entry(self)
+        self.t_OTMlocalPath.insert(0, self.OTMlocal_path)
         self.t_OTMlocalPath.grid(row=8, column=1, sticky='we')
 
-        self.t_OTMsourcePath = tk.Text(self, height=1)
-        self.t_OTMsourcePath.insert('insert', self.OTMsource_path)
+        self.t_OTMsourcePath = tk.Entry(self)
+        self.t_OTMsourcePath.insert(0, self.OTMsource_path)
         self.t_OTMsourcePath.grid(row=9, column=1, sticky='we')
 
-        self.t_PTremotePath = tk.Text(self, height=1)
-        self.t_PTremotePath.insert('insert', self.PTremote_path)
+        self.t_PTremotePath = tk.Entry(self)
+        self.t_PTremotePath.insert(0, self.PTremote_path)
         self.t_PTremotePath.grid(row=7, column=4, sticky='we')
 
-        self.t_PTlocalPath = tk.Text(self, height=1)
-        self.t_PTlocalPath.insert('insert', self.PTlocal_path)
+        self.t_PTlocalPath = tk.Entry(self)
+        self.t_PTlocalPath.insert(0, self.PTlocal_path)
         self.t_PTlocalPath.grid(row=8, column=4, sticky='we')
 
-        self.t_PTsourcePath = tk.Text(self, height=1)
-        self.t_PTsourcePath.insert('insert', self.PTsource_path)
+        self.t_PTsourcePath = tk.Entry(self)
+        self.t_PTsourcePath.insert(0, self.PTsource_path)
         self.t_PTsourcePath.grid(row=9, column=4, sticky='we')
 
-        self.t_outputBox = tk.Text(self)
+        self.t_outputBox = tk.Text(self,height=1)
         self.t_outputBox.grid(row=19, column=0, columnspan=5, sticky='nsew')
-        self.t_outputBoxError = tk.Text(self)
+        self.t_outputBoxError = tk.Text(self,height=1)
         self.t_outputBoxError.grid(row=20, column=0, columnspan=5, sticky='nsew')
 
-        self.t_configFile = tk.Text(self, height=1)
-        self.t_configFile.insert('insert', self.ConfigFile)
-        self.t_configFile.grid(row=21,column=1, columnspan=4,sticky='w')
+        self.t_configFile = tk.Entry(self)
+        self.t_configFile.insert(0, self.ConfigFile)
+        self.t_configFile.grid(row=21, column=1, columnspan=4,sticky='we')
 
         self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=11, column=0, columnspan=2, sticky='we')
-        self.b_CSSversions = tk.Button(self, text='CSS Versions', command=self.cssVersions).grid(row=12, column=0, columnspan=2, sticky='we')
+        self.b_CSSversions = tk.Button(self, text='Update CSS Versions', command=self.cssVersions).grid(row=12, column=0, columnspan=2, sticky='we')
         self.b_movePackages = tk.Button(self, text='Move CSS', command=self.movePackages).grid(row=13, column=0, columnspan=2, sticky='we')
         self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages).grid(row=15, column=3, columnspan=2, sticky='we')
         self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip).grid(row=16, column=3, columnspan=2, sticky='we')
@@ -249,8 +252,8 @@ class controlPanel(tk.Frame):
         sys.stdout = Std_redirector(self.t_outputBox)
 
     def GURP(self):
-        var = self.t_date.get('0.0','end-1c')
-        text = self.t_date.get('0.0','end')
+        var = self.t_date.get()
+        text = self.t_date.get()
         print var + 'abc'
         self.t_outputBox.yview('end')
 
@@ -295,17 +298,17 @@ class controlPanel(tk.Frame):
 
     def load(self):
         try:
-            self.ConfigFile = self.t_configFile.get('0.0', 'end-1c')
-            self.getPara()
-            self.refreshUI()
+            self.ConfigFile = self.t_configFile.get()
+            self.File2Memory()
+            self.Memory2UI()
             print 'loaded from ' + self.ConfigFile
         except:
             print 'Unable to load from {}'.format(self.ConfigFile)
 
     def save(self):
         try:
-            self.ConfigFile = self.t_configFile.get(0.0, 'end-1c')
-            self.writePara()
+            self.ConfigFile = self.t_configFile.get()
+            self.UI2File()
             print 'saved to ' + self.ConfigFile
         except:
             print 'Unable to save to {}'.format(self.ConfigFile)
