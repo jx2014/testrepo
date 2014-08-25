@@ -23,23 +23,35 @@ class Std_redirector(object):
 class controlPanel(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
+        self.getPara()
+        self.constructUI()
+        self.parent = parent
+
+    def getPara(self):
         config = ConfigParser.ConfigParser()
         config.read(r'C:\Users\ChilleeChillee\git\testrepo\work\path_config.ini')
-        self.daily_folder = config.get('DailyPatch', 'daily_folder')
+        self.daily_folder = config.get('DailyPatch', 'daily_folder') #aka package date
         self.irci = config.get('DailyPatch', 'irci')
-        #package_date = config.get('DailyPatch', 'package_date')
+        #self.package_date = config.get('DailyPatch', 'package_date')
         self.package_hr = config.get('DailyPatch', 'package_hr')
-        self.remote_path = config.get('DailyPatch', 'remote_path')
-        self.local_path = config.get('DailyPatch', 'local_path')
-        self.parent = parent
-        self.constructUI()
 
-    def main_loop(self):
-        self.parent.mainloop()
+        self.OTMremote_path = config.get('DailyPatch', 'remote_path')
+        self.OTMlocal_path = config.get('DailyPatch', 'local_path')
+        self.OTMsource_path = config.get('DailyPatch', 'source_path')
+
+        self.PTremote_path = config.get('ci_gerrit', 'remote_path')
+        self.PTlocal_path = config.get('ci_gerrit', 'local_path')
+        self.PTsource_path = config.get('ci_gerrit', 'source_path')
+        self.PTagent = config.get('ci_gerrit', 'agent')
+        self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
+        print self.PTbulidLabel
 
     def constructUI(self):
         self.pack(fill='both', expand=1)
         #self.grid(sticky='nsew')
+        #self.grid_configure(pady=5)
+        for i in range(9,20):
+            self.grid_rowconfigure(i,pad=5)
         self.grid_rowconfigure(18,weight=1)
         self.grid_rowconfigure(19,weight=1)
         self.grid_columnconfigure(1,weight=1)
@@ -68,28 +80,61 @@ class controlPanel(tk.Frame):
         l_OTMsourcePath  = tk.Label(self, text='Source path').grid(row=8, column=0, sticky='w')
         l_PTsourcePath  = tk.Label(self, text='Source path').grid(row=8, column=3, sticky='w')
         l_packages2build = tk.Label(self, text='Package(s) to be downloaded and built').grid(row=9, column=3, columnspan=2, sticky='w')
-        l_rowSpacer3  = tk.Label(self, text=' ').grid(row=11, column=0, columnspan=2)
+        #l_rowSpacer3  = tk.Label(self, text=' ').grid(row=11, column=0, columnspan=2)
         l_rowSpacer4  = tk.Label(self, text=' ').grid(row=17, column=0, columnspan=5)
 
-        self.t_date = tk.Text(self, width=20, height=1)
+        self.t_date = tk.Text(self, height=1)
+        self.t_date.insert('insert', self.daily_folder)
         self.t_date.grid(row=2, column=1, sticky='w')
-        self.t_hour = tk.Text(self, width=20, height=1).grid(row=3, column=1, sticky='w')
-        self.t_irci = tk.Text(self, width=20, height=1).grid(row=4, column=1, sticky='w')
-        self.t_agent = tk.Text(self, width=20, height=1).grid(row=2, column=4, sticky='w')
-        self.t_buildLabel = tk.Text(self, width=20, height=1).grid(row=3, column=4, sticky='w')
-        self.t_OTMremotePath = tk.Text(self, height=1).grid(row=6, column=1, sticky='we')
-        self.t_OTMlocalPath = tk.Text(self, height=1).grid(row=7, column=1, sticky='we')
-        self.t_OTMsourcePath = tk.Text(self, height=1).grid(row=8, column=1, sticky='we')
-        self.t_PTremotePath = tk.Text(self, height=1).grid(row=6, column=4, sticky='we')
-        self.t_PTlocalPath = tk.Text(self, height=1).grid(row=7, column=4, sticky='we')
-        self.t_PTsourcePath = tk.Text(self, height=1).grid(row=8, column=4, sticky='we')
+
+        self.t_hour = tk.Text(self, height=1)
+        self.t_hour.insert('insert', self.package_hr)
+        self.t_hour.grid(row=3, column=1, sticky='w')
+
+        self.t_irci = tk.Text(self, height=1)
+        self.t_irci.insert('insert', self.irci)
+        self.t_irci.grid(row=4, column=1, sticky='w')
+
+        self.t_agent = tk.Text(self, height=1)
+        self.t_agent.insert('insert', self.PTagent)
+        self.t_agent.grid(row=2, column=4, sticky='w')
+
+        self.t_buildLabel = tk.Text(self, height=1)
+        self.t_buildLabel.insert('insert', self.PTbulidLabel)
+        self.t_buildLabel.grid(row=3, column=4, sticky='w')
+
+        self.t_OTMremotePath = tk.Text(self, height=1)
+        self.t_OTMremotePath.insert('insert', self.OTMremote_path)
+        self.t_OTMremotePath.grid(row=6, column=1, sticky='we')
+
+        self.t_OTMlocalPath = tk.Text(self, height=1)
+        self.t_OTMlocalPath.insert('insert', self.OTMlocal_path)
+        self.t_OTMlocalPath.grid(row=7, column=1, sticky='we')
+
+        self.t_OTMsourcePath = tk.Text(self, height=1)
+        self.t_OTMsourcePath.insert('insert', self.OTMsource_path)
+        self.t_OTMsourcePath.grid(row=8, column=1, sticky='we')
+
+        self.t_PTremotePath = tk.Text(self, height=1)
+        self.t_PTremotePath.insert('insert', self.PTremote_path)
+        self.t_PTremotePath.grid(row=6, column=4, sticky='we')
+
+        self.t_PTlocalPath = tk.Text(self, height=1)
+        self.t_PTlocalPath.insert('insert', self.PTlocal_path)
+        self.t_PTlocalPath.grid(row=7, column=4, sticky='we')
+
+        self.t_PTsourcePath = tk.Text(self, height=1)
+        self.t_PTsourcePath.insert('insert', self.PTsource_path)
+        self.t_PTsourcePath.grid(row=8, column=4, sticky='we')
+
         self.t_outputBox = tk.Text(self)
         self.t_outputBox.grid(row=18, column=0, columnspan=5, sticky='nsew')
         self.t_outputBoxError = tk.Text(self)
         self.t_outputBoxError.grid(row=19, column=0, columnspan=5, sticky='nsew')
 
-        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=9, column=0, columnspan=2, pady=2, sticky='we')
-        self.b_movePackages = tk.Button(self, text='Move CSS', command=self.movePackages).grid(row=10, column=0, columnspan=2, sticky='we')
+        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=9, column=0, columnspan=2, sticky='we')
+        self.b_CSSversions = tk.Button(self, text='CSS Versions', command=self.cssVersions).grid(row=10, column=0, columnspan=2, sticky='we')
+        self.b_movePackages = tk.Button(self, text='Move CSS', command=self.movePackages).grid(row=11, column=0, columnspan=2, sticky='we')
         self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages).grid(row=14, column=3, columnspan=2, sticky='we')
         self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip).grid(row=15, column=3, columnspan=2, sticky='we')
         self.b_movePackages2 = tk.Button(self, text='Move CSS', command=self.movePackages2).grid(row=16, column=3, columnspan=2, sticky='we')
@@ -121,13 +166,16 @@ class controlPanel(tk.Frame):
         print var
         self.t_outputBox.yview('end')
 
+    def cssVersions(self):
+        print 'css versions'
+
     def movePackages(self):
         print 'move packages'
 
     def getPackages(self):
         print 'insert','Selected packages to be built'
         if self.var_2400.get() == 1:
-            print 2400
+            print '2400'
         if self.var_2401c2p.get() == 1:
             print '2401_csi2plus'
         if self.var_2500.get() == 1:
