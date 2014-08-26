@@ -2,7 +2,7 @@ import ConfigParser
 
 ConfigFile = 'C:\\Users\\ChilleeChillee\\git\\testrepo\\work\\path_config.ini'
 
-open(ConfigFile) as dfc
+dfc = open(ConfigFile)
 config = ConfigParser.ConfigParser()
 config.readfp(dfc)
 
@@ -12,4 +12,4 @@ for sec in config.sections():
         eval('varName')
         eval('sec')
         eval('opt')
-        #exec('%s=config.get(%s,%s)' % (eval('varName'), eval('sec'),eval('opt'))
+        exec('%s=config.get(%s,%s)' % (eval('varName'), eval('sec'), eval('opt')))
