@@ -29,57 +29,20 @@ class controlPanel(tk.Frame):
         self.constructUI()
         self.parent = parent
 
-    #from UI to memory
-    def UI2Memory(self):
-        index1 = 0.0
-        index2 = 'end-1c'
+    def UI2Memory(self):#from UI to memory
+        self.daily_folder = self.e_date.get()
+        self.irci = self.e_irci.get()
+        self.package_hr = self.e_hour.get()
+        self.OTMlocal_path = self.e_OTMlocalPath.get()
+        self.OTMremote_path = self.e_OTMremotePath.get()
+        self.OTMsource_path = self.e_OTMsourcePath.get()
+        self.PTagent = self.e_agent.get()
+        self.PTbulidLabel = self.e_buildLabel.get()
+        self.PTlocal_path = self.e_PTlocalPath.get()
+        self.PTremote_path = self.e_PTremotePath.get()
+        self.PTsource_path = self.e_PTsourcePath.get()
 
-        self.daily_folder = self.t_date.get(index1, index2)
-        self.irci = self.t_irci.get(index1, index2)
-        self.package_hr = self.t_date.get(index1, index2)
-        self.OTMlocal_path = self.t_OTMlocalPath.get(index1, index2)
-        self.OTMremote_path = self.t_OTMremotePath.get(index1, index2)
-        self.OTMsource_path = self.t_OTMsourcePath.get(index1, index2)
-        self.PTagent = self.t_agent.get(index1, index2)
-        self.PTbulidLabel = self.t_buildLabel.get(index1, index2)
-        self.PTlocal_path = self.t_PTlocalPath.get(index1, index2)
-        self.PTremote_path = self.t_PTremotePath.get(index1, index2)
-        self.PTsource_path = self.t_PTsourcePath.get(index1, index2)
-
-    #from UI to file
-    def UI2File(self):
-        config = ConfigParser.ConfigParser()
-
-        DailyPatch_info = {
-                           'daily_folder':self.t_date.get(),
-                            'irci':self.t_irci.get(),
-                            'package_hr':self.t_hour.get(),
-                            'remote_path':self.t_OTMremotePath.get(),
-                            'local_path':self.t_OTMlocalPath.get(),
-                            'source_path':self.t_OTMsourcePath.get()
-                            }
-
-        ci_gerrit_info = {
-                            'remote_path':self.t_PTremotePath.get(),
-                            'local_path':self.t_PTlocalPath.get(),
-                            'source_path':self.t_PTsourcePath.get(),
-                            'agent':self.t_agent.get(),
-                            'build_label':self.t_buildLabel.get()
-                            }
-
-        config.add_section('DailyPatch')
-        for key in DailyPatch_info.keys():
-            config.set('DailyPatch', key, DailyPatch_info.get(key))
-
-        config.add_section('ci_gerrit')
-        for key in ci_gerrit_info.keys():
-            config.set('ci_gerrit', key, ci_gerrit_info.get(key))
-
-        with open(self.ConfigFile,'w+') as cfs:
-            config.write(cfs)
-
-    #from file to memory
-    def File2Memory(self):
+    def File2Memory(self):#from file to memory
         with open(self.ConfigFile) as dcf:
             config = ConfigParser.ConfigParser()
             config.readfp(dcf)
@@ -98,34 +61,65 @@ class controlPanel(tk.Frame):
             self.PTagent = config.get('ci_gerrit', 'agent')
             self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
 
-    #from memory to UI
-    def Memory2UI(self):
-        self.t_date.delete(0, 'end')
-        self.t_hour.delete(0, 'end')
-        self.t_irci.delete(0, 'end')
-        self.t_agent.delete(0, 'end')
-        self.t_buildLabel.delete(0, 'end')
-        self.t_OTMremotePath.delete(0, 'end')
-        self.t_OTMlocalPath.delete(0, 'end')
-        self.t_OTMsourcePath.delete(0, 'end')
-        self.t_PTremotePath.delete(0, 'end')
-        self.t_PTlocalPath.delete(0, 'end')
-        self.t_PTsourcePath.delete(0, 'end')
 
-        self.t_date.insert(0, self.daily_folder)
-        self.t_hour.insert(0, self.package_hr)
-        self.t_irci.insert(0, self.irci)
-        self.t_agent.insert(0, self.PTagent)
-        self.t_buildLabel.insert(0, self.PTbulidLabel)
-        self.t_OTMremotePath.insert(0, self.OTMremote_path)
-        self.t_OTMlocalPath.insert(0, self.OTMlocal_path)
-        self.t_OTMsourcePath.insert(0, self.OTMsource_path)
-        self.t_PTremotePath.insert(0, self.PTremote_path)
-        self.t_PTlocalPath.insert(0, self.PTlocal_path)
-        self.t_PTsourcePath.insert(0, self.PTsource_path)
 
-    #initialize from File to UI
-    def constructUI(self):
+    def Memory2UI(self):#from memory to UI
+        self.e_date.delete(0, 'end')
+        self.e_hour.delete(0, 'end')
+        self.e_irci.delete(0, 'end')
+        self.e_agent.delete(0, 'end')
+        self.e_buildLabel.delete(0, 'end')
+        self.e_OTMremotePath.delete(0, 'end')
+        self.e_OTMlocalPath.delete(0, 'end')
+        self.e_OTMsourcePath.delete(0, 'end')
+        self.e_PTremotePath.delete(0, 'end')
+        self.e_PTlocalPath.delete(0, 'end')
+        self.e_PTsourcePath.delete(0, 'end')
+
+        self.e_date.insert(0, self.daily_folder)
+        self.e_hour.insert(0, self.package_hr)
+        self.e_irci.insert(0, self.irci)
+        self.e_agent.insert(0, self.PTagent)
+        self.e_buildLabel.insert(0, self.PTbulidLabel)
+        self.e_OTMremotePath.insert(0, self.OTMremote_path)
+        self.e_OTMlocalPath.insert(0, self.OTMlocal_path)
+        self.e_OTMsourcePath.insert(0, self.OTMsource_path)
+        self.e_PTremotePath.insert(0, self.PTremote_path)
+        self.e_PTlocalPath.insert(0, self.PTlocal_path)
+        self.e_PTsourcePath.insert(0, self.PTsource_path)
+
+    def Memory2File(self):#from memory to file
+        config = ConfigParser.ConfigParser()
+
+        DailyPatch_info = {
+                           'daily_folder':self.daily_folder,
+                            'irci':self.irci,
+                            'package_hr':self.package_hr,
+                            'remote_path':self.OTMremote_path,
+                            'local_path':self.OTMlocal_path,
+                            'source_path':self.OTMsource_path
+                            }
+
+        ci_gerrit_info = {
+                            'remote_path':self.PTremote_path,
+                            'local_path':self.PTlocal_path,
+                            'source_path':self.PTsource_path,
+                            'agent':self.PTagent,
+                            'build_label':self.PTbulidLabel
+                            }
+
+        config.add_section('DailyPatch')
+        for key in DailyPatch_info.keys():
+            config.set('DailyPatch', key, DailyPatch_info.get(key))
+
+        config.add_section('ci_gerrit')
+        for key in ci_gerrit_info.keys():
+            config.set('ci_gerrit', key, ci_gerrit_info.get(key))
+
+        with open(self.ConfigFile,'w+') as cfs:
+            config.write(cfs)
+
+    def constructUI(self):#initialize from File to UI
         self.pack(fill='both', expand=1)
         for i in range(10,23):
             self.grid_rowconfigure(i,pad=1)
@@ -165,58 +159,58 @@ class controlPanel(tk.Frame):
 
         #l_rowSpacer4  = tk.Label(self, text=' ').grid(row=18, column=0, columnspan=5)
 
-        self.t_date = tk.Entry(self)
-        self.t_date.insert(0, self.daily_folder)
-        self.t_date.grid(row=3, column=1, sticky='w')
+        self.e_date = tk.Entry(self)
+        self.e_date.insert(0, self.daily_folder)
+        self.e_date.grid(row=3, column=1, sticky='w')
 
-        self.t_hour = tk.Entry(self)
-        self.t_hour.insert(0, self.package_hr)
-        self.t_hour.grid(row=4, column=1, sticky='w')
+        self.e_hour = tk.Entry(self)
+        self.e_hour.insert(0, self.package_hr)
+        self.e_hour.grid(row=4, column=1, sticky='w')
 
-        self.t_irci = tk.Entry(self)
-        self.t_irci.insert(0, self.irci)
-        self.t_irci.grid(row=5, column=1, sticky='w')
+        self.e_irci = tk.Entry(self)
+        self.e_irci.insert(0, self.irci)
+        self.e_irci.grid(row=5, column=1, sticky='w')
 
-        self.t_agent = tk.Entry(self)
-        self.t_agent.insert(0, self.PTagent)
-        self.t_agent.grid(row=3, column=4, sticky='w')
+        self.e_agent = tk.Entry(self)
+        self.e_agent.insert(0, self.PTagent)
+        self.e_agent.grid(row=3, column=4, sticky='w')
 
-        self.t_buildLabel = tk.Entry(self)
-        self.t_buildLabel.insert(0, self.PTbulidLabel)
-        self.t_buildLabel.grid(row=4, column=4, sticky='w')
+        self.e_buildLabel = tk.Entry(self)
+        self.e_buildLabel.insert(0, self.PTbulidLabel)
+        self.e_buildLabel.grid(row=4, column=4, sticky='w')
 
-        self.t_OTMremotePath = tk.Entry(self)
-        self.t_OTMremotePath.insert(0, self.OTMremote_path)
-        self.t_OTMremotePath.grid(row=7, column=1, sticky='we')
+        self.e_OTMremotePath = tk.Entry(self)
+        self.e_OTMremotePath.insert(0, self.OTMremote_path)
+        self.e_OTMremotePath.grid(row=7, column=1, sticky='we')
 
-        self.t_OTMlocalPath = tk.Entry(self)
-        self.t_OTMlocalPath.insert(0, self.OTMlocal_path)
-        self.t_OTMlocalPath.grid(row=8, column=1, sticky='we')
+        self.e_OTMlocalPath = tk.Entry(self)
+        self.e_OTMlocalPath.insert(0, self.OTMlocal_path)
+        self.e_OTMlocalPath.grid(row=8, column=1, sticky='we')
 
-        self.t_OTMsourcePath = tk.Entry(self)
-        self.t_OTMsourcePath.insert(0, self.OTMsource_path)
-        self.t_OTMsourcePath.grid(row=9, column=1, sticky='we')
+        self.e_OTMsourcePath = tk.Entry(self)
+        self.e_OTMsourcePath.insert(0, self.OTMsource_path)
+        self.e_OTMsourcePath.grid(row=9, column=1, sticky='we')
 
-        self.t_PTremotePath = tk.Entry(self)
-        self.t_PTremotePath.insert(0, self.PTremote_path)
-        self.t_PTremotePath.grid(row=7, column=4, sticky='we')
+        self.e_PTremotePath = tk.Entry(self)
+        self.e_PTremotePath.insert(0, self.PTremote_path)
+        self.e_PTremotePath.grid(row=7, column=4, sticky='we')
 
-        self.t_PTlocalPath = tk.Entry(self)
-        self.t_PTlocalPath.insert(0, self.PTlocal_path)
-        self.t_PTlocalPath.grid(row=8, column=4, sticky='we')
+        self.e_PTlocalPath = tk.Entry(self)
+        self.e_PTlocalPath.insert(0, self.PTlocal_path)
+        self.e_PTlocalPath.grid(row=8, column=4, sticky='we')
 
-        self.t_PTsourcePath = tk.Entry(self)
-        self.t_PTsourcePath.insert(0, self.PTsource_path)
-        self.t_PTsourcePath.grid(row=9, column=4, sticky='we')
+        self.e_PTsourcePath = tk.Entry(self)
+        self.e_PTsourcePath.insert(0, self.PTsource_path)
+        self.e_PTsourcePath.grid(row=9, column=4, sticky='we')
 
         self.t_outputBox = tk.Text(self,height=1)
         self.t_outputBox.grid(row=19, column=0, columnspan=5, sticky='nsew')
         self.t_outputBoxError = tk.Text(self,height=1)
         self.t_outputBoxError.grid(row=20, column=0, columnspan=5, sticky='nsew')
 
-        self.t_configFile = tk.Entry(self)
-        self.t_configFile.insert(0, self.ConfigFile)
-        self.t_configFile.grid(row=21, column=1, columnspan=4,sticky='we')
+        self.e_configFile = tk.Entry(self)
+        self.e_configFile.insert(0, self.ConfigFile)
+        self.e_configFile.grid(row=21, column=1, columnspan=4,sticky='we')
 
         self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=11, column=0, columnspan=2, sticky='we')
         self.b_CSSversions = tk.Button(self, text='Update CSS Versions', command=self.cssVersions).grid(row=12, column=0, columnspan=2, sticky='we')
@@ -252,8 +246,8 @@ class controlPanel(tk.Frame):
         sys.stdout = Std_redirector(self.t_outputBox)
 
     def GURP(self):
-        var = self.t_date.get()
-        text = self.t_date.get()
+        var = self.e_date.get()
+        text = self.e_date.get()
         print var + 'abc'
         self.t_outputBox.yview('end')
 
@@ -298,7 +292,7 @@ class controlPanel(tk.Frame):
 
     def load(self):
         try:
-            self.ConfigFile = self.t_configFile.get()
+            self.ConfigFile = self.e_configFile.get()
             self.File2Memory()
             self.Memory2UI()
             print 'loaded from ' + self.ConfigFile
@@ -307,8 +301,9 @@ class controlPanel(tk.Frame):
 
     def save(self):
         try:
-            self.ConfigFile = self.t_configFile.get()
-            self.UI2File()
+            self.ConfigFile = self.e_configFile.get()
+            self.UI2Memory()
+            self.Memory2File()
             print 'saved to ' + self.ConfigFile
         except:
             print 'Unable to save to {}'.format(self.ConfigFile)
