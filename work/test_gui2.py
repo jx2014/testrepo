@@ -1,5 +1,6 @@
 import Tkinter as tk
 import ConfigParser
+from file_construct import fc
 import sys
 import os
 
@@ -61,6 +62,10 @@ class controlPanel(tk.Frame):
             self.PTagent = config.get('ci_gerrit', 'agent')
             self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
 
+            for opt in config.options('css_versions'):
+                varName = 'self.' + opt
+                exec('%s=config.get(\'css_versions\', opt)' % eval('varName'))
+                print eval(varName)
 
 
     def Memory2UI(self):#from memory to UI
@@ -317,8 +322,6 @@ def main():
     root.geometry('600x600+5+5')
     root.title('Windows OTM/Patch build Control Panel II')
     app = controlPanel(root)
-#     sys.stderr = StdError_redirector(app.t_outputBoxError)
-#     sys.stdout = Std_redirector(app.t_outputBox)
     root.mainloop()
 
 
