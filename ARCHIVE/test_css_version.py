@@ -1,4 +1,4 @@
-from file_construct import css_version_file
+from Intel_ICG_File_Construct.file_construct import css_version_file
 
 package_hr = '0200'
 daily_folder = '20140728'

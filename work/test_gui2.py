@@ -62,10 +62,34 @@ class controlPanel(tk.Frame):
             self.PTagent = config.get('ci_gerrit', 'agent')
             self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
 
-            for opt in config.options('css_versions'):
-                varName = 'self.' + opt
-                exec('%s=config.get(\'css_versions\', opt)' % eval('varName'))
-                print eval(varName)
+#             self.list_css_versions = []
+#             for opt in config.options('css_versions'):
+#                 varName = 'self.css_versions_' + opt
+#                 exec('%s=config.get(\'css_versions\', opt)' % eval('varName'))
+#                 self.list_css_versions.append(varName)
+#
+#             for varName in self.list_css_versions:
+#                 print varName
+#                 print eval(varName)
+
+            self.AutoConfigReader('css_versions', config)
+            print self.list_css_versions
+            print self.css_versions_css_2400
+
+    def AutoConfigReader(self,section_name, config):
+        listOpts = 'self.list_' + section_name
+        exec('%s = []' % eval('listOpts'))
+
+        for opt in config.options(section_name):
+            varName = 'self.' + section_name + '_' + opt
+            exec('%s=config.get(section_name, opt)' % eval('varName'))
+            exec('%s.append(%s)' % (eval('listOpts'), 'varName'))
+
+        print 'listOpts =', listOpts
+
+        for varName in eval(listOpts):
+            print varName
+            exec('varName')
 
 
     def Memory2UI(self):#from memory to UI

@@ -2,7 +2,7 @@ from file_construct import css_version_file
 import ConfigParser
 
 config = ConfigParser.ConfigParser()
-config.read('C:\Users\zjxuex\My Documents\LiClipse Workspace\work\path_config.ini')
+config.read(r'C:\Users\ChilleeChillee\git\testrepo\work\path_config.ini')
 
 #package_date = config.get('DailyPatch', 'package_date')
 daily_folder = config.get('DailyPatch', 'Daily_folder')
