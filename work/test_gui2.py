@@ -104,6 +104,10 @@ class controlPanel(tk.Frame):
             A list of options for this Section is saved in:
 
                 self.list_SectionName
+
+            To add new Section and Options, add to the end of File2Memory func
+
+                self.AutoConfigReader(self, 'Section Name', config)
         '''
         listOpts = 'self.list_' + section_name
         exec('%s = []' % eval('listOpts'))
