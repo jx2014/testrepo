@@ -43,80 +43,6 @@ class controlPanel(tk.Frame):
         self.PTremote_path = self.e_PTremotePath.get()
         self.PTsource_path = self.e_PTsourcePath.get()
 
-    def File2Memory(self):#from file to memory
-        with open(self.ConfigFile) as dcf:
-            config = ConfigParser.ConfigParser()
-            config.readfp(dcf)
-            self.daily_folder = config.get('DailyPatch', 'daily_folder') #aka package date
-            self.irci = config.get('DailyPatch', 'irci')
-            #self.package_date = config.get('DailyPatch', 'package_date')
-            self.package_hr = config.get('DailyPatch', 'package_hr')
-
-            self.OTMremote_path = config.get('DailyPatch', 'remote_path')
-            self.OTMlocal_path = config.get('DailyPatch', 'local_path')
-            self.OTMsource_path = config.get('DailyPatch', 'source_path')
-
-            self.PTremote_path = config.get('ci_gerrit', 'remote_path')
-            self.PTlocal_path = config.get('ci_gerrit', 'local_path')
-            self.PTsource_path = config.get('ci_gerrit', 'source_path')
-            self.PTagent = config.get('ci_gerrit', 'agent')
-            self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
-
-#             self.list_css_versions = []
-#             for opt in config.options('css_versions'):
-#                 varName = 'self.css_versions_' + opt
-#                 exec('%s=config.get(\'css_versions\', opt)' % eval('varName'))
-#                 self.list_css_versions.append(varName)
-#
-#             for varName in self.list_css_versions:
-#                 print varName
-#                 print eval(varName)
-
-            self.AutoConfigReader('css_versions', config)
-            print self.list_css_versions
-            print self.css_versions_css_2400
-
-    def AutoConfigReader(self,section_name, config):
-        listOpts = 'self.list_' + section_name
-        exec('%s = []' % eval('listOpts'))
-
-        for opt in config.options(section_name):
-            varName = 'self.' + section_name + '_' + opt
-            exec('%s=config.get(section_name, opt)' % eval('varName'))
-            exec('%s.append(%s)' % (eval('listOpts'), 'varName'))
-
-        print 'listOpts =', listOpts
-
-        for varName in eval(listOpts):
-            print varName
-            exec('varName')
-
-
-    def Memory2UI(self):#from memory to UI
-        self.e_date.delete(0, 'end')
-        self.e_hour.delete(0, 'end')
-        self.e_irci.delete(0, 'end')
-        self.e_agent.delete(0, 'end')
-        self.e_buildLabel.delete(0, 'end')
-        self.e_OTMremotePath.delete(0, 'end')
-        self.e_OTMlocalPath.delete(0, 'end')
-        self.e_OTMsourcePath.delete(0, 'end')
-        self.e_PTremotePath.delete(0, 'end')
-        self.e_PTlocalPath.delete(0, 'end')
-        self.e_PTsourcePath.delete(0, 'end')
-
-        self.e_date.insert(0, self.daily_folder)
-        self.e_hour.insert(0, self.package_hr)
-        self.e_irci.insert(0, self.irci)
-        self.e_agent.insert(0, self.PTagent)
-        self.e_buildLabel.insert(0, self.PTbulidLabel)
-        self.e_OTMremotePath.insert(0, self.OTMremote_path)
-        self.e_OTMlocalPath.insert(0, self.OTMlocal_path)
-        self.e_OTMsourcePath.insert(0, self.OTMsource_path)
-        self.e_PTremotePath.insert(0, self.PTremote_path)
-        self.e_PTlocalPath.insert(0, self.PTlocal_path)
-        self.e_PTsourcePath.insert(0, self.PTsource_path)
-
     def Memory2File(self):#from memory to file
         config = ConfigParser.ConfigParser()
 
@@ -147,6 +73,76 @@ class controlPanel(tk.Frame):
 
         with open(self.ConfigFile,'w+') as cfs:
             config.write(cfs)
+
+    def File2Memory(self):#from file to memory
+        with open(self.ConfigFile) as dcf:
+            config = ConfigParser.ConfigParser()
+            config.readfp(dcf)
+            self.daily_folder = config.get('DailyPatch', 'daily_folder') #aka package date
+            self.irci = config.get('DailyPatch', 'irci')
+            #self.package_date = config.get('DailyPatch', 'package_date')
+            self.package_hr = config.get('DailyPatch', 'package_hr')
+
+            self.OTMremote_path = config.get('DailyPatch', 'remote_path')
+            self.OTMlocal_path = config.get('DailyPatch', 'local_path')
+            self.OTMsource_path = config.get('DailyPatch', 'source_path')
+
+            self.PTremote_path = config.get('ci_gerrit', 'remote_path')
+            self.PTlocal_path = config.get('ci_gerrit', 'local_path')
+            self.PTsource_path = config.get('ci_gerrit', 'source_path')
+            self.PTagent = config.get('ci_gerrit', 'agent')
+            self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
+
+            self.AutoConfigReader('css_versions', config)
+
+    def AutoConfigReader(self,section_name, config):
+        '''
+            Automatically reads Section Name and it's options then create variables for it in the format of:
+
+                self.SectionName_options
+
+            A list of options for this Section is saved in:
+
+                self.list_SectionName
+        '''
+        listOpts = 'self.list_' + section_name
+        exec('%s = []' % eval('listOpts'))
+
+        for opt in config.options(section_name):
+            varName = 'self.' + section_name + '_' + opt
+            exec('%s=config.get(section_name, opt)' % eval('varName'))
+            exec('%s.append(%s)' % (eval('listOpts'), 'varName'))
+
+        print 'listOpts is', listOpts
+
+        for varName in eval(listOpts):
+            print varName
+            exec('print %s' % (varName))
+
+    def Memory2UI(self):#from memory to UI
+        self.e_date.delete(0, 'end')
+        self.e_hour.delete(0, 'end')
+        self.e_irci.delete(0, 'end')
+        self.e_agent.delete(0, 'end')
+        self.e_buildLabel.delete(0, 'end')
+        self.e_OTMremotePath.delete(0, 'end')
+        self.e_OTMlocalPath.delete(0, 'end')
+        self.e_OTMsourcePath.delete(0, 'end')
+        self.e_PTremotePath.delete(0, 'end')
+        self.e_PTlocalPath.delete(0, 'end')
+        self.e_PTsourcePath.delete(0, 'end')
+
+        self.e_date.insert(0, self.daily_folder)
+        self.e_hour.insert(0, self.package_hr)
+        self.e_irci.insert(0, self.irci)
+        self.e_agent.insert(0, self.PTagent)
+        self.e_buildLabel.insert(0, self.PTbulidLabel)
+        self.e_OTMremotePath.insert(0, self.OTMremote_path)
+        self.e_OTMlocalPath.insert(0, self.OTMlocal_path)
+        self.e_OTMsourcePath.insert(0, self.OTMsource_path)
+        self.e_PTremotePath.insert(0, self.PTremote_path)
+        self.e_PTlocalPath.insert(0, self.PTlocal_path)
+        self.e_PTsourcePath.insert(0, self.PTsource_path)
 
     def constructUI(self):#initialize from File to UI
         self.pack(fill='both', expand=1)
