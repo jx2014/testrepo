@@ -63,16 +63,25 @@ class controlPanel(tk.Frame):
                             'build_label':self.PTbulidLabel
                             }
 
-        config.add_section('DailyPatch')
-        for key in DailyPatch_info.keys():
-            config.set('DailyPatch', key, DailyPatch_info.get(key))
+        css_versions_info = {
+                             'css_2400': self.cssVersion_2400,
+                             'css_2401': self.cssVersion_2401,
+                             'css_2401_csi2plus': self.cssVersion_2401_csi2plus,
+                             'css_2500': self.cssVersion_2500
+                             }
 
-        config.add_section('ci_gerrit')
-        for key in ci_gerrit_info.keys():
-            config.set('ci_gerrit', key, ci_gerrit_info.get(key))
+        self.add_section('DailyPatch', DailyPatch_info, config)
+        self.add_section('ci_gerrit', ci_gerrit_info, config)
+        self.add_section('css_versions', css_versions_info, config)
 
         with open(self.ConfigFile,'w+') as cfs:
             config.write(cfs)
+
+    def add_section(self,sectionName, optInfo, config):
+        config.add_section(sectionName)
+        for key in optInfo.keys():
+            config.set(sectionName, key, optInfo.get(key))
+
 
     def File2Memory(self):#from file to memory
         with open(self.ConfigFile) as dcf:
@@ -93,8 +102,12 @@ class controlPanel(tk.Frame):
             self.PTagent = config.get('ci_gerrit', 'agent')
             self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
 
-            self.AutoConfigReader('css_versions', config)
+            self.cssVersion_2400 = config.get('css_versions', 'css_2400')
+            self.cssVersion_2401 = config.get('css_versions', 'css_2401')
+            self.cssVersion_2401_csi2plus = config.get('css_versions', 'css_2401_csi2plus')
+            self.cssVersion_2500 = config.get('css_versions', 'css_2500')
 
+    #AutoConfigReader is not used, manually assigning variable names is simpler and safer
     def AutoConfigReader(self,section_name, config):
         '''
             Automatically reads Section Name and it's options then create variables for it in the format of:
@@ -117,7 +130,7 @@ class controlPanel(tk.Frame):
             exec('%s=config.get(section_name, opt)' % eval('varName'))
             exec('%s.append(%s)' % (eval('listOpts'), 'varName'))
 
-        print 'listOpts is', listOpts
+        #print 'listOpts is', listOpts
 
         for varName in eval(listOpts):
             print varName
