@@ -2,7 +2,7 @@ from file_construct import fc
 import ConfigParser
 
 config = ConfigParser.ConfigParser()
-config.read(r'C:\Users\ChilleeChillee\git\testrepo\work\path_config.ini')
+config.read(r'C:\Users\zjxuex\git\gui\gui\testrepo-master\work\path_config.ini')
 
 daily_folder = config.get('DailyPatch', 'daily_folder')
 irci = config.get('DailyPatch', 'irci')
@@ -79,10 +79,28 @@ SKC_2500 = fc(
               alt_package_name = 'sh_css_sw_css_skycam_a0t_system_irci_master_' # get it from extracted folder and rid off date time, leave the underscore
               )
 
+BXT_2600 = fc(
+              package_code = '2600', #probably not needed
+              package_fn = 'css_bxt_pkg_isys_irci_master_',
+              package_extension = '.linux.tar.gz',
+              fw_name = '2600', #css_fw_2400.bin blah blah
+              #package_date = package_date,
+              package_date = daily_folder, # for most of the time, package_date equal to daily_folder date
+              daily_folder = daily_folder,
+              package_hr = package_hr,
+              remote_path = remote_path,
+              irci = irci,
+              local_path = local_path,
+              fw_sub_folder = 'firmware.target\\firmware', #required for skycam
+              alt_package_name = 'sh_css_sw_css_skycam_a0t_system_irci_master_' # get it from extracted folder and rid off date time, leave the underscore
+              )
+
+BXT_2600.rename_move_css_folder_file()
 BYT_2400.rename_move_css_folder_file()
 BYT_2401.rename_move_css_folder_file()
 CHT_2401_csi2plus.rename_move_css_folder_file()
 SKC_2500.rename_move_css_folder_file()
+
 
 # print '\nBYT_2400.irci: ', BYT_2400.irci
 # print '\nBYT_2400.remote_path_irci_master:\n', BYT_2400.remote_path_irci_master

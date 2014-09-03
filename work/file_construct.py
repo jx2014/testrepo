@@ -77,7 +77,8 @@ class fc:
             if os.path.exists(self.local_path_file):
                 print '{0:25}{2:<100}\n{1:25}{3:<100}'.format('Warning:', 'already exists in:', self.package_full_name, self.daily_folder_path)
             else:
-                shutil.copy(self.remote_path_css_file,self.local_path_file)
+                os.system('robocopy "%s" "%s" "%s" /NP /NS /NC /NFL /NDL' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
+                #shutil.copy(self.remote_path_css_file,self.local_path_file)
 
     # get tar extension of package_full_name
     #@print_func
@@ -108,16 +109,19 @@ class fc:
 
     #@print_func
     def extract_tar(self):
-        if os.path.exists(self.local_path_file):
-            with tarfile.open(self.local_path_file) as tf:
-                tf.extractall(self.daily_folder_path)
-                #print '_'*125
+        try:
+            if os.path.exists(self.local_path_file):
+                with tarfile.open(self.local_path_file) as tf:
+                    tf.extractall(self.daily_folder_path)
+                    #print '_'*125
+                    #print 'extract_tar()'
+                    print '{0:25}{1:<100}\n{2:25}{3:<100}'.format('Extracted:', self.package_full_name, 'in local folder:', self.daily_folder_path)
+            else:
+                print '_'*125
                 #print 'extract_tar()'
-                print '{0:25}{1:<100}\n{2:25}{3:<100}'.format('Extracted:', self.package_full_name, 'in local folder:', self.daily_folder_path)
-        else:
-            #print '_'*125
-            #print 'extract_tar()'
-            print '{0:25}{1:<100}\n{2:25}{3:<100}'.format('Warning:', self.package_full_name, 'does not exists in:', self.daily_folder_path)
+                print '{0:25}{1:<100}\n{2:25}{3:<100}'.format('Warning:', self.package_full_name, 'does not exists in:', self.daily_folder_path)
+        except:
+            print 'something went wrong with extract_tar()'
 
     #give full path to extracted package folder, for skycam, package name is different
     def get_package_folder_name(self):
@@ -168,7 +172,7 @@ class fc:
         self.extract_tar()
         self.change_css_folder_name()
         self.change_css_file_name()
-        shutil.rmtree(self.local_package_folder_name)
+        #shutil.rmtree(self.local_package_folder_name)
 
 
 
@@ -208,13 +212,15 @@ class active_fc():
         #pkg_2401_csi2plus_ci_gerrit = re.compile('^sh_css_sw_csi2plus_hive_isp_css_2401_system_ci_gerrit_\d{8}_\d{4}\.windows$')
         pkg_2500 = re.compile('^sh_css_sw_css_skycam_a0t_system_(irci_master|ci_gerrit)_\d{8}_\d{4}')
         #pkg_2500_ci_gerrit = re.compile('^sh_css_sw_css_skycam_a0t_system_ci_gerrit_\d{8}_\d{4}')
+        pkg_2600 = re.compile('tmp')
+
 
         if pkg_2400.search(fn): return fn, '2400'
         if pkg_2401.search(fn): return fn, '2401'
         if pkg_2401_csi2plus.search(fn): return fn, '2401_csi2plus'
-        #if pkg_2401_csi2plus_ci_gerrit.search(fn): return fn, '2401_csi2plus'
         if pkg_2500.search(fn): return fn, '2500'
-        #if pkg_2500_ci_gerrit.search(fn): return fn, '2500'
+        if pkg_2600.search(fn): return fn, '2600'
+
 
     def change_move_folder_fw(self,folder, css_id, css_fw_folder=''):
         css_folder = folder + '\\' + 'css'

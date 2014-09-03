@@ -2,7 +2,7 @@ from file_construct import active_fc
 import ConfigParser
 
 config = ConfigParser.ConfigParser()
-config.read('C:\Users\zjxuex\My Documents\LiClipse Workspace\work\path_config.ini')
+config.read(r'C:\Users\zjxuex\git\gui\gui\testrepo-master\work\path_config.ini')
 
 path_incoming_package  = config.get('Incoming_packages', 'path_incoming_package')
 local_path = config.get('Incoming_packages', 'local_path')
