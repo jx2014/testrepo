@@ -1,6 +1,7 @@
 import Tkinter as tk
 import ConfigParser
 from file_construct import fc
+from file_construct import css_version_file
 import sys
 import os
 
@@ -26,6 +27,7 @@ class controlPanel(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
         self.ConfigFile = os.getcwd() + '\\' + 'path_config.ini'
+        self.config = ConfigParser.ConfigParser()
         self.File2Memory()
         self.constructUI()
         self.parent = parent
@@ -44,7 +46,7 @@ class controlPanel(tk.Frame):
         self.PTsource_path = self.e_PTsourcePath.get()
 
     def Memory2File(self):#from memory to file
-        config = ConfigParser.ConfigParser()
+        #self.config.read(self.ConfigFile)
 
         DailyPatch_info = {
                            'daily_folder':self.daily_folder,
@@ -63,49 +65,43 @@ class controlPanel(tk.Frame):
                             'build_label':self.PTbulidLabel
                             }
 
-        css_versions_info = {
-                             'css_2400': self.cssVersion_2400,
-                             'css_2401': self.cssVersion_2401,
-                             'css_2401_csi2plus': self.cssVersion_2401_csi2plus,
-                             'css_2500': self.cssVersion_2500
-                             }
-
-        self.add_section('DailyPatch', DailyPatch_info, config)
-        self.add_section('ci_gerrit', ci_gerrit_info, config)
-        self.add_section('css_versions', css_versions_info, config)
+        self.add_section('DailyPatch', DailyPatch_info, self.config)
+        self.add_section('ci_gerrit', ci_gerrit_info, self.config)
 
         with open(self.ConfigFile,'w+') as cfs:
-            config.write(cfs)
+            self.config.write(cfs)
+
 
     def add_section(self,sectionName, optInfo, config):
-        config.add_section(sectionName)
         for key in optInfo.keys():
             config.set(sectionName, key, optInfo.get(key))
 
 
     def File2Memory(self):#from file to memory
         with open(self.ConfigFile) as dcf:
-            config = ConfigParser.ConfigParser()
-            config.readfp(dcf)
-            self.daily_folder = config.get('DailyPatch', 'daily_folder') #aka package date
-            self.irci = config.get('DailyPatch', 'irci')
-            #self.package_date = config.get('DailyPatch', 'package_date')
-            self.package_hr = config.get('DailyPatch', 'package_hr')
+            self.config.readfp(dcf)
 
-            self.OTMremote_path = config.get('DailyPatch', 'remote_path')
-            self.OTMlocal_path = config.get('DailyPatch', 'local_path')
-            self.OTMsource_path = config.get('DailyPatch', 'source_path')
+            self.daily_folder = self.config.get('DailyPatch', 'daily_folder') #aka package date
+            self.irci = self.config.get('DailyPatch', 'irci')
+            #self.package_date = self.config.get('DailyPatch', 'package_date')
+            self.package_hr = self.config.get('DailyPatch', 'package_hr')
 
-            self.PTremote_path = config.get('ci_gerrit', 'remote_path')
-            self.PTlocal_path = config.get('ci_gerrit', 'local_path')
-            self.PTsource_path = config.get('ci_gerrit', 'source_path')
-            self.PTagent = config.get('ci_gerrit', 'agent')
-            self.PTbulidLabel = config.get('ci_gerrit', 'build_label')
+            self.OTMremote_path = self.config.get('DailyPatch', 'remote_path')
+            self.OTMlocal_path = self.config.get('DailyPatch', 'local_path')
+            self.OTMsource_path = self.config.get('DailyPatch', 'source_path')
 
-            self.cssVersion_2400 = config.get('css_versions', 'css_2400')
-            self.cssVersion_2401 = config.get('css_versions', 'css_2401')
-            self.cssVersion_2401_csi2plus = config.get('css_versions', 'css_2401_csi2plus')
-            self.cssVersion_2500 = config.get('css_versions', 'css_2500')
+            self.PTremote_path = self.config.get('ci_gerrit', 'remote_path')
+            self.PTlocal_path = self.config.get('ci_gerrit', 'local_path')
+            self.PTsource_path = self.config.get('ci_gerrit', 'source_path')
+            self.PTagent = self.config.get('ci_gerrit', 'agent')
+            self.PTbulidLabel = self.config.get('ci_gerrit', 'build_label')
+
+#             self.cssVersion_2400 = self.config.get('css_versions', 'css_2400')
+#             self.cssVersion_2401 = self.config.get('css_versions', 'css_2401')
+#             self.cssVersion_2401_csi2plus = self.config.get('css_versions', 'css_2401_csi2plus')
+#             self.cssVersion_2500 = self.config.get('css_versions', 'css_2500')
+
+
 
     #AutoConfigReader is not used, manually assigning variable names is simpler and safer
     def AutoConfigReader(self,section_name, config):
@@ -294,7 +290,12 @@ class controlPanel(tk.Frame):
         self.t_outputBox.yview('end')
 
     def cssVersions(self):
-        print 'css versions'
+        for opt in self.config.options('css_versions'):
+            #print opt, self.config.get('css_versions', opt)
+            version_file = self.config.get('css_versions', opt)
+            exec('%s = css_version_file(package_hr = self.package_hr, daily_folder = self.daily_folder, css_version_path = r"%s")'
+                 % (opt, version_file))
+            exec('%s.final_wrtie_new_date_css_version()' % opt)
 
     def movePackages(self):
         print 'move packages'
@@ -348,6 +349,7 @@ class controlPanel(tk.Frame):
             self.Memory2File()
             print 'saved to ' + self.ConfigFile
         except:
+            raise Exception
             print 'Unable to save to {}'.format(self.ConfigFile)
 
     def exit(self):
