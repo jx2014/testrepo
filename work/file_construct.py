@@ -119,7 +119,7 @@ class fc:
             else:
                 print '_'*125
                 #print 'extract_tar()'
-                print '{0:25}{1:<100}\n{2:25}{3:<100}'.format('Warning:', self.package_full_name, 'does not exists in:', self.daily_folder_path)
+                print '{0:25}{1:<100}\n{2:25}{3:<100}, did you copy the package?'.format('Warning:', self.package_full_name, 'is no in this folder: ', self.daily_folder_path)
         except:
             print 'something went wrong with extract_tar()'
 
