@@ -2,6 +2,7 @@ import Tkinter as tk
 import ConfigParser
 from file_construct import fc
 from file_construct import css_version_file
+from file_construct import active_fc
 import sys
 import os
 
@@ -394,7 +395,12 @@ class controlPanel(tk.Frame):
         self.t_outputBox.yview('end')
 
     def activeUnzip(self):
-        print 'active unzip'
+        self.UI2Memory()
+        active_unzip_all = active_fc(
+                             income_pkg = self.PTlocal_path,
+                             delete_pkg = 'no'
+                             )
+        active_unzip_all.unzip_rename_move()
 
     def movePackages2(self):
         print 'move packages2'

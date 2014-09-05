@@ -77,7 +77,10 @@ class fc:
             if os.path.exists(self.local_path_file):
                 print '{0:25}{2:<100}\n{1:25}{3:<100}'.format('Warning:', 'already exists in:', self.package_full_name, self.daily_folder_path)
             else:
-                os.system('robocopy "%s" "%s" "%s" /NP /NS /NC /NFL /NDL' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
+                try:
+                    os.system('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
+                except:
+                    print 'robocopy puta'
                 #shutil.copy(self.remote_path_css_file,self.local_path_file)
 
     # get tar extension of package_full_name
@@ -299,7 +302,10 @@ class active_fc():
                 css_fw_folder = 'firmware.target\\firmware'
             else:
                 css_fw_folder = ''
-            self.change_move_folder_fw(fn,id, css_fw_folder)
+            try:
+                self.change_move_folder_fw(fn,id, css_fw_folder)
+            except:
+                print Exception
 
 
 ##################################################################################################################
