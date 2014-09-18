@@ -76,9 +76,10 @@ class fc:
         if os.path.exists(self.remote_path_css_file):
             if os.path.exists(self.local_path_file):
                 print '{0:25}{2:<100}\n{1:25}{3:<100}'.format('Warning:', 'already exists in:', self.package_full_name, self.daily_folder_path)
-            else:
-                os.system('robocopy "%s" "%s" "%s" /NP /NS /NC /NFL /NDL' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
-                #shutil.copy(self.remote_path_css_file,self.local_path_file)
+            else:                
+                os.system('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
+        else:
+            print 'This file does not seem to exist: %s' % self.remote_path_css_file
 
     # get tar extension of package_full_name
     #@print_func
@@ -119,7 +120,7 @@ class fc:
             else:
                 print '_'*125
                 #print 'extract_tar()'
-                print '{0:25}{1:<100}\n{2:25}{3:<100}'.format('Warning:', self.package_full_name, 'does not exists in:', self.daily_folder_path)
+                print '{0:25}{1:<100}\n{2:25}{3:<100}, did you copy the package?'.format('Warning:', self.package_full_name, 'is no in this folder: ', self.daily_folder_path)
         except:
             print 'something went wrong with extract_tar()'
 
@@ -204,14 +205,10 @@ class active_fc():
                 >>>id
                 2400
         '''
-        pkg_2400 = re.compile('^sh_css_sw_hive_isp_css_2400_system_(irci_master|ci_gerrit)_\d{8}_\d{4}\.windows$')
-        #pkg_2400_ci_gerrit = re.compile('^sh_css_sw_hive_isp_css_2400_system_irci_master_\d{8}_\d{4}\.windows$')
-        pkg_2401 = re.compile('^sh_css_sw_hive_isp_css_2401_system_(irci_master|ci_gerrit)_\d{8}_\d{4}\.windows$')
-        #pkg_2401_ci_gerrit = re.compile('^sh_css_sw_hive_isp_css_2401_system_irci_master_\d{8}_\d{4}\.windows$')
-        pkg_2401_csi2plus = re.compile('^sh_css_sw_csi2plus_hive_isp_css_2401_system_(irci_master|ci_gerrit)_\d{8}_\d{4}\.windows$')
-        #pkg_2401_csi2plus_ci_gerrit = re.compile('^sh_css_sw_csi2plus_hive_isp_css_2401_system_ci_gerrit_\d{8}_\d{4}\.windows$')
-        pkg_2500 = re.compile('^sh_css_sw_css_skycam_a0t_system_(irci_master|ci_gerrit)_\d{8}_\d{4}')
-        #pkg_2500_ci_gerrit = re.compile('^sh_css_sw_css_skycam_a0t_system_ci_gerrit_\d{8}_\d{4}')
+        pkg_2400 = re.compile('^sh_css_sw_hive_isp_css_2400_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}\.windows$')#'^sh_css_sw_hive_isp_css_2400_system_(irci_master|ci_gerrit)_\d{1,8}_\d{1,4}\.windows$')
+        pkg_2401 = re.compile('^sh_css_sw_hive_isp_css_2401_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}\.windows$')#'^sh_css_sw_hive_isp_css_2401_system_(irci_master|ci_gerrit)_\d{1,8}_\d{1,4}\.windows$')
+        pkg_2401_csi2plus = re.compile('^sh_css_sw_csi2plus_hive_isp_css_2401_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}\.windows$')#'^sh_css_sw_csi2plus_hive_isp_css_2401_system_(.{0}|irci_master|ci_gerrit)_\d{1,8}_\d{1,4}\.windows$')
+        pkg_2500 = re.compile('^sh_css_sw_css_skycam_a0t_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}')#'^sh_css_sw_css_skycam_a0t_system_(()|irci_master|ci_gerrit)_\d{1,8}_\d{1,4}')
         pkg_2600 = re.compile('tmp')
 
 
@@ -277,9 +274,9 @@ class active_fc():
 
     #func to get date and time out of a package name
     def get_dt(self, fn):
-        find_date = re.compile('\d{8}(?=_\d{4}\.)')
-        find_time = re.compile('(?<=\d{8}_)\d{4}(?=\.)')
-        find_dt = re.compile('\d{8}_\d{4}(?=\.)')
+        find_date = re.compile('_\d{1,8}(?=_\d{1,4}\.)')#('\d{8}(?=_\d{4}\.)')
+        find_time = re.compile('(?<=\d_)\d{4}(?=\.)')#'(?<=\d{8}_)\d{4}(?=\.)')
+        find_dt = re.compile('\d{1,8}_\d{1,4}(?=\.)')#'\d{8}_\d{4}(?=\.)')
         date = find_date.search(fn)
         time = find_time.search(fn)
         dt = find_dt.search(fn)
@@ -299,7 +296,10 @@ class active_fc():
                 css_fw_folder = 'firmware.target\\firmware'
             else:
                 css_fw_folder = ''
-            self.change_move_folder_fw(fn,id, css_fw_folder)
+            try:
+                self.change_move_folder_fw(fn,id, css_fw_folder)
+            except:
+                print Exception
 
 
 ##################################################################################################################

@@ -2,6 +2,7 @@ import Tkinter as tk
 import ConfigParser
 from file_construct import fc
 from file_construct import css_version_file
+from file_construct import active_fc
 import sys
 import os
 
@@ -284,18 +285,99 @@ class controlPanel(tk.Frame):
         sys.stdout = Std_redirector(self.t_outputBox)
 
     def GURP(self):
-        var = self.e_date.get()
-        text = self.e_date.get()
-        print var + 'abc'
-        self.t_outputBox.yview('end')
+        self.UI2Memory()
+
+        BYT_2400 = fc(
+                      package_code = '2400', #probably not needed
+                      package_fn = 'sh_css_sw_hive_isp_css_2400_system_irci_master_',
+                      package_extension = '.windows.tar.gz',
+                      fw_name = '2400', #css_fw_2400.bin blah blah
+                      #package_date = package_date,
+                      package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                      daily_folder = self.daily_folder,
+                      package_hr = self.package_hr,
+                      remote_path = self.OTMremote_path,
+                      irci = self.irci,
+                      local_path = self.OTMlocal_path,
+                      )
+
+        BYT_2401 = fc(
+                      package_code = '2401', #probably not needed
+                      package_fn = 'sh_css_sw_hive_isp_css_2401_system_irci_master_',
+                      package_extension = '.windows.tar.gz',
+                      fw_name = '2401', #css_fw_2400.bin blah blah
+                      #package_date = package_date,
+                      package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                      daily_folder = self.daily_folder,
+                      package_hr = self.package_hr,
+                      remote_path = self.OTMremote_path,
+                      irci = self.irci,
+                      local_path = self.OTMlocal_path,
+                      )
+
+        CHT_2401_csi2plus = fc(
+                      package_code = '2401_csi2plus', #probably not needed
+                      package_fn = 'sh_css_sw_csi2plus_hive_isp_css_2401_system_irci_master_',
+                      package_extension = '.windows.tar.gz',
+                      fw_name = '2401_csi2plus', #css_fw_2400.bin blah blah
+                      #package_date = package_date,
+                      package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                      daily_folder = self.daily_folder,
+                      package_hr = self.package_hr,
+                      remote_path = self.OTMremote_path,
+                      irci = self.irci,
+                      local_path = self.OTMlocal_path,
+                      )
+
+        SKC_2500 = fc(
+                      package_code = '2500', #probably not needed
+                      package_fn = 'css_pkg_css_skycam_a0t_system_irci_master_',
+                      package_extension = '.tar.gz',
+                      fw_name = '2500', #css_fw_2400.bin blah blah
+                      #package_date = package_date,
+                      package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                      daily_folder = self.daily_folder,
+                      package_hr = self.package_hr,
+                      remote_path = self.OTMremote_path,
+                      irci = self.irci,
+                      local_path = self.OTMlocal_path,
+                      fw_sub_folder = 'firmware.target\\firmware', #required for skycam
+                      alt_package_name = 'sh_css_sw_css_skycam_a0t_system_irci_master_' # get it from extracted folder and rid off date time, leave the underscore
+                      )
+
+        BXT_2600_isys = fc(
+                      package_code = '2600', #probably not needed
+                      package_fn = 'css_pkg_bxt_isys_irci_master_',
+                      package_extension = '.windows.tar.gz',
+                      fw_name = '2600', #css_fw_2400.bin blah blah
+                      #package_date = package_date,
+                      package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                      daily_folder = self.daily_folder,
+                      package_hr = self.package_hr,
+                      remote_path = self.OTMremote_path,
+                      irci = self.irci,
+                      local_path = self.OTMlocal_path,
+                      )
+
+        BXT_2600_isys.rename_move_css_folder_file()
+        BYT_2400.rename_move_css_folder_file()
+        BYT_2401.rename_move_css_folder_file()
+        CHT_2401_csi2plus.rename_move_css_folder_file()
+        SKC_2500.rename_move_css_folder_file()
 
     def cssVersions(self):
+        self.UI2Memory()
         for opt in self.config.options('css_versions'):
             #print opt, self.config.get('css_versions', opt)
             version_file = self.config.get('css_versions', opt)
             exec('%s = css_version_file(package_hr = self.package_hr, daily_folder = self.daily_folder, css_version_path = r"%s")'
                  % (opt, version_file))
             exec('%s.final_wrtie_new_date_css_version()' % opt)
+
+        print 'head Camera/ISP/css/2400/lib/css_version.txt'
+        print 'head Camera/ISP/css/2401/lib/css_version.txt'
+        print 'head Camera/ISP/css/2401_csi2plus/lib/css_version.txt'
+        print 'head Camera/ISP/css/2500/lib/css_version.txt'
 
     def movePackages(self):
         print 'move packages'
@@ -313,7 +395,12 @@ class controlPanel(tk.Frame):
         self.t_outputBox.yview('end')
 
     def activeUnzip(self):
-        print 'active unzip'
+        self.UI2Memory()
+        active_unzip_all = active_fc(
+                             income_pkg = self.PTlocal_path,
+                             delete_pkg = 'no'
+                             )
+        active_unzip_all.unzip_rename_move()
 
     def movePackages2(self):
         print 'move packages2'

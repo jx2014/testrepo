@@ -1,0 +1,64 @@
+
+******Commit(s) in 667 not in 674************
+
+1bdbe419be0dd44667069f0b1c94c31e03bf4bc3 [tools+simulation] raw10 to dat file conversion.
+bdfdbf675ba661db7be236826b3a485f9d3161bd [css|version] Remove css_version.h
+3f6e8370fd0cec04e04a1f2aa2eb34fdd2a375a4 [BXT isp test bench] propagate profiling settings
+df45ab977953922f096e490c4adeebf091b535ee [Skycam] Pipe initialization warning fixed (isp cfg per pipe)
+cfe2a31424bf8f063a34048b317e4423a0781d1c [ISP TESTBENCH] add s3a to smoke test
+4fa31956984e382f854b334ef2b5f7132b3fabcd [CSS-API] do argument checking before creating API change
+4e85458537b11bec57fdc02ca011549692e019cc [BXT ISP TB] Klocwork tainted malloc size fix
+9263640ec61c661592545500e412cd93597b899d [video.host.c, preview.host.c] fix compile warnings
+7f3b94641f96b155cf31abee79b31e316c2a825c [BXT-Tracing] More ISYS bug fixes.
+21a058ed1e569b1d4c7178c0d51e2680787ef495 [BXT Accelerator] Y_bin encoding function and testcase
+208a0b42aea28f64b8b504eb312ebea816ac2aa5 [mk_firmware.h] fix compiler warning
+46eef190c95093b4ff0e3813a68a8eea7f6b6224 [BXT PSYS] Use vied_env on test small & 4k60
+bb1c8385eec1fcd1b9daf45dc0ce2948067e1769 [BXT FF+ISP] ISP Swap kernel RD locally and WR remotely
+f3732e33fb5661b2cc8ec67922ae1496baf5fdc8 [Skycam] Remove unused skycam binaries
+6eae274adb57384cc87b68b7c71a1c31f69a5d09 [Skycam] Re-enable checking of test outputs against reference
+1280ba5f548e5339beab736a3ab0847c09681cbc [BXT-Tracing] Tracing Unit NCI ISYS bug fix.
+a2c42b56ff6cd8fad87e6915d3c1b93109964be5 [sand] implement new 1-stage video binary video_lp_isp2
+ff5a66bd334539623ddb1cd037e81671b267edce [Feat# ACC_20] ACC Test Package
+4a56c6f6719bbc4e17b441b502b892a7e60fba12 #define isp_vf_image_format for VF module
+fadcc321881c0cf10260f78bc2edd3e03effeeb8 Rename SkyCam ISP files
+95be4799e8d76f3a51ca04649accb2db6be17eb0 Rename BXT ISP files
+8e7d497775562acc5cec905617527a6c893dd215 [CSS#API] make_version_file.sh: add css_api_version.h dependency
+1098da2750bdab49fb906f0d3931fdd7c5dfdb2c Revert "[Makefile.regression] fix vars"
+d3ac611bcfd7e40938e837c84193a656576b82e2 simple_extension_multi regression fix
+c26635ad658cb7c7df191da965aacb220dc1604f [BXT-Tracing] Added unit test for interleaved trace generation.
+f81ef6029a056079455ac8ebae4aa7a6138100c0 [BXT Accelerator] DVS FF encoding & decoding function
+4e3e49441e7022bbdbec6b70cfb070fa4ca97c9e [BXT Debug API] Debug API.
+172755c4bb3f0eba4a7f0610eaefd2f4108611e1 assert: clean up assert_support.h
+334d8caeb0603709f3877c49495ed87bfd48e111 SP: add SP error event in addition to std_break
+
+******Commit(s) in 674 not in 667************
+
+5ace5e58b4914c1f9b8ecddc1a26a06106482d0d [libprm] add 64 bit support ,Frans Meulenbroeks, 2014-09-16 15:56:08 +0100
+5933c67be5e5f2e20b4d70267f91af448a0da119 [CSS-API-version] minor documentation update ,Peter van der Meer, 2014-09-16 14:20:13 +0100
+0d77e3ed471446e623871db773af94baac59cf18 [BXT ISP TB] Enable BFA + New Bxt C0 SDK ,Jacco van Gurp, 2014-09-16 11:29:11 +0100
+10c541188f9610ebe09d69d31bd57452e5e2099c [xnr] remove the xnr_ker tests ,Jacco van Gurp, 2014-09-16 09:56:30 +0100
+228c224decad626be326862bb31e664c41881638 [BXT release] Verify package build ,Dorin Gheorghe, 2014-09-16 07:58:54 +0100
+fd5d586f1e23e60c9ffe06f6a885e6412e5a2e2a [rawcopy #3741] add ability to lock all frames ,Jozef Kruger, 2014-09-15 21:11:48 -0700
+1ed2a2d9cd4f09c2b194cc3097cae9bd1297a729 [sand BZ3812] Add logging for ia_css_refcount_decrement assert ,Irene Wu, 2014-09-15 23:14:51 +0100
+3f18fccecc9303d6847584afe1bca7e9ef55c8db [BXT ACC] Encoding function for TCC FF ,Kyu-hwa Jeong, 2014-09-15 21:34:39 +0100
+fbda4eef67bd85135ed0c59432ee9ac37177bd5c [FW source tree] Logged short source graph ,Aung Naing, 2014-09-15 19:40:40 +0100
+9a0a87d8e6130b66c3207e4ac939e9457f5d97f9 [BXT PSYS FPGA] Run 4k60 on FPGA ,Dorin Gheorghe dorin.gheorghe@intel.com, 2014-09-15 16:22:07 +0100
+b7786124b2359b90519961546fb30b8f8100a537 [BXT] Enabling CSI stimuli files for BXT-ISYS ,Adil Emre Gozek, 2014-09-15 16:08:13 +0100
+677012d0a31b386a6b7e048a223d19a0932b3b12 [BXT ISYS] 3A AWB test enabling in CI + IDS. ,Adil Emre Gozek, 2014-09-15 16:02:31 +0100
+672ac0e02e2a00be49014676aaa52a18062b2b81 [BXT-klocwork] Buffer Overflow, array Index Out of Bounds ,twan Verstegen, 2014-09-15 15:29:43 +0100
+68db776463d8cd1b027ec060e21a2d6841976511 [BXT PSYS] PSYS Fixing tracing on Windows ,Veniero, Antonio, 2014-09-15 14:45:48 +0100
+e12fbfc4b09986af35c7d3c764b07e40dc9d07d0 [CSS-tools] Update to tools int_css_mizuchi_20140829_1053 ,Peter van der Meer, 2014-09-15 10:55:22 +0100
+f706cbace0d746d1e94879be76e7fb57394bd515 [Skycam] ACC cluster private config dump (Part 1) ,Vijaykumar Desai, 2014-09-15 10:42:23 +0100
+82732e13d8cf6e234869537541820bb99265bb27 [kernel_testbench] SP program load, start and wait functions ,Rick Boer, 2014-09-15 10:39:52 +0100
+9f514353fa1c488ca3482a3e2030896a3eab1b38 [Skycam] change log path in tgdb ,Hirsh, Shira, 2014-09-15 10:22:52 +0100
+344c616074e031493e3b8c412aa1c9dc0fdc0d2f [ISP_TEST_BENCH] Cleanup parameter files ,Hugo Boullosa Gonzalez, 2014-09-15 09:40:20 +0100
+f04e58f11ece751c831d53d20e848ccc424a4fbe [Skycam] code clean-up from warnings part 2 ,gerardo.ochoa.lopez, 2014-09-15 08:21:47 +0100
+c2fb39c62bf801c42c3eb172d9cac1782dcdceb3 [Skycam] Time-based frame queuing ,Dror Heller, 2014-09-14 10:49:29 +0100
+2e7fe3d295e0edca8c931eb3bffc73e4bd8000d9 [Skycam] Minor optimisations in the PES binary ,Maulik Prabhudesai, 2014-09-13 10:33:36 +0100
+9b550d10ffc4634b1c7d7e2bca7f170a13b8ce87 [isp testbench] add frame data types and generic verification ,Mohan Kandra, 2014-09-13 04:11:38 +0100
+ecc9d1c5271eb0359e1e195286c59e918027be9e [BZ#3871] Fix Klockwork issues with ACC Test Package (part2) ,Eliot Lee, 2014-09-12 12:18:59 +0100
+d7a5cfda681785ea1f8af6b1ba345ebe25d64231 [BXT ACC] Encoding function for psys IEFD FF ,Kyu-hwa Jeong, 2014-09-11 21:06:40 +0100
+da0f15c0108a54bddbc55d877905f956c6aa5171 [Broxton ISP] Adds s_bayer test for multi isp queue ,Manvi Agarwal, 2014-09-11 16:56:45 +0100
+eaebfeae4b8f611328735368fe0205def22470bb [Kernel_testbench] Move xmem and dmem access to dli ,Rick Boer, 2014-09-11 12:08:16 +0100
+a577e81ad66e950805d6cf05f895246c4b42f2d3 [Fix#2816] Make SP to host buffer/event enqueue atomic ,Yusong Huang, 2014-09-11 00:35:03 +0100
+c6d5ad15c363bbc0e70e9b59ffdb3ab2756ab94d [BXT Accelerator] test code change on GBL encoding function ,Hongbing Hu, 2014-09-05 02:16:39 +0100
