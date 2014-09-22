@@ -359,6 +359,21 @@ class controlPanel(tk.Frame):
                       local_path = self.OTMlocal_path,
                       )
 
+        BXT_2600_psys = fc(
+                      package_code = '2600', #probably not needed
+                      package_fn = 'css_pkg_bxt_isys_',
+                      package_extension = '.windows.tar.gz',
+                      fw_name = '2600', #css_fw_2400.bin blah blah
+                      #package_date = package_date,
+                      package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                      daily_folder = self.daily_folder,
+                      package_hr = self.package_hr,
+                      remote_path = self.OTMremote_path,
+                      irci = self.irci,
+                      local_path = self.OTMlocal_path,
+                      )
+
+        BXT_2600_psys.rename_move_css_folder_file()
         BXT_2600_isys.rename_move_css_folder_file()
         BYT_2400.rename_move_css_folder_file()
         BYT_2401.rename_move_css_folder_file()
