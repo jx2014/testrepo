@@ -41,18 +41,20 @@ with open(a_file_input, 'r') as a_txt, open(b_file_input, 'r') as b_txt:
     b_txt.seek(0,0)
 
     with open(output, 'w') as output_file:
-        output_file.write('\n******Commit(s) in {} not in {}'.format(a_file_name,b_file_name) + '*'*12 +'\n\n')  
+        output_file.write('\n******FW Commit(s) in {} since {}'.format(a_file_name,b_file_name) + '*'*12 +'\n\n')  
         for a_line in a_txt:
             #print a_line
             for sha_line in in_a_not_in_b:
+                #print sha_line
                 if re.match(sha_line+'.*', a_line):                
                     output_file.write(a_line.rstrip('\n')+'\n')
                     
     with open(output, 'a') as output_file:
-        output_file.write('\n******Commit(s) in {} not in {}'.format(b_file_name, a_file_name) + '*'*12 + '\n\n')    
+        output_file.write('\n******FW Commit(s) in {} since {}'.format(b_file_name, a_file_name) + '*'*12 + '\n\n')    
         for b_line in b_txt:
             #print b_line
             for sha_line in in_b_not_in_a:
+                #print sha_line
                 if re.match(sha_line+'.*', b_line):                
                     output_file.write(b_line.rstrip('\n')+'\n')
 
@@ -73,7 +75,10 @@ with open(a_file_input, 'r') as a_txt, open(b_file_input, 'r') as b_txt:
 ##    for line2 in same_ba:                
 ##        output_file.write(line2.rstrip('\n')+'\n')
 
-subprocess.Popen("notepad output.txt", shell=False)
+try:
+	subprocess.Popen("notepad output.txt", shell=False)
+except:
+	print 'Error opening Notepad'
 
 
 

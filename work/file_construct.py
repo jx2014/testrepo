@@ -76,7 +76,7 @@ class fc:
         if os.path.exists(self.remote_path_css_file):
             if os.path.exists(self.local_path_file):
                 print '{0:25}{2:<100}\n{1:25}{3:<100}'.format('Warning:', 'already exists in:', self.package_full_name, self.daily_folder_path)
-            else:
+            else:                
                 os.system('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
         else:
             print 'This file does not seem to exist: %s' % self.remote_path_css_file
