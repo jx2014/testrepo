@@ -5,6 +5,7 @@ import shutil
 import tarfile
 import re
 import string
+import subprocess
 
 def print_func(fn):
     def wrapped(self):
@@ -77,7 +78,8 @@ class fc:
             if os.path.exists(self.local_path_file):
                 print '{0:25}{2:<100}\n{1:25}{3:<100}'.format('Warning:', 'already exists in:', self.package_full_name, self.daily_folder_path)
             else:                
-                os.system('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
+                #os.system('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
+                subprocess.call('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name),shell = True, creationflags=0x08000000)
         else:
             print 'This file does not seem to exist: %s' % self.remote_path_css_file
 

@@ -3,6 +3,7 @@ import ConfigParser
 from file_construct import fc
 from file_construct import css_version_file
 from file_construct import active_fc
+import subprocess
 import sys
 import os
 
@@ -55,7 +56,9 @@ class controlPanel(tk.Frame):
                             'package_hr':self.package_hr,
                             'remote_path':self.OTMremote_path,
                             'local_path':self.OTMlocal_path,
-                            'source_path':self.OTMsource_path
+                            'source_path':self.OTMsource_path,
+                            'winterfell':self.winterfell_path,
+                            'windows_build':self.windowsbuild_path
                             }
 
         ci_gerrit_info = {
@@ -90,6 +93,8 @@ class controlPanel(tk.Frame):
             self.OTMremote_path = self.config.get('DailyPatch', 'remote_path')
             self.OTMlocal_path = self.config.get('DailyPatch', 'local_path')
             self.OTMsource_path = self.config.get('DailyPatch', 'source_path')
+            self.winterfell_path = self.config.get('DailyPatch', 'winterfell')
+            self.windowsbuild_path = self.config.get('DailyPatch', 'windows_build')
 
             self.PTremote_path = self.config.get('ci_gerrit', 'remote_path')
             self.PTlocal_path = self.config.get('ci_gerrit', 'local_path')
@@ -263,7 +268,12 @@ class controlPanel(tk.Frame):
         self.b_buildCHTC2P = tk.Button(self, text='Build CHT CSI2PLUS', command=self.buildCHTC2P).grid(row=17, column=0, columnspan=2, sticky='we')
         self.b_buildSKC = tk.Button(self, text='Build SKC', command=self.buildSKC).grid(row=18, column=0, columnspan=2, sticky='we')
         self.b_load = tk.Button(self, text='load', command=self.load, width=10).grid(row=21, column=0, sticky='we')
-        self.b_save = tk.Button(self, text='save', command=self.save, width=10).grid(row=22, column=0, sticky='we')
+        self.b_save = tk.Button(self, text='save', command=self.save, width=10).grid(row=22, column=0, sticky='we')        
+        self.b_folderDaily = tk.Button(self, text='Daily', command=self.openOTMlocalFolder, width=10).grid(row=22, column=1, sticky='we')
+        self.b_folderSource = tk.Button(self, text='Source', command=self.openOTMsourceFolder, width=10).grid(row=22, column=2, sticky='we')
+        self.b_folderIncoming = tk.Button(self, text='Incoming', command=self.openPTlocalFolder, width=10).grid(row=22, column=3, sticky='we')
+        self.b_folderWinterfell = tk.Button(self, text='Winterfell', command=self.openWinterfellFolder, width=10).grid(row=23, column=1, sticky='we')
+        self.b_folderWindowsBuild = tk.Button(self, text='WindowsBuild', command=self.openWindowsbuildFolder, width=10).grid(row=23, column=2, sticky='we')
         self.b_exit = tk.Button(self, text='Exit', command=self.exit, width=10).grid(row=23, column=0, sticky='we')
 
         self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400)
@@ -284,6 +294,26 @@ class controlPanel(tk.Frame):
         sys.stderr = StdError_redirector(self.t_outputBoxError)
         sys.stdout = Std_redirector(self.t_outputBox)
 
+    def openFolder(self, path):
+        #os.system('start %s' % path)
+        #subprocess.call("start %s" % path, creationflags=0x08000000, shell=True)
+        subprocess.call("start %s" % path, shell=True)
+
+    def openOTMsourceFolder(self):
+        self.openFolder(self.OTMsource_path)
+
+    def openOTMlocalFolder(self):
+        self.openFolder(self.OTMlocal_path)
+
+    def openPTlocalFolder(self):
+        self.openFolder(self.PTlocal_path)
+
+    def openWinterfellFolder(self):
+        self.openFolder(self.winterfell_path)
+
+    def openWindowsbuildFolder(self):
+        self.openFolder(self.windowsbuild_path)		
+		
     def GURP(self):
         self.UI2Memory()
 
