@@ -210,7 +210,7 @@ class active_fc():
         pkg_2400 = re.compile('^sh_css_sw_hive_isp_css_2400_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}\.windows$')#'^sh_css_sw_hive_isp_css_2400_system_(irci_master|ci_gerrit)_\d{1,8}_\d{1,4}\.windows$')
         pkg_2401 = re.compile('^sh_css_sw_hive_isp_css_2401_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}\.windows$')#'^sh_css_sw_hive_isp_css_2401_system_(irci_master|ci_gerrit)_\d{1,8}_\d{1,4}\.windows$')
         pkg_2401_csi2plus = re.compile('^sh_css_sw_csi2plus_hive_isp_css_2401_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}\.windows$')#'^sh_css_sw_csi2plus_hive_isp_css_2401_system_(.{0}|irci_master|ci_gerrit)_\d{1,8}_\d{1,4}\.windows$')
-        pkg_2500 = re.compile('^sh_css_sw_css_skycam_a0t_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}')#'^sh_css_sw_css_skycam_a0t_system_(()|irci_master|ci_gerrit)_\d{1,8}_\d{1,4}')
+        pkg_2500 = re.compile('^sh_css_sw_css_skycam_c0_system_(()|irci_master_|ci_gerrit_)\d{1,8}_\d{1,4}')#'^sh_css_sw_css_skycam_a0t_system_(()|irci_master|ci_gerrit)_\d{1,8}_\d{1,4}')
         pkg_2600 = re.compile('tmp')
 
 
@@ -239,8 +239,7 @@ class active_fc():
             os.rename(css_folder, new_css_folder)
             os.rename(css_fw, new_css_fw)
         except Exception as e:
-            #print 'unable to rename, something went wrong'
-            print e
+            print 'unable to rename: ', e            
 
         print 'moving {} to {}'.format(new_css_folder, os.getcwd())
         print 'moving {} to {}'.format(new_css_fw, os.getcwd())
@@ -250,8 +249,7 @@ class active_fc():
             if self.delete_pkg == 'yes':
                 shutil.rmtree(folder)
         except Exception as e:
-            #print 'unable to move css folder or css fw, something went wrong'
-            print e
+            print 'unable to move css folder or css fw: ', e
 
     #Used by unzip_pkgs()
     def get_pkgs(self):
@@ -269,10 +267,13 @@ class active_fc():
 
     # unzip all the pkgs found in self.inc_pkg_path
     def unzip_pkgs(self):
-        for pkg in self.get_pkgs():
-            with tarfile.open(pkg) as tf:
-                print 'unzipping...%s' % pkg
-                tf.extractall(os.getcwd())
+        try:
+            for pkg in self.get_pkgs():
+                with tarfile.open(pkg) as tf:
+                    print 'unzipping...%s' % pkg
+                    tf.extractall(os.getcwd())
+        except:
+            print 'Error unzipping: ', Exception
 
     #func to get date and time out of a package name
     def get_dt(self, fn):
@@ -292,17 +293,17 @@ class active_fc():
         '''
         self.unzip_pkgs()
         for flder in self.get_folders():
-            fn, id = self.id_folders(flder)
-            # used for skycam
-            if id == '2500':
-                css_fw_folder = 'firmware.target\\firmware'
-            else:
-                css_fw_folder = ''
+            print flder
             try:
-                self.change_move_folder_fw(fn,id, css_fw_folder)
+                fn, id = self.id_folders(flder)
+                # used for skycam
+                if id == '2500':
+                    css_fw_folder = 'firmware.target\\firmware'
+                else:
+                    css_fw_folder = ''
+                self.change_move_folder_fw(fn, id, css_fw_folder)
             except:
-                print Exception
-
+                print 'exception occured during unzip_rename_move ', flder
 
 ##################################################################################################################
 #                                                                                                                #
