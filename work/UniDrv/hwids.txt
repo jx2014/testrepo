@@ -1,0 +1,1148 @@
+ROOT\HIDCLASS\0000
+    Name: Wacom Virtual Hid Driver
+    Hardware ID's:
+        ROOT\WACOMVIRTUALHID
+ROOT\LEGACY_MSAHCI\0000
+    Name: msahci
+    No hardware/compatible ID's available for this device.
+ROOT\SYSTEM\0000
+    Name: Plug and Play Software Device Enumerator
+    Hardware ID's:
+        root\swenum
+ACPI\PNP0C0E\2&DABA3FF&2
+    Name: ACPI Sleep Button
+    Hardware ID's:
+        ACPI\PNP0C0E
+        *PNP0C0E
+ROOT\LEGACY_VOLMGRX\0000
+    Name: Dynamic Volume Manager
+    No hardware/compatible ID's available for this device.
+PCI\VEN_8086&DEV_2D10&SUBSYS_219617AA&REV_02\3&2B8E0B4B&0&10
+    Name: QPI Link 0 - 2D10
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2D10&SUBSYS_219617AA&REV_02
+        PCI\VEN_8086&DEV_2D10&SUBSYS_219617AA
+        PCI\VEN_8086&DEV_2D10&CC_060000
+        PCI\VEN_8086&DEV_2D10&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2D10&REV_02
+        PCI\VEN_8086&DEV_2D10
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+PCI\VEN_8086&DEV_3B34&SUBSYS_216317AA&REV_06\3&21436425&0&E8
+    Name: Intel(R) 5 Series/3400 Series Chipset Family USB Enhanced Host Controller - 3B34
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B34&SUBSYS_216317AA&REV_06
+        PCI\VEN_8086&DEV_3B34&SUBSYS_216317AA
+        PCI\VEN_8086&DEV_3B34&CC_0C0320
+        PCI\VEN_8086&DEV_3B34&CC_0C03
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B34&REV_06
+        PCI\VEN_8086&DEV_3B34
+        PCI\VEN_8086&CC_0C0320
+        PCI\VEN_8086&CC_0C03
+        PCI\VEN_8086
+        PCI\CC_0C0320
+        PCI\CC_0C03
+PCI\VEN_8086&DEV_4239&SUBSYS_13118086&REV_35\4&3372E7DE&0&00E4
+    Name: Intel(R) Centrino(R) Advanced-N 6200 AGN
+    Hardware ID's:
+        PCI\VEN_8086&DEV_4239&SUBSYS_13118086&REV_35
+        PCI\VEN_8086&DEV_4239&SUBSYS_13118086
+        PCI\VEN_8086&DEV_4239&CC_028000
+        PCI\VEN_8086&DEV_4239&CC_0280
+    Compatible ID's:
+        PCI\VEN_8086&DEV_4239&REV_35
+        PCI\VEN_8086&DEV_4239
+        PCI\VEN_8086&CC_028000
+        PCI\VEN_8086&CC_0280
+        PCI\VEN_8086
+        PCI\CC_028000
+        PCI\CC_0280
+ROOT\HIDCLASS\0001
+    Name: Virtual Touch Driver
+    Hardware ID's:
+        ROOT\WACOMVTHID
+ROOT\UMBUS\0000
+    Name: UMBus Root Bus Enumerator
+    Hardware ID's:
+        root\umbus
+HID\WACF00C&COL03\5&37290763&0&0002
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACF00C&Col03
+        HID\*WACF00C&Col03
+        HID_DEVICE_UP:00FF_U:00EE
+        HID_DEVICE
+SW\{EEAB7790-C514-11D1-B42B-00805FC1270E}\ASYNCMAC
+    Name: RAS Async Adapter
+    Hardware ID's:
+        SW\{eeab7790-c514-11d1-b42b-00805fc1270e}
+ACPI\PNP0C14\1
+    Name: Microsoft Windows Management Interface for ACPI
+    Hardware ID's:
+        ACPI\PNP0C14
+        *PNP0C14
+ROOT\VDRVROOT\0000
+    Name: Microsoft Virtual Drive Enumerator Driver
+    Hardware ID's:
+        ROOT\vdrvroot
+ROOT\LEGACY_VOLSNAP\0000
+    Name: Storage volumes
+    No hardware/compatible ID's available for this device.
+WPDBUSENUMROOT\UMB\2&37C186B&0&STORAGE#VOLUME#_??_USBSTOR#DISK&VEN_GENERIC-&PROD_MULTI-CARD&REV_1.00#20071114173400000&0#
+    Name: BOOT
+    Compatible ID's:
+        wpdbusenum\fs
+ROOT\LEGACY_AFD\0000
+    Name: Ancillary Function Driver for Winsock
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_QWAVEDRV\0000
+    Name: QWAVE driver
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_MSISADRV\0000
+    Name: msisadrv
+    No hardware/compatible ID's available for this device.
+ACPI\SMO1200\1
+    Name: Trusted Platform Module 1.2
+    Hardware ID's:
+        ACPI\SMO1200
+        *SMO1200
+    Compatible ID's:
+        *PNP0C31
+HID\WACF00C&COL04\5&37290763&0&0003
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACF00C&Col04
+        HID\*WACF00C&Col04
+        HID_DEVICE_UP:00FF_U:0003
+        HID_DEVICE
+ROOT\VOLMGR\0000
+    Name: Volume Manager
+    Hardware ID's:
+        ROOT\VOLMGR
+    Compatible ID's:
+        DETECTEDInternal\volmgr
+        DETECTED\volmgr
+ROOT\LEGACY_ASWHWID\0000
+    Name: avast! HardwareID
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_VWIFIFLT\0000
+    Name: Virtual WiFi Filter Driver
+    No hardware/compatible ID's available for this device.
+DISPLAY\LEN4011\4&6E127C6&0&UID67568640
+    Name: ThinkPad Display 1280x800
+    Hardware ID's:
+        MONITOR\LEN4011
+    Compatible ID's:
+        *PNP09FF
+ACPI\THERMALZONE\THM0
+    Name: ACPI Thermal Zone
+    Hardware ID's:
+        ACPI\ThermalZone
+        *ThermalZone
+ACPI\IBM0068\5&2890D699&0
+    Name: Lenovo PM Device
+    Hardware ID's:
+        ACPI\IBM0068
+        *IBM0068
+PCI\VEN_8086&DEV_2D11&SUBSYS_219617AA&REV_02\3&2B8E0B4B&0&11
+    Name: QPI Physical 0 - 2D11
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2D11&SUBSYS_219617AA&REV_02
+        PCI\VEN_8086&DEV_2D11&SUBSYS_219617AA
+        PCI\VEN_8086&DEV_2D11&CC_060000
+        PCI\VEN_8086&DEV_2D11&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2D11&REV_02
+        PCI\VEN_8086&DEV_2D11
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+PCI\VEN_8086&DEV_3B3C&SUBSYS_216317AA&REV_06\3&21436425&0&D0
+    Name: Intel(R) 5 Series/3400 Series Chipset Family USB Enhanced Host Controller - 3B3C
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B3C&SUBSYS_216317AA&REV_06
+        PCI\VEN_8086&DEV_3B3C&SUBSYS_216317AA
+        PCI\VEN_8086&DEV_3B3C&CC_0C0320
+        PCI\VEN_8086&DEV_3B3C&CC_0C03
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B3C&REV_06
+        PCI\VEN_8086&DEV_3B3C
+        PCI\VEN_8086&CC_0C0320
+        PCI\VEN_8086&CC_0C03
+        PCI\VEN_8086
+        PCI\CC_0C0320
+        PCI\CC_0C03
+ACPI\WACF00C\4&5C30863&0
+    Name: Wacom Two Finger Touch
+    Hardware ID's:
+        ACPI\WACF00C
+        *WACF00C
+ROOT\LEGACY_WANARPV6\0000
+    Name: Remote Access IPv6 ARP Driver
+    No hardware/compatible ID's available for this device.
+ACPI\LEN0010\4&5C30863&0
+    Name: ThinkPad Tablet Keyboard and Buttons
+    Hardware ID's:
+        ACPI\LEN0010
+        *LEN0010
+    Compatible ID's:
+        *PNP0303
+ROOT\LEGACY_RDPCDD\0000
+    Name: RDPCDD
+    No hardware/compatible ID's available for this device.
+HID\WACF00C&COL05\5&37290763&0&0004
+    Name: Microsoft Input Configuration Device
+    Hardware ID's:
+        HID\WACF00C&Col05
+        HID\*WACF00C&Col05
+        HID_DEVICE_UP:000D_U:000E
+        HID_DEVICE
+ROOT\LEGACY_NATIVEWIFIP\0000
+    Name: NativeWiFi Filter
+    No hardware/compatible ID's available for this device.
+HDAUDIO\FUNC_01&VEN_14F1&DEV_5069&SUBSYS_17AA2157&REV_1003\4&9D6DE18&0&0001
+    Name: Conexant 20585 SmartAudio HD
+    Hardware ID's:
+        HDAUDIO\FUNC_01&VEN_14F1&DEV_5069&SUBSYS_17AA2157&REV_1003
+        HDAUDIO\FUNC_01&VEN_14F1&DEV_5069&SUBSYS_17AA2157
+    Compatible ID's:
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56&VEN_14F1&DEV_5069&REV_1003
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&VEN_14F1&DEV_5069&REV_1003
+        HDAUDIO\FUNC_01&VEN_14F1&DEV_5069&REV_1003
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56&VEN_14F1&DEV_5069
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&VEN_14F1&DEV_5069
+        HDAUDIO\FUNC_01&VEN_14F1&DEV_5069
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56&VEN_14F1
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&VEN_14F1
+        HDAUDIO\FUNC_01&VEN_14F1
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56
+        HDAUDIO\FUNC_01&CTLR_VEN_8086
+        HDAUDIO\FUNC_01&GF&VEN_14F1&DEV_5069&SUBSYS_17AA2157&REV_1003
+        HDAUDIO\FUNC_01
+USB\VID_0A5C&PID_217F\889FFAF4CFDB
+    Name: ThinkPad Bluetooth 2.1 with Enhanced Data Rate II
+    Hardware ID's:
+        USB\VID_0A5C&PID_217F&REV_0360
+        USB\VID_0A5C&PID_217F
+    Compatible ID's:
+        USB\MS_COMP_BLUTUTH&MS_SUBCOMP_1112EDR
+        USB\MS_COMP_BLUTUTH
+        USB\Class_E0&SubClass_01&Prot_01
+        USB\Class_E0&SubClass_01
+        USB\Class_E0
+ACPI_HAL\PNP0C08\0
+    Name: Microsoft ACPI-Compliant System
+    Hardware ID's:
+        ACPI_HAL\PNP0C08
+        *PNP0C08
+ACPI\ACPI0003\0
+    Name: Microsoft AC Adapter
+    Hardware ID's:
+        ACPI\ACPI0003
+        *ACPI0003
+ROOT\LEGACY_WDF01000\0000
+    Name: Kernel Mode Driver Frameworks service
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_RDPENCDD\0000
+    Name: RDP Encoder Mirror Driver
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_ASWRDR\0000
+    Name: aswRdr
+    No hardware/compatible ID's available for this device.
+ACPI\LEN0018\4&5C30863&0
+    Name: ThinkPad UltraNav Pointing Device
+    Hardware ID's:
+        ACPI\LEN0018
+        *LEN0018
+    Compatible ID's:
+        *PNP0F13
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT1
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+ROOT\LEGACY_NDIS\0000
+    Name: NDIS System Driver
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_FVEVOL\0000
+    Name: Bitlocker Drive Encryption Filter Driver
+    No hardware/compatible ID's available for this device.
+HID\WACF00C&COL06\5&37290763&0&0005
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACF00C&Col06
+        HID\*WACF00C&Col06
+        HID_DEVICE_UP:FF00_U:0002
+        HID_DEVICE
+ACPI\FIXEDBUTTON\2&DABA3FF&2
+    Name: ACPI Fixed Feature Button
+    Hardware ID's:
+        ACPI\FixedButton
+        *FixedButton
+PCI\VEN_8086&DEV_0044&SUBSYS_219317AA&REV_02\3&21436425&0&00
+    Name: Intel(R) processor DRAM Controller - 0044
+    Hardware ID's:
+        PCI\VEN_8086&DEV_0044&SUBSYS_219317AA&REV_02
+        PCI\VEN_8086&DEV_0044&SUBSYS_219317AA
+        PCI\VEN_8086&DEV_0044&CC_060000
+        PCI\VEN_8086&DEV_0044&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_0044&REV_02
+        PCI\VEN_8086&DEV_0044
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+PCI\VEN_8086&DEV_2D12&SUBSYS_219617AA&REV_02\3&2B8E0B4B&0&12
+    Name: Reserved - 2D12
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2D12&SUBSYS_219617AA&REV_02
+        PCI\VEN_8086&DEV_2D12&SUBSYS_219617AA
+        PCI\VEN_8086&DEV_2D12&CC_060000
+        PCI\VEN_8086&DEV_2D12&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2D12&REV_02
+        PCI\VEN_8086&DEV_2D12
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+BTH\MS_BTHBRB\7&12B67842&0&1
+    Name: Microsoft Bluetooth Enumerator
+    Hardware ID's:
+        BTH\MS_BTHBRB
+PCI\VEN_8086&DEV_3B42&SUBSYS_216417AA&REV_06\3&21436425&0&E0
+    Name: Intel(R) 5 Series/3400 Series Chipset Family PCI Express Root Port 1 - 3B42
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B42&SUBSYS_216417AA&REV_06
+        PCI\VEN_8086&DEV_3B42&SUBSYS_216417AA
+        PCI\VEN_8086&DEV_3B42&CC_060400
+        PCI\VEN_8086&DEV_3B42&CC_0604
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B42&REV_06
+        PCI\VEN_8086&DEV_3B42
+        PCI\VEN_8086&CC_060400
+        PCI\VEN_8086&CC_0604
+        PCI\VEN_8086
+        PCI\CC_060400
+        PCI\CC_0604
+ROOT\LEGACY_ASWRVRT\0000
+    Name: avast! Revert
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_WFPLWF\0000
+    Name: WFP Lightweight Filter
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_RDPREFMP\0000
+    Name: Reflector Display Driver used to gain access to graphics data
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0000\4&5C30863&0
+    Name: Programmable interrupt controller
+    Hardware ID's:
+        ACPI\PNP0000
+        *PNP0000
+USB\VID_0BDA&PID_0159\20071114173400000
+    Name: USB Mass Storage Device
+    Hardware ID's:
+        USB\VID_0BDA&PID_0159&REV_5888
+        USB\VID_0BDA&PID_0159
+    Compatible ID's:
+        USB\Class_08&SubClass_06&Prot_50
+        USB\Class_08&SubClass_06
+        USB\Class_08
+ROOT\LEGACY_NDISUIO\0000
+    Name: NDIS Usermode I/O Protocol
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_HTTP\0000
+    Name: HTTP
+    No hardware/compatible ID's available for this device.
+UMB\UMB\1&841921D&0&PRINTERBUSENUMERATOR
+    Name: UMBus Enumerator
+    Hardware ID's:
+        UMB\UMBUS
+{5D624F94-8850-40C3-A3FA-A4FD2080BAF3}\VWIFIMP\5&1217410B&0&01
+    Name: Microsoft Virtual WiFi Miniport Adapter
+    Hardware ID's:
+        {5d624f94-8850-40c3-a3fa-a4fd2080baf3}\vwifimp
+    Compatible ID's:
+        {5d624f94-8850-40c3-a3fa-a4fd2080baf3}\vwifimp
+ACPI\GENUINEINTEL_-_INTEL64_FAMILY_6_MODEL_37_-_INTEL(R)_CORE(TM)_I7_CPU_______L_620__@_2.00GHZ\_0
+    Name: Intel(R) Core(TM) i7 CPU       L 620  @ 2.00GHz
+    Hardware ID's:
+        ACPI\GenuineIntel_-_Intel64_Family_6_Model_37
+        *GenuineIntel_-_Intel64_Family_6_Model_37
+        ACPI\GenuineIntel_-_Intel64_Family_6
+        *GenuineIntel_-_Intel64_Family_6
+        ACPI\GenuineIntel_-_Intel64
+        *GenuineIntel_-_Intel64
+    Compatible ID's:
+        ACPI\Processor
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT2
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+HID\WACOMVIRTUALHID&COL01\1&2D595CA7&0&0000
+    Name: Wacom HID Pen
+    Hardware ID's:
+        HID\WACOMVIRTUALHID&Col01
+        HID_DEVICE_UP:000D_U:0002
+        HID_DEVICE
+BTH\MS_BTHPAN\7&12B67842&0&2
+    Name: Bluetooth Device (Personal Area Network)
+    Hardware ID's:
+        BTH\MS_BTHPAN
+ROOT\LEGACY_WUDFPF\0000
+    Name: User Mode Driver Frameworks Platform Driver
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_RSPNDR\0000
+    Name: Link-Layer Topology Discovery Responder
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0100\4&5C30863&0
+    Name: System timer
+    Hardware ID's:
+        ACPI\PNP0100
+        *PNP0100
+ROOT\LEGACY_HWPOLICY\0000
+    Name: Hardware Policy Driver
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_NDPROXY\0000
+    Name: NDProxy
+    No hardware/compatible ID's available for this device.
+HDAUDIO\FUNC_01&VEN_8086&DEV_2804&SUBSYS_17AA21B5&REV_1000\4&9D6DE18&0&0301
+    Name: High Definition Audio Device
+    Hardware ID's:
+        HDAUDIO\FUNC_01&VEN_8086&DEV_2804&SUBSYS_17AA21B5&REV_1000
+        HDAUDIO\FUNC_01&VEN_8086&DEV_2804&SUBSYS_17AA21B5
+    Compatible ID's:
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56&VEN_8086&DEV_2804&REV_1000
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&VEN_8086&DEV_2804&REV_1000
+        HDAUDIO\FUNC_01&VEN_8086&DEV_2804&REV_1000
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56&VEN_8086&DEV_2804
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&VEN_8086&DEV_2804
+        HDAUDIO\FUNC_01&VEN_8086&DEV_2804
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56&VEN_8086
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&VEN_8086
+        HDAUDIO\FUNC_01&VEN_8086
+        HDAUDIO\FUNC_01&CTLR_VEN_8086&CTLR_DEV_3B56
+        HDAUDIO\FUNC_01&CTLR_VEN_8086
+        HDAUDIO\FUNC_01&GF&VEN_8086&DEV_2804&SUBSYS_17AA21B5&REV_1000
+        HDAUDIO\FUNC_01
+USB\VID_8087&PID_0020\5&15BBD570&0&1
+    Name: Generic USB Hub
+    Hardware ID's:
+        USB\VID_8087&PID_0020&REV_0000
+        USB\VID_8087&PID_0020
+    Compatible ID's:
+        USB\Class_09&SubClass_00&Prot_00
+        USB\Class_09&SubClass_00
+        USB\Class_09
+ROOT\MSSMBIOS\0000
+    Name: Microsoft System Management BIOS Driver
+    Hardware ID's:
+        ROOT\mssmbios
+PCI\VEN_8086&DEV_0046&SUBSYS_215A17AA&REV_02\3&21436425&0&10
+    Name: Intel(R) HD Graphics
+    Hardware ID's:
+        PCI\VEN_8086&DEV_0046&SUBSYS_215A17AA&REV_02
+        PCI\VEN_8086&DEV_0046&SUBSYS_215A17AA
+        PCI\VEN_8086&DEV_0046&CC_030000
+        PCI\VEN_8086&DEV_0046&CC_0300
+    Compatible ID's:
+        PCI\VEN_8086&DEV_0046&REV_02
+        PCI\VEN_8086&DEV_0046
+        PCI\VEN_8086&CC_030000
+        PCI\VEN_8086&CC_0300
+        PCI\VEN_8086
+        PCI\CC_030000
+        PCI\CC_0300
+UMB\UMB\1&841921D&0&WPDBUSENUMROOT
+    Name: UMBus Enumerator
+    Hardware ID's:
+        UMB\UMBUS
+ROOT\LEGACY_SECDRV\0000
+    Name: Security Driver
+    No hardware/compatible ID's available for this device.
+PCI\VEN_8086&DEV_2D13&SUBSYS_219617AA&REV_02\3&2B8E0B4B&0&13
+    Name: Reserved - 2D13
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2D13&SUBSYS_219617AA&REV_02
+        PCI\VEN_8086&DEV_2D13&SUBSYS_219617AA
+        PCI\VEN_8086&DEV_2D13&CC_060000
+        PCI\VEN_8086&DEV_2D13&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2D13&REV_02
+        PCI\VEN_8086&DEV_2D13
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+BTH\MS_RFCOMM\7&12B67842&0&0
+    Name: Bluetooth Device (RFCOMM Protocol TDI)
+    Hardware ID's:
+        BTH\MS_RFCOMM
+PCI\VEN_8086&DEV_3B48&SUBSYS_216417AA&REV_06\3&21436425&0&E3
+    Name: Intel(R) 5 Series/3400 Series Chipset Family PCI Express Root Port 4 - 3B48
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B48&SUBSYS_216417AA&REV_06
+        PCI\VEN_8086&DEV_3B48&SUBSYS_216417AA
+        PCI\VEN_8086&DEV_3B48&CC_060400
+        PCI\VEN_8086&DEV_3B48&CC_0604
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B48&REV_06
+        PCI\VEN_8086&DEV_3B48
+        PCI\VEN_8086&CC_060400
+        PCI\VEN_8086&CC_0604
+        PCI\VEN_8086
+        PCI\CC_060400
+        PCI\CC_0604
+ACPI\PNP0103\4&5C30863&0
+    Name: High precision event timer
+    Hardware ID's:
+        ACPI\PNP0103
+        *PNP0103
+ROOT\LEGACY_IPNAT\0000
+    Name: IP Network Address Translator
+    No hardware/compatible ID's available for this device.
+STORAGE\VOLUME\_??_USBSTOR#DISK&VEN_GENERIC-&PROD_MULTI-CARD&REV_1.00#20071114173400000&0#{53F56307-B6BF-11D0-94F2-00A0C91EFB8B}
+    Name: Generic volume
+    Hardware ID's:
+        STORAGE\Volume
+HID\WACOMVIRTUALHID&COL02\1&2D595CA7&0&0001
+    Name: Wacom HID Digitizer
+    Hardware ID's:
+        HID\WACOMVIRTUALHID&Col02
+        HID_DEVICE_UP:000D_U:0001
+        HID_DEVICE
+ROOT\MS_AGILEVPNMINIPORT\0000
+    Name: WAN Miniport (IKEv2)
+    Hardware ID's:
+        ms_agilevpnminiport
+ROOT\*6TO4MP\0000
+    Name: Microsoft 6to4 Adapter
+    Hardware ID's:
+        *6to4mp
+ROOT\LEGACY_ASWSTM\0000
+    Name: aswStm
+    No hardware/compatible ID's available for this device.
+{5D624F94-8850-40C3-A3FA-A4FD2080BAF3}\VWIFIMP\5&1217410B&0&02
+    Name: Microsoft Virtual WiFi Miniport Adapter #2
+    Hardware ID's:
+        {5d624f94-8850-40c3-a3fa-a4fd2080baf3}\vwifimp
+    Compatible ID's:
+        {5d624f94-8850-40c3-a3fa-a4fd2080baf3}\vwifimp
+ROOT\LEGACY_SPLDR\0000
+    Name: Security Processor Loader Driver
+    No hardware/compatible ID's available for this device.
+USB\VID_8087&PID_0020\5&29432BF7&0&1
+    Name: Generic USB Hub
+    Hardware ID's:
+        USB\VID_8087&PID_0020&REV_0000
+        USB\VID_8087&PID_0020
+    Compatible ID's:
+        USB\Class_09&SubClass_00&Prot_00
+        USB\Class_09&SubClass_00
+        USB\Class_09
+ACPI\PNP0200\4&5C30863&0
+    Name: Direct memory access controller
+    Hardware ID's:
+        ACPI\PNP0200
+        *PNP0200
+ROOT\LEGACY_KSECDD\0000
+    Name: KSecDD
+    No hardware/compatible ID's available for this device.
+BTHENUM\{24DF01A9-3E4F-4C9F-9F66-5AA8AB14F8F4}_LOCALMFG&0000\8&1740B02E&0&000000000000_00000000
+    Name: Bluetooth Hands-free Audio
+    Hardware ID's:
+        BTHENUM\{24df01a9-3e4f-4c9f-9f66-5aa8ab14f8f4}_LOCALMFG&0000
+    Compatible ID's:
+        BTHENUM\{24df01a9-3e4f-4c9f-9f66-5aa8ab14f8f4}
+ROOT\LEGACY_NETBT\0000
+    Name: NETBT
+    No hardware/compatible ID's available for this device.
+USB\ROOT_HUB20\4&1C1548F&0
+    Name: USB Root Hub
+    Hardware ID's:
+        USB\ROOT_HUB20&VID8086&PID3B3C&REV0006
+        USB\ROOT_HUB20&VID8086&PID3B3C
+        USB\ROOT_HUB20
+ROOT\*ISATAP\0000
+    Name: Microsoft ISATAP Adapter
+    Hardware ID's:
+        *ISATAP
+ROOT\LEGACY_ASWVMM\0000
+    Name: avast! VM Monitor
+    No hardware/compatible ID's available for this device.
+ROOT\MS_L2TPMINIPORT\0000
+    Name: WAN Miniport (L2TP)
+    Hardware ID's:
+        ms_l2tpminiport
+ROOT\LEGACY_KSECPKG\0000
+    Name: KSecPkg
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0800\4&5C30863&0
+    Name: System speaker
+    Hardware ID's:
+        ACPI\PNP0800
+        *PNP0800
+HID\WACOMVIRTUALHID&COL03\1&2D595CA7&0&0002
+    Name: Wacom Mouse
+    Hardware ID's:
+        HID\WACOMVIRTUALHID&Col03
+        HID_DEVICE_SYSTEM_MOUSE
+        HID_DEVICE_UP:0001_U:0001
+        HID_DEVICE
+HID\LEN0010&COL01\5&850533D&0&0000
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\LEN0010&Col01
+        HID\*LEN0010&Col01
+        HID_DEVICE_UP:0001_U:0009
+        HID_DEVICE
+ROOT\LEGACY_NPF\0000
+    Name: NetGroup Packet Filter Driver
+    No hardware/compatible ID's available for this device.
+ROOT\*ISATAP\0001
+    Name: Microsoft ISATAP Adapter #2
+    Hardware ID's:
+        *ISATAP
+PCI\VEN_8086&DEV_10EA&SUBSYS_215317AA&REV_06\3&21436425&0&C8
+    Name: Intel(R) 82577LM Gigabit Network Connection
+    Hardware ID's:
+        PCI\VEN_8086&DEV_10EA&SUBSYS_215317AA&REV_06
+        PCI\VEN_8086&DEV_10EA&SUBSYS_215317AA
+        PCI\VEN_8086&DEV_10EA&CC_020000
+        PCI\VEN_8086&DEV_10EA&CC_0200
+    Compatible ID's:
+        PCI\VEN_8086&DEV_10EA&REV_06
+        PCI\VEN_8086&DEV_10EA
+        PCI\VEN_8086&CC_020000
+        PCI\VEN_8086&CC_0200
+        PCI\VEN_8086
+        PCI\CC_020000
+        PCI\CC_0200
+PCI\VEN_8086&DEV_3B07&SUBSYS_216617AA&REV_06\3&21436425&0&F8
+    Name: Intel(R) QM57 Express Chipset LPC Interface Controller - 3B07
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B07&SUBSYS_216617AA&REV_06
+        PCI\VEN_8086&DEV_3B07&SUBSYS_216617AA
+        PCI\VEN_8086&DEV_3B07&CC_060100
+        PCI\VEN_8086&DEV_3B07&CC_0601
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B07&REV_06
+        PCI\VEN_8086&DEV_3B07
+        PCI\VEN_8086&CC_060100
+        PCI\VEN_8086&CC_0601
+        PCI\VEN_8086
+        PCI\CC_060100
+        PCI\CC_0601
+PCI\VEN_8086&DEV_3B4A&SUBSYS_216417AA&REV_06\3&21436425&0&E4
+    Name: Intel(R) 5 Series/3400 Series Chipset Family PCI Express Root Port 5 - 3B4A
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B4A&SUBSYS_216417AA&REV_06
+        PCI\VEN_8086&DEV_3B4A&SUBSYS_216417AA
+        PCI\VEN_8086&DEV_3B4A&CC_060400
+        PCI\VEN_8086&DEV_3B4A&CC_0604
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B4A&REV_06
+        PCI\VEN_8086&DEV_3B4A
+        PCI\VEN_8086&CC_060400
+        PCI\VEN_8086&CC_0604
+        PCI\VEN_8086
+        PCI\CC_060400
+        PCI\CC_0604
+ACPI\GENUINEINTEL_-_INTEL64_FAMILY_6_MODEL_37_-_INTEL(R)_CORE(TM)_I7_CPU_______L_620__@_2.00GHZ\_1
+    Name: Intel(R) Core(TM) i7 CPU       L 620  @ 2.00GHz
+    Hardware ID's:
+        ACPI\GenuineIntel_-_Intel64_Family_6_Model_37
+        *GenuineIntel_-_Intel64_Family_6_Model_37
+        ACPI\GenuineIntel_-_Intel64_Family_6
+        *GenuineIntel_-_Intel64_Family_6
+        ACPI\GenuineIntel_-_Intel64
+        *GenuineIntel_-_Intel64
+    Compatible ID's:
+        ACPI\Processor
+USB\ROOT_HUB20\4&2851D18A&0
+    Name: USB Root Hub
+    Hardware ID's:
+        USB\ROOT_HUB20&VID8086&PID3B34&REV0006
+        USB\ROOT_HUB20&VID8086&PID3B34
+        USB\ROOT_HUB20
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT3
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+ROOT\LEGACY_ATAPI\0000
+    Name: IDE Channel
+    No hardware/compatible ID's available for this device.
+ROOT\MS_NDISWANBH\0000
+    Name: WAN Miniport (Network Monitor)
+    Hardware ID's:
+        ms_ndiswanbh
+ROOT\LEGACY_LENOVO.SMI\0000
+    Name: Lenovo System Interface Driver
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0A03\2&DABA3FF&2
+    Name: PCI bus
+    Hardware ID's:
+        ACPI\PNP0A03
+        *PNP0A03
+HID\LEN0010&COL02\5&850533D&0&0001
+    Name: HID Keyboard Device
+    Hardware ID's:
+        HID\LEN0010&Col02
+        HID\*LEN0010&Col02
+        HID_DEVICE_SYSTEM_KEYBOARD
+        HID_DEVICE_UP:0001_U:0006
+        HID_DEVICE
+ROOT\LEGACY_BEEP\0000
+    Name: Beep
+    No hardware/compatible ID's available for this device.
+ROOT\*ISATAP\0003
+    Name: Microsoft ISATAP Adapter #4
+    Hardware ID's:
+        *ISATAP
+ROOT\MS_NDISWANIP\0000
+    Name: WAN Miniport (IP)
+    Hardware ID's:
+        ms_ndiswanip
+HID\WACOMVIRTUALHID&COL04\1&2D595CA7&0&0003
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACOMVIRTUALHID&Col04
+        HID_DEVICE_UP:00FF_U:0001
+        HID_DEVICE
+ROOT\LEGACY_NSIPROXY\0000
+    Name: NSI proxy service driver.
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0A08\2&DABA3FF&2
+    Name: PCI bus
+    Hardware ID's:
+        ACPI\PNP0A08
+        *PNP0A08
+    Compatible ID's:
+        *PNP0A03
+ROOT\LEGACY_LLTDIO\0000
+    Name: Link-Layer Topology Discovery Mapper I/O Driver
+    No hardware/compatible ID's available for this device.
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT4
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+ROOT\*ISATAP\0004
+    Name: Microsoft ISATAP Adapter #5
+    Hardware ID's:
+        *ISATAP
+ROOT\LEGACY_STORFLT\0000
+    Name: Disk Virtual Machine Bus Acceleration Filter Driver
+    No hardware/compatible ID's available for this device.
+PCI\VEN_8086&DEV_2448&SUBSYS_216517AA&REV_A6\3&21436425&0&F0
+    Name: Intel(R) 82801 PCI Bridge - 2448
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2448&SUBSYS_216517AA&REV_A6
+        PCI\VEN_8086&DEV_2448&SUBSYS_216517AA
+        PCI\VEN_8086&DEV_2448&CC_060401
+        PCI\VEN_8086&DEV_2448&CC_0604
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2448&REV_A6
+        PCI\VEN_8086&DEV_2448
+        PCI\VEN_8086&CC_060401
+        PCI\VEN_8086&CC_0604
+        PCI\VEN_8086
+        PCI\CC_060401
+        PCI\CC_0604
+PCI\VEN_8086&DEV_3B2F&SUBSYS_216817AA&REV_06\3&21436425&0&FA
+    Name: Intel(R) 5 Series 6 Port SATA AHCI Controller
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B2F&SUBSYS_216817AA&REV_06
+        PCI\VEN_8086&DEV_3B2F&SUBSYS_216817AA
+        PCI\VEN_8086&DEV_3B2F&CC_010601
+        PCI\VEN_8086&DEV_3B2F&CC_0106
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B2F&REV_06
+        PCI\VEN_8086&DEV_3B2F
+        PCI\VEN_8086&CC_010601
+        PCI\VEN_8086&CC_0106
+        PCI\VEN_8086
+        PCI\CC_010601
+        PCI\CC_0106
+PCI\VEN_8086&DEV_3B56&SUBSYS_215E17AA&REV_06\3&21436425&0&D8
+    Name: High Definition Audio Controller
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B56&SUBSYS_215E17AA&REV_06
+        PCI\VEN_8086&DEV_3B56&SUBSYS_215E17AA
+        PCI\VEN_8086&DEV_3B56&CC_040300
+        PCI\VEN_8086&DEV_3B56&CC_0403
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B56&REV_06
+        PCI\VEN_8086&DEV_3B56
+        PCI\VEN_8086&CC_040300
+        PCI\VEN_8086&CC_0403
+        PCI\VEN_8086
+        PCI\CC_040300
+        PCI\CC_0403
+BTHENUM\{6E0C8F4C-D928-4852-B6B2-F0F0E0D126FA}_LOCALMFG&0000\8&1740B02E&0&000000000000_00000000
+    Name: Bluetooth L2CAP Interface
+    Hardware ID's:
+        BTHENUM\{6e0c8f4c-d928-4852-b6b2-f0f0e0d126fa}_LOCALMFG&0000
+    Compatible ID's:
+        BTHENUM\{6e0c8f4c-d928-4852-b6b2-f0f0e0d126fa}
+ROOT\MS_NDISWANIPV6\0000
+    Name: WAN Miniport (IPv6)
+    Hardware ID's:
+        ms_ndiswanipv6
+HID\LEN0010&COL03\5&850533D&0&0002
+    Name: HID Keyboard Device
+    Hardware ID's:
+        HID\LEN0010&Col03
+        HID\*LEN0010&Col03
+        HID_DEVICE_SYSTEM_KEYBOARD
+        HID_DEVICE_UP:0001_U:0006
+        HID_DEVICE
+STORAGE\VOLUME\{845A93C0-EE80-11E3-9EA4-806E6F6E6963}#0000000000100000
+    Name: Generic volume
+    Hardware ID's:
+        STORAGE\Volume
+ROOT\*ISATAP\0005
+    Name: Microsoft ISATAP Adapter #6
+    Hardware ID's:
+        *ISATAP
+ACPI\PNP0B00\4&5C30863&0
+    Name: System CMOS/real time clock
+    Hardware ID's:
+        ACPI\PNP0B00
+        *PNP0B00
+USBSTOR\DISK&VEN_GENERIC-&PROD_MULTI-CARD&REV_1.00\20071114173400000&0
+    Name: Generic- Multi-Card USB Device
+    Hardware ID's:
+        USBSTOR\DiskGeneric-Multi-Card______1.00
+        USBSTOR\DiskGeneric-Multi-Card______
+        USBSTOR\DiskGeneric-
+        USBSTOR\Generic-Multi-Card______1
+        Generic-Multi-Card______1
+        USBSTOR\GenDisk
+        GenDisk
+    Compatible ID's:
+        USBSTOR\Disk
+        USBSTOR\RAW
+ROOT\LEGACY_CLFS\0000
+    Name: Common Log (CLFS)
+    No hardware/compatible ID's available for this device.
+HID\WACOMVTHID&COL01\1&4784345&0&0000
+    Name: Virtual Touch Interface
+    Hardware ID's:
+        HID\WACOMVTHID&Col01
+        HID_DEVICE_UP:000D_U:000E
+        HID_DEVICE
+ROOT\LEGACY_TCPIP\0000
+    Name: TCP/IP Protocol Driver
+    No hardware/compatible ID's available for this device.
+ROOT\MS_PPPOEMINIPORT\0000
+    Name: WAN Miniport (PPPOE)
+    Hardware ID's:
+        ms_pppoeminiport
+ROOT\LEGACY_NULL\0000
+    Name: Null
+    No hardware/compatible ID's available for this device.
+ROOT\*ISATAP\0006
+    Name: Microsoft ISATAP Adapter #7
+    Hardware ID's:
+        *ISATAP
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT5
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+ROOT\LEGACY_MOUNTMGR\0000
+    Name: Mount Point Manager
+    No hardware/compatible ID's available for this device.
+ACPI\GENUINEINTEL_-_INTEL64_FAMILY_6_MODEL_37_-_INTEL(R)_CORE(TM)_I7_CPU_______L_620__@_2.00GHZ\_2
+    Name: Intel(R) Core(TM) i7 CPU       L 620  @ 2.00GHz
+    Hardware ID's:
+        ACPI\GenuineIntel_-_Intel64_Family_6_Model_37
+        *GenuineIntel_-_Intel64_Family_6_Model_37
+        ACPI\GenuineIntel_-_Intel64_Family_6
+        *GenuineIntel_-_Intel64_Family_6
+        ACPI\GenuineIntel_-_Intel64
+        *GenuineIntel_-_Intel64
+    Compatible ID's:
+        ACPI\Processor
+ACPI\PNP0C01\2&DABA3FF&2
+    Name: System board
+    Hardware ID's:
+        ACPI\PNP0C01
+        *PNP0C01
+HID\LEN0010&COL04\5&850533D&0&0003
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\LEN0010&Col04
+        HID\*LEN0010&Col04
+        HID_DEVICE_SYSTEM_CONTROL
+        HID_DEVICE_UP:0001_U:0080
+        HID_DEVICE
+ROOT\LEGACY_CNG\0000
+    Name: CNG
+    No hardware/compatible ID's available for this device.
+ROOT\LEGACY_TCPIPREG\0000
+    Name: TCP/IP Registry Compatibility
+    No hardware/compatible ID's available for this device.
+ROOT\*TEREDO\0000
+    Name: Teredo Tunneling Pseudo-Interface
+    Hardware ID's:
+        *TEREDO
+ROOT\LEGACY_PCASP60\0000
+    Name: Rawether NDIS 6.X SPR Protocol Driver
+    No hardware/compatible ID's available for this device.
+ROOT\MS_PPTPMINIPORT\0000
+    Name: WAN Miniport (PPTP)
+    Hardware ID's:
+        ms_pptpminiport
+PCI\VEN_8086&DEV_2C62&SUBSYS_219617AA&REV_02\3&2B8E0B4B&0&00
+    Name: QuickPath Architecture Generic Non-core Registers - 2C62
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2C62&SUBSYS_219617AA&REV_02
+        PCI\VEN_8086&DEV_2C62&SUBSYS_219617AA
+        PCI\VEN_8086&DEV_2C62&CC_060000
+        PCI\VEN_8086&DEV_2C62&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2C62&REV_02
+        PCI\VEN_8086&DEV_2C62
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+PCI\VEN_8086&DEV_3B30&SUBSYS_216717AA&REV_06\3&21436425&0&FB
+    Name: Intel(R) 5 Series/3400 Series Chipset Family SMBus Controller - 3B30
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B30&SUBSYS_216717AA&REV_06
+        PCI\VEN_8086&DEV_3B30&SUBSYS_216717AA
+        PCI\VEN_8086&DEV_3B30&CC_0C0500
+        PCI\VEN_8086&DEV_3B30&CC_0C05
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B30&REV_06
+        PCI\VEN_8086&DEV_3B30
+        PCI\VEN_8086&CC_0C0500
+        PCI\VEN_8086&CC_0C05
+        PCI\VEN_8086
+        PCI\CC_0C0500
+        PCI\CC_0C05
+HID\WACOMVTHID&COL02\1&4784345&0&0001
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACOMVTHID&Col02
+        HID_DEVICE_UP:FF00_U:0001
+        HID_DEVICE
+PCI\VEN_8086&DEV_3B64&SUBSYS_215F17AA&REV_06\3&21436425&0&B0
+    Name: Intel(R) Management Engine Interface
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B64&SUBSYS_215F17AA&REV_06
+        PCI\VEN_8086&DEV_3B64&SUBSYS_215F17AA
+        PCI\VEN_8086&DEV_3B64&CC_078000
+        PCI\VEN_8086&DEV_3B64&CC_0780
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B64&REV_06
+        PCI\VEN_8086&DEV_3B64
+        PCI\VEN_8086&CC_078000
+        PCI\VEN_8086&CC_0780
+        PCI\VEN_8086
+        PCI\CC_078000
+        PCI\CC_0780
+ROOT\LEGACY_MPSDRV\0000
+    Name: Windows Firewall Authorization Driver
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0C02\0
+    Name: Motherboard resources
+    Hardware ID's:
+        ACPI\PNP0C02
+        *PNP0C02
+ROOT\LEGACY_CSC\0000
+    Name: Offline Files Driver
+    No hardware/compatible ID's available for this device.
+ROOT\ACPI_HAL\0000
+    Name: ACPI x64-based PC
+    Hardware ID's:
+        acpiapic
+    Compatible ID's:
+        DETECTEDInternal\ACPI_HAL
+        DETECTED\ACPI_HAL
+ROOT\LEGACY_TDX\0000
+    Name: NetIO Legacy TDI Support Driver
+    No hardware/compatible ID's available for this device.
+HID\LEN0010&COL05\5&850533D&0&0004
+    Name: HID-compliant consumer control device
+    Hardware ID's:
+        HID\LEN0010&Col05
+        HID\*LEN0010&Col05
+        HID_DEVICE_SYSTEM_CONSUMER
+        HID_DEVICE_UP:000C_U:0001
+        HID_DEVICE
+ROOT\LEGACY_PCW\0000
+    Name: Performance Counters for Windows Driver
+    No hardware/compatible ID's available for this device.
+STORAGE\VOLUME\{845A93C0-EE80-11E3-9EA4-806E6F6E6963}#0000000006500000
+    Name: Generic volume
+    Hardware ID's:
+        STORAGE\Volume
+ACPI\PNP0C04\4&5C30863&0
+    Name: Numeric data processor
+    Hardware ID's:
+        ACPI\PNP0C04
+        *PNP0C04
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT6
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+ROOT\MS_SSTPMINIPORT\0000
+    Name: WAN Miniport (SSTP)
+    Hardware ID's:
+        ms_sstpminiport
+ROOT\BLBDRIVE\0000
+    Name: File as Volume Driver
+    Hardware ID's:
+        ROOT\BLBDRIVE
+    Compatible ID's:
+        DETECTEDInternal\blbdrive
+        DETECTED\blbdrive
+BTHENUM\{84A1E9B8-12BA-4A9C-8AB0-A43784E0D149}_LOCALMFG&0000\8&1740B02E&0&000000000000_00000000
+    Name: Bluetooth Remote Control
+    Hardware ID's:
+        BTHENUM\{84a1e9b8-12ba-4a9c-8ab0-a43784e0d149}_LOCALMFG&0000
+    Compatible ID's:
+        BTHENUM\{84a1e9b8-12ba-4a9c-8ab0-a43784e0d149}
+HID\WACOMVTHID&COL03\1&4784345&0&0002
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACOMVTHID&Col03
+        HID_DEVICE_UP:000D_U:0004
+        HID_DEVICE
+ROOT\LEGACY_PEAUTH\0000
+    Name: PEAUTH
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0C09\0
+    Name: Microsoft ACPI-Compliant Embedded Controller
+    Hardware ID's:
+        ACPI\PNP0C09
+        *PNP0C09
+ROOT\RDPBUS\0000
+    Name: Remote Desktop Device Redirector Bus
+    Hardware ID's:
+        ROOT\RDPBUS
+ROOT\COMPOSITEBUS\0000
+    Name: Composite Bus Enumerator
+    Hardware ID's:
+        ROOT\CompositeBus
+ROOT\LEGACY_DISCACHE\0000
+    Name: System Attribute Cache
+    No hardware/compatible ID's available for this device.
+HID\WACF00C&COL01\5&37290763&0&0000
+    Name: HID-compliant device
+    Hardware ID's:
+        HID\WACF00C&Col01
+        HID\*WACF00C&Col01
+        HID_DEVICE_UP:00FF_U:0002
+        HID_DEVICE
+PCI\VEN_8086&DEV_2D01&SUBSYS_219617AA&REV_02\3&2B8E0B4B&0&01
+    Name: QuickPath Architecture System Address Decoder - 2D01
+    Hardware ID's:
+        PCI\VEN_8086&DEV_2D01&SUBSYS_219617AA&REV_02
+        PCI\VEN_8086&DEV_2D01&SUBSYS_219617AA
+        PCI\VEN_8086&DEV_2D01&CC_060000
+        PCI\VEN_8086&DEV_2D01&CC_0600
+    Compatible ID's:
+        PCI\VEN_8086&DEV_2D01&REV_02
+        PCI\VEN_8086&DEV_2D01
+        PCI\VEN_8086&CC_060000
+        PCI\VEN_8086&CC_0600
+        PCI\VEN_8086
+        PCI\CC_060000
+        PCI\CC_0600
+PCI\VEN_8086&DEV_3B32&SUBSYS_219017AA&REV_06\3&21436425&0&FE
+    Name: Intel(R) 5 Series/3400 Series Chipset Family Thermal Subsystem - 3B32
+    Hardware ID's:
+        PCI\VEN_8086&DEV_3B32&SUBSYS_219017AA&REV_06
+        PCI\VEN_8086&DEV_3B32&SUBSYS_219017AA
+        PCI\VEN_8086&DEV_3B32&CC_118000
+        PCI\VEN_8086&DEV_3B32&CC_1180
+    Compatible ID's:
+        PCI\VEN_8086&DEV_3B32&REV_06
+        PCI\VEN_8086&DEV_3B32
+        PCI\VEN_8086&CC_118000
+        PCI\VEN_8086&CC_1180
+        PCI\VEN_8086
+        PCI\CC_118000
+        PCI\CC_1180
+ROOT\LEGACY_TPPWRIF\0000
+    Name: TPPWRIF
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0C0A\0
+    Name: Microsoft ACPI-Compliant Control Method Battery
+    Hardware ID's:
+        ACPI\PNP0C0A
+        *PNP0C0A
+ROOT\RDP_KBD\0000
+    Name: Terminal Server Keyboard Driver
+    Hardware ID's:
+        ROOT\RDP_KBD
+STORAGE\VOLUMESNAPSHOT\HARDDISKVOLUMESNAPSHOT7
+    Name: Generic volume shadow copy
+    Hardware ID's:
+        STORAGE\VolumeSnapshot
+ACPI\GENUINEINTEL_-_INTEL64_FAMILY_6_MODEL_37_-_INTEL(R)_CORE(TM)_I7_CPU_______L_620__@_2.00GHZ\_3
+    Name: Intel(R) Core(TM) i7 CPU       L 620  @ 2.00GHz
+    Hardware ID's:
+        ACPI\GenuineIntel_-_Intel64_Family_6_Model_37
+        *GenuineIntel_-_Intel64_Family_6_Model_37
+        ACPI\GenuineIntel_-_Intel64_Family_6
+        *GenuineIntel_-_Intel64_Family_6
+        ACPI\GenuineIntel_-_Intel64
+        *GenuineIntel_-_Intel64
+    Compatible ID's:
+        ACPI\Processor
+ROOT\COMPOSITE_BATTERY\0000
+    Name: Microsoft Composite Battery
+    Hardware ID's:
+        COMPOSITE_BATTERY
+ROOT\LEGACY_DXGKRNL\0000
+    Name: LDDM Graphics Subsystem
+    No hardware/compatible ID's available for this device.
+ACPI\PNP0C0D\2&DABA3FF&2
+    Name: ACPI Lid
+    Hardware ID's:
+        ACPI\PNP0C0D
+        *PNP0C0D
+ROOT\RDP_MOU\0000
+    Name: Terminal Server Mouse Driver
+    Hardware ID's:
+        ROOT\RDP_MOU
+ROOT\LEGACY_VGASAVE\0000
+    Name: VgaSave
+    No hardware/compatible ID's available for this device.
+IDE\DISKINTEL_SSDSA2M160G2HP____________________2CV102HA\4&398487B7&0&0.0.0
+    Name: INTEL SSDSA2M160G2HP
+    Hardware ID's:
+        IDE\DiskINTEL_SSDSA2M160G2HP____________________2CV102HA
+        IDE\INTEL_SSDSA2M160G2HP____________________2CV102HA
+        IDE\DiskINTEL_SSDSA2M160G2HP____________________
+        INTEL_SSDSA2M160G2HP____________________2CV102HA
+        GenDisk
+    Compatible ID's:
+        GenDisk
+HID\WACF00C&COL02\5&37290763&0&0001
+    Name: HID-compliant mouse
+    Hardware ID's:
+        HID\WACF00C&Col02
+        HID\*WACF00C&Col02
+        HID_DEVICE_SYSTEM_MOUSE
+        HID_DEVICE_UP:0001_U:0002
+        HID_DEVICE
+ROOT\LEGACY_PSCHED\0000
+    Name: QoS Packet Scheduler
+    No hardware/compatible ID's available for this device.
+189 matching device(s) found.
