@@ -1,0 +1,32 @@
+Line 19275: [1]0004.01B4::12/19/2014-15:58:22.225 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.9
+Line 19376: [2]0004.00C4::12/19/2014-15:58:22.258 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.9
+Line 186: [1]03EC.0084::12/19/2014-15:58:18.209 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Preview Pin as (640, 480, NV12)
+Line 243: [2]03EC.0084::12/19/2014-15:58:18.210 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Capture Pin as (320, 180, NV12)
+Line 310: [2]03EC.0084::12/19/2014-15:58:18.242 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Still Pin as (1280, 960, NV12)
+Line 648: [2]03EC.0F6C::12/19/2014-15:58:18.265 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Still Pin as (2560, 1921, NV12)
+Line 766: [2]03EC.0F6C::12/19/2014-15:58:18.269 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Still Pin as (2560, 1440, NV12)
+Line 861: [2]03EC.0F6C::12/19/2014-15:58:18.274 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Preview Pin as (1920, 1080, NV12)
+Line 975: [0]03EC.0F6C::12/19/2014-15:58:18.283 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Preview Pin as (1280, 720, NV12)
+Line 19198: [0]0004.00C4::12/19/2014-15:58:22.212 [iacamera]===<FPS>=== Stream 1 Pin 2: 4.9
+Line 19275: [1]0004.01B4::12/19/2014-15:58:22.225 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.9
+Line 19376: [2]0004.00C4::12/19/2014-15:58:22.258 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.9
+Line 19494: [3]0004.01B4::12/19/2014-15:58:22.292 [iacamera]===<FPS>=== Stream 1 Pin 0: 30.3
+Line 19609: [1]0004.00C4::12/19/2014-15:58:22.326 [iacamera]===<FPS>=== Stream 1 Pin 0: 30.0
+Line 19719: [2]0004.01B4::12/19/2014-15:58:22.367 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.5
+Line 19825: [0]0004.01B4::12/19/2014-15:58:22.395 [iacamera]===<FPS>=== Stream 1 Pin 1: 30.0
+Line 186: [1]03EC.0084::12/19/2014-15:58:18.209 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Preview Pin as (640, 480, NV12)
+Line 243: [2]03EC.0084::12/19/2014-15:58:18.210 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Capture Pin as (320, 180, NV12)
+Line 648: [2]03EC.0F6C::12/19/2014-15:58:18.265 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Still Pin as (2560, 1920, NV12)
+Line 766: [2]03EC.0F6C::12/19/2014-15:58:18.269 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Still Pin as (2560, 1440, NV12)
+Line 861: [2]03EC.0F6C::12/19/2014-15:58:18.274 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Preview Pin as (1920, 1080, NV12)
+Line 975: [0]03EC.0F6C::12/19/2014-15:58:18.283 [iacamera]CCapturePin::DispatchSetFormat Filter 0xb836007c SetFormat for Preview Pin as (1280, 720, NV12)
+Line 19900: [0]0004.00C8::12/19/2014-15:58:22.413 [iacamera]===<FPS>=== Stream 1 Pin 2: 4.9
+Line 19977: [3]0004.00C8::12/19/2014-15:58:22.426 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.9
+Line 20095: [3]0004.00C8::12/19/2014-15:58:22.459 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.9
+Line 20205: [2]0004.00C8::12/19/2014-15:58:22.493 [iacamera]===<FPS>=== Stream 1 Pin 0: 30.3
+Line 20312: [1]0004.00C8::12/19/2014-15:58:22.526 [iacamera]===<FPS>=== Stream 1 Pin 0: 30.0
+Line 20423: [0]0004.00C4::12/19/2014-15:58:22.567 [iacamera]===<FPS>=== Stream 1 Pin 0: 29.4
+Line 20530: [1]0004.00C8::12/19/2014-15:58:22.595 [iacamera]===<FPS>=== Stream 1 Pin 1: 30.0
+Line 20605: [0]0004.00C4::12/19/2014-15:58:22.613 [iacamera]===<FPS>=== Stream 1 Pin 2: 4.9
+    
+

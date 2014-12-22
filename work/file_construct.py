@@ -39,6 +39,7 @@ class fc:
                              'remote_path',
                              "irci",
                              "local_path",
+                             "copy_acc",                             
                              ]
 
         for key in list_of_variables:
@@ -48,6 +49,9 @@ class fc:
 ##########################################################################################################
 #           end of auto assign list of variables                                                         #
 ##########################################################################################################
+        #print '{0:<30}{1:<20}'.format(self.copy_acc, copy_acc)
+        #self.copy_acc = copy_acc
+        
         self._dt = self.package_date + '_' + self.package_hr
         #package_full_name  i.e. sh_css_sw_hive_isp_css_2400_system_irci_master_20140715_1500.windows.tar.gz
         self.package_full_name = self.package_fn + self._dt + self.package_extension
@@ -62,10 +66,11 @@ class fc:
 
         self.remote_path_irci_master = self.remote_path + '\\' + self.folder_irci_master
         self.remote_path_css = self.remote_path_irci_master + '\\'+ 'ifw-ispfw'
-        self.remote_path_hdr = self.remote_path_irci_master + '\\' + 'ispfw'
+        self.remote_path_acc = self.remote_path_irci_master + '\\' + 'ispfw'
         self.remote_path_css_file = self.remote_path_css + '\\' + self.package_full_name
 
         self.daily_folder_path = self.local_path + '\\' + self.daily_folder + '\\' + self.irci
+        self.acc_folder_path = self.daily_folder_path + '\\' + 'acc'
         self.local_path_file = self.daily_folder_path + '\\' + self.package_full_name
 
         if not os.path.exists(self.daily_folder_path):
@@ -82,6 +87,11 @@ class fc:
                 subprocess.call('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name),shell = True, creationflags=0x08000000)
         else:
             print 'This file does not seem to exist: %s' % self.remote_path_css_file
+        if self.copy_acc == 1:
+            try:
+                subprocess.call('robocopy "%s" "%s" * /NP' % (self.remote_path_acc, self.acc_folder_path),shell = True, creationflags=0x08000000)
+            except:
+                print 'Failed to copy %s to %s' % (self.remote_path_acc, self.acc_folder_path)
 
     # get tar extension of package_full_name
     #@print_func
@@ -169,15 +179,27 @@ class fc:
             except:
                 print 'Can not rename or move, may be file and directory already exists'
 
+    #copy acc / HDR related
+    def extract_tar_acc(self):
+        #print self.copy_acc
+        if self.copy_acc == 1:
+            for root,dir,file in os.walk(self.acc_folder_path):
+                for f in file:
+                    try:
+                        unzip = tarfile.open(root+'\\'+f,'r')
+                        unzip.extractall(root)
+                    except:
+                        print 'unable to extract: ', f
+                
     def rename_move_css_folder_file(self):
         self.fcopy()
         self.get_tar_extension()
         self.extract_tar()
+        self.extract_tar_acc()
         self.change_css_folder_name()
         self.change_css_file_name()
         #shutil.rmtree(self.local_package_folder_name)
-
-
+    
 
 ##################################################################################################################
 #                                                                                                                #

@@ -165,10 +165,10 @@ class controlPanel(tk.Frame):
 
     def constructUI(self):#initialize from File to UI
         self.pack(fill='both', expand=1)
-        for i in range(10,23):
+        for i in range(11,24):
             self.grid_rowconfigure(i,pad=1)
-        self.grid_rowconfigure(19,weight=1)
         self.grid_rowconfigure(20,weight=1)
+        self.grid_rowconfigure(21,weight=1)
         self.grid_columnconfigure(1,weight=1)
         self.grid_columnconfigure(4,weight=1)
 
@@ -176,6 +176,7 @@ class controlPanel(tk.Frame):
         self.var_2401c2p = tk.IntVar()
         self.var_2500 = tk.IntVar()
         self.var_2600 = tk.IntVar()
+        self.var_ACC = tk.IntVar()
 
         l_dailyIntegration = tk.Label(self, text = 'Daily Integration',font=(24)).grid(row=1,column=0, columnspan=2,sticky='w')
         l_patchTesting = tk.Label(self, text = 'Patch Testing',font=(24)).grid(row=1,column=3, columnspan=2,sticky='w')
@@ -198,7 +199,7 @@ class controlPanel(tk.Frame):
         l_PTsourcePath  = tk.Label(self, text='Source path').grid(row=9, column=3, sticky='w')
 
         l_rowSpacer3  = tk.Label(self, text=' ').grid(row=10, column=0, columnspan=5)
-        l_packages2build = tk.Label(self, text='Package(s) to be downloaded and built').grid(row=11, column=3, columnspan=2, sticky='w')
+        l_packages2build = tk.Label(self, text='Package(s) to be downloaded and built').grid(row=12, column=3, columnspan=2, sticky='w')
 
 
         #l_rowSpacer4  = tk.Label(self, text=' ').grid(row=18, column=0, columnspan=5)
@@ -248,46 +249,49 @@ class controlPanel(tk.Frame):
         self.e_PTsourcePath.grid(row=9, column=4, sticky='we')
 
         self.t_outputBox = tk.Text(self,height=1)
-        self.t_outputBox.grid(row=19, column=0, columnspan=5, sticky='nsew')
+        self.t_outputBox.grid(row=20, column=0, columnspan=5, sticky='nsew')
         self.t_outputBoxError = tk.Text(self,height=1)
-        self.t_outputBoxError.grid(row=20, column=0, columnspan=5, sticky='nsew')
+        self.t_outputBoxError.grid(row=21, column=0, columnspan=5, sticky='nsew')
 
         self.e_configFile = tk.Entry(self)
         self.e_configFile.insert(0, self.ConfigFile)
-        self.e_configFile.grid(row=21, column=1, columnspan=4,sticky='we')
+        self.e_configFile.grid(row=22, column=1, columnspan=4,sticky='we')
+        
+        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=12, column=0, columnspan=2, sticky='we')
+        self.b_CSSversions = tk.Button(self, text='Update CSS Versions', command=self.cssVersions).grid(row=13, column=0, columnspan=2, sticky='we')
+        self.b_movePackages = tk.Button(self, text='Move CSS', command=self.movePackages).grid(row=14, column=0, columnspan=2, sticky='we')
+        self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages).grid(row=16, column=3, columnspan=2, sticky='we')
+        self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip).grid(row=17, column=3, columnspan=2, sticky='we')
+        self.b_movePackages2 = tk.Button(self, text='Move CSS', command=self.movePackages2).grid(row=18, column=3, columnspan=2, sticky='we')
+        self.b_build4packages = tk.Button(self, text='Build 4 Packages', command=self.build4packages).grid(row=15, column=0, columnspan=2, sticky='we')
+        self.b_buildBYT = tk.Button(self, text='Build BYT', command=self.buildBYT).grid(row=16, column=0, columnspan=2, sticky='we')
+        self.b_buildBXT = tk.Button(self, text='Build BXT', command=self.buildBXT).grid(row=17, column=0, columnspan=2, sticky='we')
+        self.b_buildCHTC2P = tk.Button(self, text='Build CHT CSI2PLUS', command=self.buildCHTC2P).grid(row=18, column=0, columnspan=2, sticky='we')
+        self.b_buildSKC = tk.Button(self, text='Build SKC', command=self.buildSKC).grid(row=19, column=0, columnspan=2, sticky='we')
+        self.b_load = tk.Button(self, text='load', command=self.load, width=10).grid(row=22, column=0, sticky='we')
+        self.b_save = tk.Button(self, text='save', command=self.save, width=10).grid(row=23, column=0, sticky='we')        
+        self.b_folderDaily = tk.Button(self, text='Daily', command=self.openOTMlocalFolder, width=10).grid(row=23, column=1, sticky='we')
+        self.b_folderSource = tk.Button(self, text='Source', command=self.openOTMsourceFolder, width=10).grid(row=23, column=2, sticky='we')
+        self.b_folderIncoming = tk.Button(self, text='Incoming', command=self.openPTlocalFolder, width=10).grid(row=24, column=3, sticky='we')
+        self.b_folderWinterfell = tk.Button(self, text='Winterfell', command=self.openWinterfellFolder, width=10).grid(row=24, column=1, sticky='we')
+        self.b_folderWindowsBuild = tk.Button(self, text='WindowsBuild', command=self.openWindowsbuildFolder, width=10).grid(row=24, column=2, sticky='we')
+        self.b_exit = tk.Button(self, text='Exit', command=self.exit, width=10).grid(row=24, column=0, sticky='we')
 
-        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=10).grid(row=11, column=0, columnspan=2, sticky='we')
-        self.b_CSSversions = tk.Button(self, text='Update CSS Versions', command=self.cssVersions).grid(row=12, column=0, columnspan=2, sticky='we')
-        self.b_movePackages = tk.Button(self, text='Move CSS', command=self.movePackages).grid(row=13, column=0, columnspan=2, sticky='we')
-        self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages).grid(row=15, column=3, columnspan=2, sticky='we')
-        self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip).grid(row=16, column=3, columnspan=2, sticky='we')
-        self.b_movePackages2 = tk.Button(self, text='Move CSS', command=self.movePackages2).grid(row=17, column=3, columnspan=2, sticky='we')
-        self.b_build4packages = tk.Button(self, text='Build 4 Packages', command=self.build4packages).grid(row=14, column=0, columnspan=2, sticky='we')
-        self.b_buildBYT = tk.Button(self, text='Build BYT', command=self.buildBYT).grid(row=15, column=0, columnspan=2, sticky='we')
-        self.b_buildBXT = tk.Button(self, text='Build BXT', command=self.buildBXT).grid(row=16, column=0, columnspan=2, sticky='we')
-        self.b_buildCHTC2P = tk.Button(self, text='Build CHT CSI2PLUS', command=self.buildCHTC2P).grid(row=17, column=0, columnspan=2, sticky='we')
-        self.b_buildSKC = tk.Button(self, text='Build SKC', command=self.buildSKC).grid(row=18, column=0, columnspan=2, sticky='we')
-        self.b_load = tk.Button(self, text='load', command=self.load, width=10).grid(row=21, column=0, sticky='we')
-        self.b_save = tk.Button(self, text='save', command=self.save, width=10).grid(row=22, column=0, sticky='we')        
-        self.b_folderDaily = tk.Button(self, text='Daily', command=self.openOTMlocalFolder, width=10).grid(row=22, column=1, sticky='we')
-        self.b_folderSource = tk.Button(self, text='Source', command=self.openOTMsourceFolder, width=10).grid(row=22, column=2, sticky='we')
-        self.b_folderIncoming = tk.Button(self, text='Incoming', command=self.openPTlocalFolder, width=10).grid(row=22, column=3, sticky='we')
-        self.b_folderWinterfell = tk.Button(self, text='Winterfell', command=self.openWinterfellFolder, width=10).grid(row=23, column=1, sticky='we')
-        self.b_folderWindowsBuild = tk.Button(self, text='WindowsBuild', command=self.openWindowsbuildFolder, width=10).grid(row=23, column=2, sticky='we')
-        self.b_exit = tk.Button(self, text='Exit', command=self.exit, width=10).grid(row=23, column=0, sticky='we')
-
-        self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400)
-        self.c_2400.grid(row=12, column=3, sticky='w')
-        self.c_2401C2P = tk.Checkbutton(self, text='2401C2P', variable=self.var_2401c2p).grid(row=13, column=3, sticky='w')
-        self.c_2500 = tk.Checkbutton(self, text='2500', variable=self.var_2500).grid(row=12, column=4, sticky='w')
-        self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=13, column=4, sticky='w')
+        self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400).grid(row=13, column=3, sticky='w')
+        self.c_2401C2P = tk.Checkbutton(self, text='2401C2P', variable=self.var_2401c2p).grid(row=14, column=3, sticky='w')
+        self.c_2500 = tk.Checkbutton(self, text='2500', variable=self.var_2500).grid(row=13, column=4, sticky='w')
+        self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=14, column=4, sticky='w')
+        
+        self.c_ACC = tk.Checkbutton(self, text='Download acc', variable=self.var_ACC).grid(row=11, column=0, sticky='w')
+        #self.c_ACC.grid(row=10, column=0, columnspan=5)
+        #self.c_ACC.grid(row=10, column=0, sticky='w')
 
         self.scrollbar = tk.Scrollbar(self)
         self.scrollbar.config(command=self.t_outputBox.yview)
-        self.scrollbar.grid(row=19, column=5, sticky='ns')
+        self.scrollbar.grid(row=20, column=5, sticky='ns')
         self.scrollbarError = tk.Scrollbar(self)
         self.scrollbarError.config(command=self.t_outputBoxError.yview)
-        self.scrollbarError.grid(row=20, column=5, sticky='ns')
+        self.scrollbarError.grid(row=21, column=5, sticky='ns')
         self.t_outputBox.config(yscrollcommand=self.scrollbar.set)
         self.t_outputBoxError.config(yscrollcommand=self.scrollbarError.set)
 
@@ -312,8 +316,8 @@ class controlPanel(tk.Frame):
         self.openFolder(self.winterfell_path)
 
     def openWindowsbuildFolder(self):
-        self.openFolder(self.windowsbuild_path)		
-		
+        self.openFolder(self.windowsbuild_path)     
+        
     def GURP(self):
         self.UI2Memory()
 
@@ -329,6 +333,7 @@ class controlPanel(tk.Frame):
                       remote_path = self.OTMremote_path,
                       irci = self.irci,
                       local_path = self.OTMlocal_path,
+                      copy_acc = self.var_ACC.get()
                       )
 
         BYT_2401 = fc(
@@ -391,7 +396,7 @@ class controlPanel(tk.Frame):
 
         BXT_2600_psys = fc(
                       package_code = '2600', #probably not needed
-                      package_fn = 'css_pkg_bxt_psys_',
+                      package_fn = 'css_pkg_bxt_psys_irci_master_',
                       package_extension = '.windows.tar.gz',
                       fw_name = '2600', #css_fw_2400.bin blah blah
                       #package_date = package_date,
@@ -402,13 +407,14 @@ class controlPanel(tk.Frame):
                       irci = self.irci,
                       local_path = self.OTMlocal_path,
                       )
+        
 
-        BXT_2600_psys.rename_move_css_folder_file()
-        BXT_2600_isys.rename_move_css_folder_file()
         BYT_2400.rename_move_css_folder_file()
         BYT_2401.rename_move_css_folder_file()
         CHT_2401_csi2plus.rename_move_css_folder_file()
         SKC_2500.rename_move_css_folder_file()
+        BXT_2600_psys.rename_move_css_folder_file()
+        BXT_2600_isys.rename_move_css_folder_file()
 
     def cssVersions(self):
         self.UI2Memory()
@@ -437,6 +443,8 @@ class controlPanel(tk.Frame):
             print '2500'
         if self.var_2600.get() == 1:
             print '2600'
+        if self.var_ACC.get() == 1:
+            print 'ACC'
         self.t_outputBox.yview('end')
 
     def activeUnzip(self):
