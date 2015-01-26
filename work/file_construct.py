@@ -39,7 +39,7 @@ class fc:
                              'remote_path',
                              "irci",
                              "local_path",
-                             "copy_acc",                             
+                             "copy_acc",
                              ]
 
         for key in list_of_variables:
@@ -51,7 +51,7 @@ class fc:
 ##########################################################################################################
         #print '{0:<30}{1:<20}'.format(self.copy_acc, copy_acc)
         #self.copy_acc = copy_acc
-        
+
         self._dt = self.package_date + '_' + self.package_hr
         #package_full_name  i.e. sh_css_sw_hive_isp_css_2400_system_irci_master_20140715_1500.windows.tar.gz
         self.package_full_name = self.package_fn + self._dt + self.package_extension
@@ -82,7 +82,7 @@ class fc:
         if os.path.exists(self.remote_path_css_file):
             if os.path.exists(self.local_path_file):
                 print '{0:25}{2:<100}\n{1:25}{3:<100}'.format('Warning:', 'already exists in:', self.package_full_name, self.daily_folder_path)
-            else:                
+            else:
                 #os.system('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name))
                 subprocess.call('robocopy "%s" "%s" "%s" /NP' % (self.remote_path_css, self.daily_folder_path, self.package_full_name),shell = True, creationflags=0x08000000)
         else:
@@ -190,7 +190,7 @@ class fc:
                         unzip.extractall(root)
                     except:
                         print 'unable to extract: ', f
-                
+
     def rename_move_css_folder_file(self):
         self.fcopy()
         self.get_tar_extension()
@@ -199,7 +199,7 @@ class fc:
         self.change_css_folder_name()
         self.change_css_file_name()
         #shutil.rmtree(self.local_package_folder_name)
-    
+
 
 ##################################################################################################################
 #                                                                                                                #
@@ -261,7 +261,7 @@ class active_fc():
             os.rename(css_folder, new_css_folder)
             os.rename(css_fw, new_css_fw)
         except Exception as e:
-            print 'unable to rename: ', e            
+            print 'unable to rename: ', e
 
         print 'moving {} to {}'.format(new_css_folder, os.getcwd())
         print 'moving {} to {}'.format(new_css_fw, os.getcwd())
@@ -389,3 +389,61 @@ class css_version_file():
 
 
 
+##################################################################################################################
+#                                                                                                                #
+#                           C S S         M E R G E                                                              #
+#                                                                                                                #
+##################################################################################################################
+class css_merge:
+    def __init__(self, **kwargs):
+        self.source_folder = kwargs.get('source_folder')
+        self.fw_name = kwargs.get('fw_name')
+        self.local_path = kwargs.get('local_path')
+        self.daily_folder = kwargs.get('daily_folder')
+        self.irci = kwargs.get('irci')
+        self.merge_acc = kwargs.get('merge_acc')
+
+        self.daily_folder_path = self.local_path + '\\' + self.daily_folder + '\\' + self.irci
+        self.source_package_path = self.source_folder +'\\' + 'camerasw\\camera\\isp\\css\\' + self.fw_name
+
+    def unique_files(self,a,b): #verified  with beyond compare
+        for rs, ds, fs in os.walk(a):
+            for f in fs:
+                a_path = string.join([rs,f],'\\')
+                b_path = a_path.replace(a, b)
+                if os.path.exists(b_path) == False:
+                    yield a_path
+
+    def common_files(self,a,b): # files with same name shared in both folders, verified  with beyond compare
+        for rs, ds, fs in os.walk(a):
+            for f in fs:
+                a_path = string.join([rs,f],'\\')
+                b_path = a_path.replace(a, b)
+                if os.path.exists(b_path) == True:
+                    yield a_path
+
+    def empty_folders(self, a):
+        for rs,ds,fs in os.walk(a):
+            if len(os.listdir(rs)) < 1:
+                yield rs
+
+    def compare_a_b(self, file_a, file_b): #single file comparison
+        with open(file_a,'rU') as A:
+            with open(file_b,'rU') as B:
+                return [line for line in A.read().split('\n') if line.strip()] == [line for line in B.read().split('\n') if line.strip()]
+
+    def diff_files(self, a, b): #compare files from two folders and yield the file path from folder a if file is found to be different in content
+        for rs, ds, fs in os.walk(a):
+            for f in fs:
+                a_path = string.join([rs,f],'\\')
+                b_path = a_path.replace(a, b)
+                if os.path.exists(b_path) == True:
+                    #print a_path, b_path
+                    if self.compare_a_b(a_path,b_path) == False:
+                        yield f
+
+    def test(self):
+        print self.fw_name
+        print self.daily_folder_path
+        print self.source_package_path
+        print self.merge_acc
