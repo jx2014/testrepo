@@ -1,12 +1,10 @@
 import Tkinter as tk
 import ConfigParser
-from file_construct import fc
-from file_construct import css_version_file
-from file_construct import active_fc
-from file_construct import css_merge
+from file_construct import fc, css_version_file, active_fc, css_merge
 import subprocess
 import sys
 import os
+from Queue import Queue
 
 class StdError_redirector(object):
     def __init__(self,widget):
@@ -435,21 +433,30 @@ class controlPanel(tk.Frame):
                           )
         except:
             print 'Something went wrong with GURP function in test_gui2.pyw'
-
+        
+        Q = Queue()
+        
         if self.var_buildBYT.get() == 1:
-            BYT_2400.rename_move_css_folder_file()
-            BYT_2401.rename_move_css_folder_file()
+            Q.put(BYT_2400.rename_move_css_folder_file())
+            Q.put(BYT_2401.rename_move_css_folder_file())
 
         if self.var_buildCHTC2P.get() == 1:
-            CHT_2401_csi2plus.rename_move_css_folder_file()
+            Q.put(CHT_2401_csi2plus.rename_move_css_folder_file())
 
         if self.var_buildSKC.get() == 1:
-            SKC_2500.rename_move_css_folder_file()
+            Q.put(SKC_2500.rename_move_css_folder_file())
 
         if self.var_buildBXT.get() == 1:
-            BXT_2600_psys.rename_move_css_folder_file()
-            BXT_2600_isys.rename_move_css_folder_file()
-
+            Q.put(BXT_2600_psys.rename_move_css_folder_file())
+            Q.put(BXT_2600_isys.rename_move_css_folder_file())
+        
+        print "\nexport MY_INTEGRATION=irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
+        print "export USER=zjxuex"
+        print "git checkout -b remotes/origin/master/${MY_INTEGRATION}"
+        print "\ngit commit -s"
+        print "Integrated_CSSIFW_irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
+        print "\ngit push origin HEAD:refs/for/master/${MY_INTEGRATION}"
+            
     def cssVersions(self):
         self.UI2Memory()
         for opt in self.config.options('css_versions'):

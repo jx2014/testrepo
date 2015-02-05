@@ -6,6 +6,7 @@ import tarfile
 import re
 import string
 import subprocess
+from Queue import Queue
 
 def print_func(fn):
     def wrapped(self):
@@ -149,8 +150,9 @@ class fc:
         return full_package_folder_path
 
     def change_css_folder_name(self):
-        full_css_folder_path = self.local_package_folder_name + '\\' + 'css'
+        full_css_folder_path = self.local_package_folder_name + '\\' + 'css'        
         new_full_css_folder_path = self.local_package_folder_name + '\\' + self.fw_name
+
         if os.path.exists(full_css_folder_path):
             print '{0:25}{1:<100}'.format('Local css directory:', full_css_folder_path)
             print '{0:25}{1:<100}'.format('New css directory:', new_full_css_folder_path)
@@ -159,6 +161,18 @@ class fc:
                 shutil.move(new_full_css_folder_path, self.daily_folder_path)
             except:
                 print 'Can not rename or move, may be files and directory already exists'
+        
+        if self.fw_name == '2500':
+            extras_2500_folder_path = self.local_package_folder_name + '\\' + 'firmware.extras'
+            new_extras_2500_folder_path = self.local_package_folder_name + '\\' + 'CSS_FW_2500_ExtraBinaries'
+            if os.path.exists(extras_2500_folder_path):
+                print '{0:25}{1:<100}'.format('2500 extra directory:', extras_2500_folder_path)
+                print '{0:25}{1:<100}'.format('New 2500 extra directory:', new_extras_2500_folder_path)
+                try:
+                    os.rename(extras_2500_folder_path, new_extras_2500_folder_path)
+                    shutil.move(new_extras_2500_folder_path, self.daily_folder_path)
+                except:
+                    print 'Can not rename or move, may be files and directory already exists'
 
     def change_css_file_name(self):
         # by fw_sub_folder is None, but for skycam, user will add sub folder to it, and as a result, full_css_file_name will change accordingly
@@ -402,9 +416,25 @@ class css_merge:
         self.daily_folder = kwargs.get('daily_folder')
         self.irci = kwargs.get('irci')
         self.merge_acc = kwargs.get('merge_acc')
-
-        self.daily_folder_path = self.local_path + '\\' + self.daily_folder + '\\' + self.irci
+        
+        if self.daily_folder == None: #if daily_folder is supplied, then we treat it as from incoming_packge or some other places
+            self.daily_folder_path = self.local_path
+        else:
+            self.daily_folder_path = self.local_path + '\\' + self.daily_folder + '\\' + self.irci
+            
         self.source_package_path = self.source_folder +'\\' + 'camerasw\\camera\\isp\\css\\' + self.fw_name
+        self.fw_package_path = self.daily_folder_path + '\\' + self.fw_name
+        
+        if os.path.exists(self.source_package_path) == False or os.path.exists(self.fw_package_path) == False:
+            print 'shit'
+        #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\css
+        #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\firmware
+        #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\firmware\CSS_FW_2500_ExtraBinaries
+        #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\firmware\acc\hdr
+        #
+        #F:\daily_integration\20150126\1064\css_fw_2401_csi2plus.bin
+        #F:\daily_integration\20150126\1064\sh_css_sw_css_skycam_c0_system_irci_master_20150126_1500\firmware.extras
+        #F:\daily_integration\20150126\1064\acc\bin
 
     def unique_files(self,a,b): #verified  with beyond compare
         for rs, ds, fs in os.walk(a):
@@ -432,7 +462,7 @@ class css_merge:
             with open(file_b,'rU') as B:
                 return [line for line in A.read().split('\n') if line.strip()] == [line for line in B.read().split('\n') if line.strip()]
 
-    def diff_files(self, a, b): #compare files from two folders and yield the file path from folder a if file is found to be different in content
+    def diff_files(self, a, b): #compare files from two folders and yield the file path from folder 'a' if file is found to be different in content
         for rs, ds, fs in os.walk(a):
             for f in fs:
                 a_path = string.join([rs,f],'\\')
@@ -440,7 +470,7 @@ class css_merge:
                 if os.path.exists(b_path) == True:
                     #print a_path, b_path
                     if self.compare_a_b(a_path,b_path) == False:
-                        yield f
+                        yield a_path, b_path
 
     def test(self):
         print self.fw_name
