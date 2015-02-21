@@ -1,3 +1,13 @@
+# GUI for:  
+#   FW package download, unzip utility, 
+#   2400/2401/2401_CSI2PLUS css version modifier
+#   Patch FW unpack
+#   CSS Merger
+# Author: Jeremy Xue
+# Jeremy.xzm@gmail.com
+# Last update: Feb 18, 2015
+
+
 import Tkinter as tk
 import ConfigParser
 from file_construct import fc, css_version_file, active_fc, css_merge
@@ -83,6 +93,8 @@ class controlPanel(tk.Frame):
     def File2Memory(self):#from file to memory
         with open(self.ConfigFile) as dcf:
             self.config.readfp(dcf)
+            
+            self.user = self.config.get('path_config', 'user')
 
             self.daily_folder = self.config.get('DailyPatch', 'daily_folder') #aka package date
             self.irci = self.config.get('DailyPatch', 'irci')
@@ -175,6 +187,7 @@ class controlPanel(tk.Frame):
         self.var_2401c2p = tk.IntVar()
         self.var_2500 = tk.IntVar()
         self.var_2600 = tk.IntVar()
+        
         self.var_ACC = tk.IntVar()
         self.var_buildBYT = tk.IntVar()
         self.var_buildBXT = tk.IntVar()
@@ -267,7 +280,8 @@ class controlPanel(tk.Frame):
 
         self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages, width=15).grid(row=14, column=3, columnspan=2, sticky='w')
         self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip, width=15).grid(row=15, column=3, columnspan=2, sticky='w')
-        self.b_movePackages2 = tk.Button(self, text='Move CSS', command=self.movePackages2, width=15).grid(row=16, column=3, columnspan=2, sticky='w')
+        self.b_mergeCSS2 = tk.Button(self, text='Merge CSS', command=self.mergeCSS2, width=15).grid(row=15, column=4, sticky='w')
+        self.b_buildPackages2 = tk.Button(self, text='Build Package(s)', command=self.buildPackages2, width=15).grid(row=16, column=3, columnspan=2, sticky='w')
 
         #self.b_buildBYT = tk.Button(self, text='Build BYT', command=self.buildBYT).grid(row=16, column=0, columnspan=2, sticky='we')
         #self.b_buildBXT = tk.Button(self, text='Build BXT', command=self.buildBXT).grid(row=17, column=0, columnspan=2, sticky='we')
@@ -287,7 +301,9 @@ class controlPanel(tk.Frame):
         self.c_2500 = tk.Checkbutton(self, text='2500', variable=self.var_2500).grid(row=12, column=4, sticky='w')
         self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=13, column=4, sticky='w')
 
-        self.c_ACC = tk.Checkbutton(self, text='ACC', variable=self.var_ACC).grid(row=11, column=0, sticky='w')
+        self.c_ACC = tk.Checkbutton(self, text='2400 ACC', variable=self.var_ACC)
+        self.c_ACC.select()        
+        self.c_ACC.grid(row=11, column=0, sticky='w')
 
         self.c_buildBYT = tk.Checkbutton(self, text='2400', variable=self.var_buildBYT)
         self.c_buildBYT.select()
@@ -297,8 +313,7 @@ class controlPanel(tk.Frame):
         self.c_buildSKC.select()
         self.c_buildSKC.grid(row=13, column=1, sticky='w')
 
-        self.c_buildBXT = tk.Checkbutton(self, text='2600', variable=self.var_buildBXT)
-        self.c_buildBXT.select()
+        self.c_buildBXT = tk.Checkbutton(self, text='2600', variable=self.var_buildBXT)        
         self.c_buildBXT.grid(row=12, column=1, sticky='w')
 
         self.c_buildCHTC2P = tk.Checkbutton(self, text='2401C2P', variable=self.var_buildCHTC2P)
@@ -451,7 +466,7 @@ class controlPanel(tk.Frame):
             Q.put(BXT_2600_isys.rename_move_css_folder_file())
         
         print "\nexport MY_INTEGRATION=irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
-        print "export USER=zjxuex"
+        print "".join(["export USER=", self.user])
         print "git checkout -b remotes/origin/master/${MY_INTEGRATION}"
         print "\ngit commit -s"
         print "Integrated_CSSIFW_irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
@@ -524,8 +539,38 @@ class controlPanel(tk.Frame):
                              )
         active_unzip_all.unzip_rename_move()
 
-    def movePackages2(self):
-        print 'move packages2'
+    def mergeCSS2(self):
+        fw_names = []
+        merge_acc =  0
+
+        if self.var_2400.get() == 1:
+            fw_names.append('2400')
+            fw_names.append('2401')
+        if self.var_2401c2p.get() == 1:
+            fw_names.append('2401_csi2plus')
+        if self.var_2500.get() == 1:
+            fw_names.append('2500')
+        if self.var_2600.get() == 1:
+            fw_names.append('2600')
+        if self.var_ACC.get() == 1:
+            merge_acc = 1
+
+        for fw in fw_names:
+            print fw
+            merge = css_merge(
+                          #package_code = fw, #probably not needed
+                          fw_name = fw,
+                          daily_folder = self.daily_folder,
+                          irci = self.irci,
+                          local_path = self.PTlocal_path,
+                          source_folder = self.PTsource_path,
+                          merge_acc = merge_acc
+                          )
+
+            merge.test()
+    
+    def buildPackages2(self):
+        print 'buildPackages2'
 
     def build4packages(self):
         print 'build 4 packages'

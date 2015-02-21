@@ -1,3 +1,11 @@
+# FW package download, unzip utility, 
+# 2400/2401/2401_CSI2PLUS css version modifier
+# Patch FW unpack
+# CSS Merger
+# Author: Jeremy Xue
+# Jeremy.xzm@gmail.com
+# Last update: Feb 18, 2015
+
 # define each tarfile name pattern
 # define each tarfile location
 import os
@@ -7,6 +15,7 @@ import re
 import string
 import subprocess
 from Queue import Queue
+import time
 
 def print_func(fn):
     def wrapped(self):
@@ -205,13 +214,15 @@ class fc:
                     except:
                         print 'unable to extract: ', f
 
-    def rename_move_css_folder_file(self):
-        self.fcopy()
-        self.get_tar_extension()
-        self.extract_tar()
-        self.extract_tar_acc()
-        self.change_css_folder_name()
-        self.change_css_file_name()
+    def rename_move_css_folder_file(self):        
+        Q = Queue()
+        Q.put(self.fcopy())
+        Q.put(self.get_tar_extension())
+        Q.put(self.extract_tar())
+        Q.put(self.extract_tar_acc())
+        time.sleep(5) #make sure all tars are unzipped
+        Q.put(self.change_css_folder_name())
+        Q.put(self.change_css_file_name())
         #shutil.rmtree(self.local_package_folder_name)
 
 
@@ -328,6 +339,7 @@ class active_fc():
             Final function to unzip, rename and move folder, fw
         '''
         self.unzip_pkgs()
+        time.sleep(5) #make sure all unzips are completed
         for flder in self.get_folders():
             print flder
             try:
@@ -410,23 +422,41 @@ class css_version_file():
 ##################################################################################################################
 class css_merge:
     def __init__(self, **kwargs):
-        self.source_folder = kwargs.get('source_folder')
+        self.Q = Queue()
+        
+        self.source_folder = kwargs.get('source_folder') #C:\JX_Projects\vieddrv-trunk\camerasw\Source
         self.fw_name = kwargs.get('fw_name')
         self.local_path = kwargs.get('local_path')
         self.daily_folder = kwargs.get('daily_folder')
         self.irci = kwargs.get('irci')
         self.merge_acc = kwargs.get('merge_acc')
+        self.cmd_exe = r'%systemroot%\system32\cmd.exe'
+        #self.sh_exe = r'e:\git\bin\sh.exe'
+        self.sh_exe = r'"C:\Program Files (x86)\Git\bin\sh.exe"'
+        #self.git_bash_script = os.path.join(self.source_folder, 'git_bash.sh')
+        self.git_bash_script = string.join([self.source_folder.split('\\')[0],self.source_folder.split('\\')[1],'git_bash.sh'],'\\') #C:\JX_Projects\git_bash.sh
+        self.git_bash_log = string.join([self.source_folder.split('\\')[0],self.source_folder.split('\\')[1],'git_bash.log'],'\\') #C:\JX_Projects\git_bash.log
         
-        if self.daily_folder == None: #if daily_folder is supplied, then we treat it as from incoming_packge or some other places
+        if self.daily_folder == None:
             self.daily_folder_path = self.local_path
         else:
             self.daily_folder_path = self.local_path + '\\' + self.daily_folder + '\\' + self.irci
             
-        self.source_package_path = self.source_folder +'\\' + 'camerasw\\camera\\isp\\css\\' + self.fw_name
+        self.source_package_path = self.source_folder +'\\' + 'camera\\isp\\css\\' + self.fw_name
         self.fw_package_path = self.daily_folder_path + '\\' + self.fw_name
         
         if os.path.exists(self.source_package_path) == False or os.path.exists(self.fw_package_path) == False:
             print 'shit'
+        
+        if os.path.exists(self.git_bash_log): #start with a clean log
+            os.remove(self.git_bash_log)
+        
+        self.otm_file_ignore_list = [self.source_package_path + '\\' + 'css_version.txt', 
+                                     self.source_package_path + '\\' + 'css_' + self.fw_name + '.vcxproj',
+                                     self.source_package_path + '\\' + 'css_' + self.fw_name + '.vcxproj.filters',
+                                     self.source_package_path + '\\' + 'css' + self.fw_name + '.props',
+                                     self.source_package_path + '\\' + 'shcss.vcxproj']
+            
         #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\css
         #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\firmware
         #C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\ISP\firmware\CSS_FW_2500_ExtraBinaries
@@ -435,16 +465,90 @@ class css_merge:
         #F:\daily_integration\20150126\1064\css_fw_2401_csi2plus.bin
         #F:\daily_integration\20150126\1064\sh_css_sw_css_skycam_c0_system_irci_master_20150126_1500\firmware.extras
         #F:\daily_integration\20150126\1064\acc\bin
+    
+    def path_win_to_unix(self, win_path):
+        unix_path = win_path.replace(':','') #c:\windows\system to /c/windows/system
+        unix_path = unix_path.replace('\\','/')
+        unix_path = '/' + unix_path
+        return unix_path
+    
+    def git_bash_call(self, script_path): #call git bash script
+        if os.path.exists(script_path) == True:
+            final_script = self.cmd_exe + ' /c ' + self.sh_exe + ' --login -i -- ' + script_path
+            print "Executing command: %s" % final_script
+            p = subprocess.Popen(final_script, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            o, e = p.communicate()
+            if o:
+                print o
+            if e:
+                print "The command encountered an error: %s" % e
+            
+    def create_bash(self, bash_content): #create git bash script under C:\JX_Projects\git_bash.sh
+        try:
+            os.remove(self.git_bash_script) #remove current git bash before creating a new one
+        except OSError as e:
+            print "Creating %s" % self.git_bash_script
 
-    def unique_files(self,a,b): #verified  with beyond compare
+        with open(self.git_bash_script, 'w+') as bs:
+            bs.write(bash_content)
+            
+        return self.git_bash_script
+                
+    def bs_git_checkout(self): #bash script for git checkout at source folder and return the path to such script        
+        bash_command = '''cd %s
+git checkout master
+git pull -v
+cd ..
+git pull -v''' % self.path_win_to_unix(self.source_folder)
+            
+        self.git_bash_call(self.create_bash(bash_command))
+         
+    def bs_git_clean(self):
+        bash_command = '''cd %s
+git clean -xfd''' % self.path_win_to_unix(self.source_package_path)
+
+        self.git_bash_call(self.create_bash(bash_command))
+    
+    def check_unique_files(self): #main function: check unique files from OTM trunk and fw package and log them
+        with open(self.git_bash_log, 'a+') as gbl:
+            gbl.write('\nObsolete file(s) in otm trunk\n') #start with otm trunk, and they will get removed from the folder and vcxproj list
+            print "\nObsolete file(s)"
+            for unique_file, otm_path, fw_dir in self.unique_files(self.source_package_path, self.fw_package_path):
+                
+                ignore_this_file = False
+                for i in self.otm_file_ignore_list:                    
+                    if otm_path.lower() == i.lower():
+                        ignore_this_file = True #if any one of the file in the list, then we ignore it
+                        print "file ignored: %s" % otm_path.lower()
+                        
+                if ignore_this_file == False:
+                    print unique_file.lower()
+                    print i.lower()
+                    gbl.writelines(unique_file + '\n')
+                    #os.remove(unique_file) #let's not remove them, yet
+               
+            gbl.write('\nNew file(s) in fw package\n') #new files from fw package, will move them to otm trunk
+            print "\nNew file(s)"
+            for new_file, new_file_path, dst_dir in self.unique_files(self.fw_package_path, self.source_package_path):
+                gbl.write(new_file + '\n')
+                print new_file
+                if os.path.exists(dst_dir) == False:
+                    os.mkdir(dst_dir)
+                shutil.copy(new_file_path, dst_dir)
+    
+    def copy_modified_files(self):
+        pass
+        
+    def unique_files(self, a, b): #verified  with beyond compare
         for rs, ds, fs in os.walk(a):
-            for f in fs:
+            for f in fs:                
                 a_path = string.join([rs,f],'\\')
+                b_dir = rs.replace(a, b)
                 b_path = a_path.replace(a, b)
                 if os.path.exists(b_path) == False:
-                    yield a_path
+                    yield f, a_path, b_dir
 
-    def common_files(self,a,b): # files with same name shared in both folders, verified  with beyond compare
+    def common_files(self, a, b): # files with same name shared in both folders, verified  with beyond compare
         for rs, ds, fs in os.walk(a):
             for f in fs:
                 a_path = string.join([rs,f],'\\')
@@ -452,10 +556,26 @@ class css_merge:
                 if os.path.exists(b_path) == True:
                     yield a_path
 
-    def empty_folders(self, a):
-        for rs,ds,fs in os.walk(a):
-            if len(os.listdir(rs)) < 1:
-                yield rs
+    def remove_and_log_empty_folders(self): #main function to clean up empty folders from FW package. 
+        with open(self.git_bash_log, 'a+') as gbl:
+            gbl.write('\nEmpty folders removed:\n')
+            print "\nEmpty folders removed:"
+            for empty_folder in self.remove_empty_folders(self.source_package_path):
+                gbl.write(empty_folder + '\n')
+                print empty_folder
+            for empty_folder in self.remove_empty_folders(self.fw_package_path):
+                gbl.write(empty_folder + '\n')            
+                print empty_folder
+                    
+    def remove_empty_folders(self, folder_path):
+        rerun = 1 #must have to start hte empty folder hunting
+        while rerun > 0:
+            rerun = 0 #assume we don't need to rerun it
+            for r, d, f in os.walk(folder_path):
+                if len(os.listdir(r)) < 1:                  
+                    os.rmdir(r)
+                    rerun = rerun + 1
+                    yield r
 
     def compare_a_b(self, file_a, file_b): #single file comparison
         with open(file_a,'rU') as A:
@@ -476,4 +596,11 @@ class css_merge:
         print self.fw_name
         print self.daily_folder_path
         print self.source_package_path
+        print self.fw_package_path
         print self.merge_acc
+        
+        self.Q.put(self.bs_git_clean())
+        #self.Q.put(self.remove_and_log_empty_folders())
+        self.Q.put(self.check_unique_files())
+        
+        
