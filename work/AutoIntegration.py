@@ -93,9 +93,9 @@ for i in diff_files(folder_otm, folder_fw):
 a = r"E:\FamilyProject\TestProject\testrepo\a.txt"
 b = r"E:\FamilyProject\TestProject\testrepo\b.txt"
 
-def compare_a_b(file_a, file_b):
-    with open(file_a,'rU') as A:
-        with open(file_b,'rU') as B:
+def compare_a_b(a, b):
+    with open(a,'rU') as A:
+        with open(b,'rU') as B:
             return [line for line in A.read().split('\n') if line.strip()] == [line for line in B.read().split('\n') if line.strip()]
 
 

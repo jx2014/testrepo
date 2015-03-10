@@ -167,6 +167,7 @@ class fc:
             print '{0:25}{1:<100}'.format('New css directory:', new_full_css_folder_path)
             try:
                 os.rename(full_css_folder_path,new_full_css_folder_path)
+                time.sleep(2)
                 shutil.move(new_full_css_folder_path, self.daily_folder_path)
             except:
                 print 'Can not rename or move, may be files and directory already exists'
@@ -179,6 +180,7 @@ class fc:
                 print '{0:25}{1:<100}'.format('New 2500 extra directory:', new_extras_2500_folder_path)
                 try:
                     os.rename(extras_2500_folder_path, new_extras_2500_folder_path)
+                    time.sleep(2)
                     shutil.move(new_extras_2500_folder_path, self.daily_folder_path)
                 except:
                     print 'Can not rename or move, may be files and directory already exists'
