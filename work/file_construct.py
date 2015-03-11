@@ -458,6 +458,13 @@ class css_version_file():
 #                           C S S         M E R G E                                                              #
 #                                                                                                                #
 ##################################################################################################################
+class css_checkout:
+    def __init__(self):
+        print 'hi'
+
+    def __del__(self):
+        print 'good bye'
+
 class css_merge:
     def __init__(self, **kwargs):
         self.Q = Queue()
@@ -483,8 +490,8 @@ class css_merge:
         self.source_package_path = self.source_folder +'\\' + 'camera\\isp\\css\\' + self.fw_name
         self.fw_package_path = self.daily_folder_path + '\\' + self.fw_name
 
-        if os.path.exists(self.source_package_path) == False or os.path.exists(self.fw_package_path) == False:
-            print 'shit'
+        #if os.path.exists(self.source_package_path) == False or os.path.exists(self.fw_package_path) == False:
+        #    print 'shit'
 
         if os.path.exists(self.git_bash_log): #start with a clean log
             os.remove(self.git_bash_log)
@@ -504,6 +511,9 @@ class css_merge:
         #F:\daily_integration\20150126\1064\sh_css_sw_css_skycam_c0_system_irci_master_20150126_1500\firmware.extras
         #F:\daily_integration\20150126\1064\acc\bin
 
+    def __del__(self):
+        print 'good bye!'
+
     def path_win_to_unix(self, win_path):
         unix_path = win_path.replace(':','') #c:\windows\system to /c/windows/system
         unix_path = unix_path.replace('\\','/')
@@ -522,6 +532,9 @@ class css_merge:
                 print "The command encountered an error: %s" % e
 
     def create_bash(self, bash_content): #create git bash script under C:\JX_Projects\git_bash.sh
+        print '\n\nbash command to be created:'
+        print bash_content
+        print '\n'
         try:
             os.remove(self.git_bash_script) #remove current git bash before creating a new one
         except OSError as e:
@@ -532,6 +545,7 @@ class css_merge:
 
         return self.git_bash_script
 
+
     def bs_git_checkout(self): #bash script for git checkout at source folder and return the path to such script
         bash_command = '''cd %s
 git checkout master
@@ -541,11 +555,26 @@ git pull -v''' % self.path_win_to_unix(self.source_folder)
 
         self.git_bash_call(self.create_bash(bash_command))
 
+
+    def bs_git_clean_source(self):
+        bash_command = '''cd %s
+git clean -xfd''' % self.path_win_to_unix(self.source_folder)
+
+        self.git_bash_call(self.create_bash(bash_command))
+
+
     def bs_git_clean(self):
         bash_command = '''cd %s
 git clean -xfd''' % self.path_win_to_unix(self.source_package_path)
 
         self.git_bash_call(self.create_bash(bash_command))
+
+    def bs_git_log_10_lines(self):
+        bash_command = '''cd %s
+git log --oneline -n10''' % self.path_win_to_unix(self.source_package_path)
+
+        self.git_bash_call(self.create_bash(bash_command))
+
 
     def check_unique_files(self): #main function: check unique files from OTM trunk and fw package and log them
         with open(self.git_bash_log, 'a+') as gbl:

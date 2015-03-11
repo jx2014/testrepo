@@ -274,7 +274,8 @@ class controlPanel(tk.Frame):
         self.e_configFile.insert(0, self.ConfigFile)
         self.e_configFile.grid(row=22, column=1, columnspan=4,sticky='we')
 
-        self.b_GURP = tk.Button(self, text='Get Unzip Rename Packages', command=self.GURP, width=27).grid(row=14, column=0, columnspan=2, sticky='w')
+        self.b_GURP = tk.Button(self, text='GURP', command=self.GURP, width=10).grid(row=14, column=0, sticky='w')
+        self.b_Checkout = tk.Button(self, text='Checkout', command=self.Checkout, width=15).grid(row=14, column=1, sticky='w')
         self.b_movePackages = tk.Button(self, text='Merge CSS', command=self.movePackages, width=10).grid(row=15, column=0, columnspan=2, sticky='w')
         self.b_CSSversions = tk.Button(self, text='Version txt', command=self.cssVersions, width=15).grid(row=15, column=1, sticky='w')
         self.b_build4packages = tk.Button(self, text='Build Packages', command=self.build4packages, width=27).grid(row=16, column=0, columnspan=2, sticky='w')
@@ -360,6 +361,22 @@ class controlPanel(tk.Frame):
 
     def openWindowsbuildFolder(self):
         self.openFolder(self.windowsbuild_path)
+
+    def Checkout(self):
+        checkout = css_merge(
+              #package_code = fw, #probably not needed
+              fw_name = '',
+              daily_folder = self.daily_folder,
+              irci = self.irci,
+              local_path = self.PTlocal_path,
+              source_folder = self.PTsource_path,
+              merge_acc = ''
+              )
+
+        checkout.bs_git_checkout()
+        checkout.bs_git_clean_source()
+        checkout.bs_git_log_10_lines()
+
 
     def GURP(self):
         self.UI2Memory()
