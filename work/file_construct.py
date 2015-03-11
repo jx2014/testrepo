@@ -63,8 +63,7 @@ class fc:
         #self.copy_acc = copy_acc
 
         self._dt = self.package_date + '_' + self.package_hr
-        #package_full_name  i.e. sh_css_sw_hive_isp_css_2400_system_irci_master_20140715_1500.windows.tar.gz
-        self.package_full_name = self.package_fn + self._dt + self.package_extension
+
         #package folder full name i.e. irci_master_20140715_1500
         self.folder_irci_master = 'irci_master' + '_' + self._dt
 
@@ -77,11 +76,31 @@ class fc:
         self.remote_path_irci_master = self.remote_path + '\\' + self.folder_irci_master
         self.remote_path_css = self.remote_path_irci_master + '\\'+ 'ifw-ispfw'
         self.remote_path_acc = self.remote_path_irci_master + '\\' + 'ispfw'
+
+        re_remote_AIO_number = re.compile(r'(?<=ia_css_)([0-9]{1,3}\.){3}[0-9]{1,3}(?=_irci.*windows)')
+        self.remote_AIO_number = ''
+        if self.fw_name == 'AIO':
+            for i in os.listdir(self.remote_path_css):
+                find_AIO_number = re_remote_AIO_number.search(i)
+                if find_AIO_number: #use new fn_package name
+                    print '=' * 30
+                    print 'old self.package_fn is ', self.package_fn
+                    print find_AIO_number.group()
+                    self.package_fn = re.sub(r'(?<=ia_css_)([0-9]{1,3}\.){3}[0-9]{1,3}(?=_irci)', find_AIO_number.group(), self.package_fn)
+                    print 'new self.package_fn is ', self.package_fn
+                    print '=' * 30
+                    break
+
+        #package_full_name  i.e. sh_css_sw_hive_isp_css_2400_system_irci_master_20140715_1500.windows.tar.gz
+        self.package_full_name = self.package_fn + self._dt + self.package_extension
+
         self.remote_path_css_file = self.remote_path_css + '\\' + self.package_full_name
 
         self.daily_folder_path = self.local_path + '\\' + self.daily_folder + '\\' + self.irci
         self.acc_folder_path = self.daily_folder_path + '\\' + 'acc'
         self.local_path_file = self.daily_folder_path + '\\' + self.package_full_name
+
+
 
         if not os.path.exists(self.daily_folder_path):
             os.makedirs(self.daily_folder_path)
