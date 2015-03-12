@@ -278,7 +278,8 @@ class controlPanel(tk.Frame):
         self.b_Checkout = tk.Button(self, text='Checkout', command=self.Checkout, width=15).grid(row=14, column=1, sticky='w')
         self.b_movePackages = tk.Button(self, text='Merge CSS', command=self.movePackages, width=10).grid(row=15, column=0, columnspan=2, sticky='w')
         self.b_CSSversions = tk.Button(self, text='Version txt', command=self.cssVersions, width=15).grid(row=15, column=1, sticky='w')
-        self.b_build4packages = tk.Button(self, text='Build Packages', command=self.build4packages, width=27).grid(row=16, column=0, columnspan=2, sticky='w')
+        self.b_ShowGitCommands = tk.Button(self, text='Show Git', command=self.ShowGitCommands, width=15).grid(row=16, column=1, sticky='w')
+        self.b_build4packages = tk.Button(self, text='Build', command=self.build4packages, width=10).grid(row=16, column=0, sticky='w')
 
         self.b_getPackages = tk.Button(self, text='Get Packages', command=self.getPackages, width=15).grid(row=14, column=3, columnspan=2, sticky='w')
         self.b_activeUnzip = tk.Button(self, text='Active Unzip', command=self.activeUnzip, width=15).grid(row=15, column=3, columnspan=2, sticky='w')
@@ -505,6 +506,9 @@ class controlPanel(tk.Frame):
         if self.var_buildAIO.get() == 1:
             Q.put(AIO.rename_move_css_folder_file())
 
+        self.ShowGitCommands()
+
+    def ShowGitCommands(self):
         print "\nexport MY_INTEGRATION=irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
         print "".join(["export USER=", self.user])
         print "git checkout -b remotes/origin/master/${MY_INTEGRATION}"
