@@ -383,48 +383,48 @@ class controlPanel(tk.Frame):
         self.UI2Memory()
 
         try:
-#             BYT_2400 = fc(
-#                           package_code = '2400', #probably not needed
-#                           package_fn = 'sh_css_sw_hive_isp_css_2400_system_irci_master_',
-#                           package_extension = '.windows.tar.gz',
-#                           fw_name = '2400', #css_fw_2400.bin blah blah
-#                           #package_date = package_date,
-#                           package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
-#                           daily_folder = self.daily_folder,
-#                           package_hr = self.package_hr,
-#                           remote_path = self.OTMremote_path,
-#                           irci = self.irci,
-#                           local_path = self.OTMlocal_path,
-#                           #copy_acc = self.var_ACC.get()
-#                           )
-#
-#             BYT_2401 = fc(
-#                           package_code = '2401', #probably not needed
-#                           package_fn = 'sh_css_sw_hive_isp_css_2401_system_irci_master_',
-#                           package_extension = '.windows.tar.gz',
-#                           fw_name = '2401', #css_fw_2400.bin blah blah
-#                           #package_date = package_date,
-#                           package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
-#                           daily_folder = self.daily_folder,
-#                           package_hr = self.package_hr,
-#                           remote_path = self.OTMremote_path,
-#                           irci = self.irci,
-#                           local_path = self.OTMlocal_path,
-#                           )
-#
-#             CHT_2401_csi2plus = fc(
-#                           package_code = '2401_csi2plus', #probably not needed
-#                           package_fn = 'sh_css_sw_csi2plus_hive_isp_css_2401_system_irci_master_',
-#                           package_extension = '.windows.tar.gz',
-#                           fw_name = '2401_csi2plus', #css_fw_2400.bin blah blah
-#                           #package_date = package_date,
-#                           package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
-#                           daily_folder = self.daily_folder,
-#                           package_hr = self.package_hr,
-#                           remote_path = self.OTMremote_path,
-#                           irci = self.irci,
-#                           local_path = self.OTMlocal_path,
-#                           )
+            BYT_2400 = fc(
+                          package_code = '2400', #probably not needed
+                          package_fn = 'sh_css_sw_hive_isp_css_2400_system_irci_master_',
+                          package_extension = '.windows.tar.gz',
+                          fw_name = '2400', #css_fw_2400.bin blah blah
+                          #package_date = package_date,
+                          package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                          daily_folder = self.daily_folder,
+                          package_hr = self.package_hr,
+                          remote_path = self.OTMremote_path,
+                          irci = self.irci,
+                          local_path = self.OTMlocal_path,
+                          #copy_acc = self.var_ACC.get()
+                          )
+
+            BYT_2401 = fc(
+                          package_code = '2401', #probably not needed
+                          package_fn = 'sh_css_sw_hive_isp_css_2401_system_irci_master_',
+                          package_extension = '.windows.tar.gz',
+                          fw_name = '2401', #css_fw_2400.bin blah blah
+                          #package_date = package_date,
+                          package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                          daily_folder = self.daily_folder,
+                          package_hr = self.package_hr,
+                          remote_path = self.OTMremote_path,
+                          irci = self.irci,
+                          local_path = self.OTMlocal_path,
+                          )
+
+            CHT_2401_csi2plus = fc(
+                          package_code = '2401_csi2plus', #probably not needed
+                          package_fn = 'sh_css_sw_csi2plus_hive_isp_css_2401_system_irci_master_',
+                          package_extension = '.windows.tar.gz',
+                          fw_name = '2401_csi2plus', #css_fw_2400.bin blah blah
+                          #package_date = package_date,
+                          package_date = self.daily_folder, # for most of the time, package_date equal to daily_folder date
+                          daily_folder = self.daily_folder,
+                          package_hr = self.package_hr,
+                          remote_path = self.OTMremote_path,
+                          irci = self.irci,
+                          local_path = self.OTMlocal_path,
+                          )
 
             AIO = fc(
                           package_code = 'AIO', #probably not needed
