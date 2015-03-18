@@ -36,7 +36,7 @@ class Std_redirector(object):
 
 class controlPanel(tk.Frame):
     def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent)        
         self.ConfigFile = os.getcwd() + '\\' + 'path_config.ini'
         self.config = ConfigParser.ConfigParser()
         self.File2Memory()
@@ -85,7 +85,7 @@ class controlPanel(tk.Frame):
             self.config.write(cfs)
 
 
-    def add_section(self,sectionName, optInfo, config):
+    def add_section(self, sectionName, optInfo, config):
         for key in optInfo.keys():
             config.set(sectionName, key, optInfo.get(key))
 
