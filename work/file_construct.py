@@ -485,9 +485,10 @@ class css_checkout:
         print 'good bye'
 
 class css_merge:
-    def __init__(self, **kwargs):
+    def __init__(self, sha = 'master', **kwargs):
         self.Q = Queue()
 
+        self.sha = sha
         self.source_folder = kwargs.get('source_folder') #C:\JX_Projects\vieddrv-trunk\camerasw\Source
         self.fw_name = kwargs.get('fw_name')
         self.local_path = kwargs.get('local_path')
@@ -567,10 +568,10 @@ class css_merge:
 
     def bs_git_checkout(self): #bash script for git checkout at source folder and return the path to such script
         bash_command = '''cd %s
-git checkout master
+git checkout %s
 git pull -v
 cd ..
-git pull -v''' % self.path_win_to_unix(self.source_folder)
+git pull -v''' % (self.sha, self.path_win_to_unix(self.source_folder))
 
         self.git_bash_call(self.create_bash(bash_command))
 

@@ -36,11 +36,11 @@ class Std_redirector(object):
 
 class controlPanel(tk.Frame):
     def __init__(self, parent):
-        tk.Frame.__init__(self, parent)        
+        tk.Frame.__init__(self, parent)
         self.ConfigFile = os.getcwd() + '\\' + 'path_config.ini'
         self.config = ConfigParser.ConfigParser()
         self.File2Memory()
-        self.constructUI()
+        self.ConstructUI()
         self.parent = parent
 
     def UI2Memory(self):#from UI to memory
@@ -174,7 +174,7 @@ class controlPanel(tk.Frame):
         self.e_PTlocalPath.insert(0, self.PTlocal_path)
         self.e_PTsourcePath.insert(0, self.PTsource_path)
 
-    def constructUI(self):#initialize from File to UI
+    def ConstructUI(self):#initialize from File to UI
         self.pack(fill='both', expand=1)
         for i in range(11,24):
             self.grid_rowconfigure(i,pad=1)
@@ -275,7 +275,7 @@ class controlPanel(tk.Frame):
         self.e_configFile.grid(row=22, column=1, columnspan=4,sticky='we')
 
         self.b_GURP = tk.Button(self, text='GURP', command=self.GURP, width=10).grid(row=14, column=0, sticky='w')
-        self.b_Checkout = tk.Button(self, text='Checkout', command=self.Checkout, width=15).grid(row=14, column=1, sticky='w')
+        self.b_Checkout = tk.Button(self, text='Checkout', command=self.Checkout, width=15, bg='yellow').grid(row=14, column=1, sticky='w')
         self.b_movePackages = tk.Button(self, text='Merge CSS', command=self.movePackages, width=10).grid(row=15, column=0, columnspan=2, sticky='w')
         self.b_CSSversions = tk.Button(self, text='Version txt', command=self.cssVersions, width=15).grid(row=15, column=1, sticky='w')
         self.b_ShowGitCommands = tk.Button(self, text='Show Git', command=self.ShowGitCommands, width=15).grid(row=16, column=1, sticky='w')
@@ -290,14 +290,14 @@ class controlPanel(tk.Frame):
         #self.b_buildBXT = tk.Button(self, text='Build BXT', command=self.buildBXT).grid(row=17, column=0, columnspan=2, sticky='we')
         #self.b_buildCHTC2P = tk.Button(self, text='Build CHT CSI2PLUS', command=self.buildCHTC2P).grid(row=18, column=0, columnspan=2, sticky='we')
         #self.b_buildSKC = tk.Button(self, text='Build SKC', command=self.buildSKC).grid(row=19, column=0, columnspan=2, sticky='we')
-        self.b_load = tk.Button(self, text='load', command=self.load, width=10).grid(row=22, column=0, sticky='w')
-        self.b_save = tk.Button(self, text='save', command=self.save, width=10).grid(row=23, column=0, sticky='w')
+        self.b_load = tk.Button(self, text='load', command=self.Load, width=10).grid(row=22, column=0, sticky='w')
+        self.b_save = tk.Button(self, text='save', command=self.Save, width=10).grid(row=23, column=0, sticky='w')
         self.b_folderDaily = tk.Button(self, text='Daily', command=self.openOTMlocalFolder, width=15).grid(row=23, column=3, sticky='w')
         self.b_folderSource = tk.Button(self, text='Source', command=self.openOTMsourceFolder, width=10).grid(row=23, column=4, sticky='w')
         self.b_folderIncoming = tk.Button(self, text='Incoming', command=self.openPTlocalFolder, width=15).grid(row=24, column=3, sticky='w')
         self.b_folderWinterfell = tk.Button(self, text='Winterfell', command=self.openWinterfellFolder, width=10).grid(row=24, column=4, sticky='w')
         self.b_folderWindowsBuild = tk.Button(self, text='WindowsBuild', command=self.openWindowsbuildFolder, width=15).grid(row=24, column=1, sticky='w')
-        self.b_exit = tk.Button(self, text='Exit', command=self.exit, width=10).grid(row=24, column=0, sticky='w')
+        self.b_exit = tk.Button(self, text='Exit', command=self.Exit, width=10).grid(row=24, column=0, sticky='w')
 
         self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400).grid(row=12, column=3, sticky='w')
         self.c_2401C2P = tk.Checkbutton(self, text='2401C2P', variable=self.var_2401c2p).grid(row=13, column=3, sticky='w')
@@ -631,7 +631,7 @@ class controlPanel(tk.Frame):
     def buildSKC(self):
         pass
 
-    def load(self):
+    def Load(self):
         try:
             self.ConfigFile = self.e_configFile.get()
             self.File2Memory()
@@ -640,7 +640,7 @@ class controlPanel(tk.Frame):
         except:
             print 'Unable to load from {}'.format(self.ConfigFile)
 
-    def save(self):
+    def Save(self):
         try:
             self.ConfigFile = self.e_configFile.get()
             self.UI2Memory()
@@ -650,7 +650,7 @@ class controlPanel(tk.Frame):
             raise Exception
             print 'Unable to save to {}'.format(self.ConfigFile)
 
-    def exit(self):
+    def Exit(self):
         self.parent.destroy()
 
 
