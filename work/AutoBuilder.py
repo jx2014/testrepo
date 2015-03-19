@@ -12,7 +12,7 @@
 import re
 import Tkinter as tk
 import ConfigParser
-from file_construct import fc, css_version_file, active_fc, css_merge
+from file_construct import fc, css_version_file, active_fc, css_merge, BuildFW
 from test_gui2 import controlPanel, StdError_redirector, Std_redirector
 import subprocess
 import sys
@@ -112,9 +112,6 @@ class AutoBuildPanel(controlPanel):
         print 'you pressed CheckoutMaster button'
         #self.Checkout('master')
 
-    def BuildFW(self,fw):
-        pass
-
     def Build(self):
         #text = self.t_shas.get();
         self.t_outputBox.delete(1.0, 'end')
@@ -128,6 +125,8 @@ class AutoBuildPanel(controlPanel):
                 #self.Checkout(sha)
                 for fw in self.buildFWs:
                     print '.'.join([fw, sha])
+                    build = BuildFW(source_folder = self.source_path, fw = fw)
+                    build.Build()
         else:
             print '\nNo FW selected.\nPlease check at least one FW to build'
 
