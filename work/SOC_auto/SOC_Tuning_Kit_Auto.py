@@ -11,58 +11,93 @@ import ctypes
 import os
 import subprocess
 
-testSIandVR = True
-testSIwithHDR = True
-testSIwithULL = True
+testVR60FPS = False
+testRAW = True
 
 recordAttempts = 1
 videoDuration = 30
-tests = ['SI', 'VR']
 
-titleSocCaptureEngine = "Intel SoC Capture Engine (v0.1.40112.1)"
+sensors = ['front', 'rear']
+tests = ['SI','VR']
+mp4FIlePath = r'C:\Users\irp\Desktop'
+
+titleSocCaptureEngine = "SoC Camera Tuning Kit (v0.2.40108.1)"
 titleSaveVideo = "Select File Name"
 
 shell = win32com.client.Dispatch("WScript.Shell")
 shell.AppActivate(titleSocCaptureEngine)
 user32 = ctypes.windll.user32
 
-#resolution window
-resWindowXStart = 695
-resWindowXEnd = 814
-resWindowYStart = 53
-resWindowYEnd = 73 # next item begins at 73 + 1(offset window border)
-resWindowFontSize = 12
+
 
 #sensor window
-senWindowXStart = 580
-senWindowXEnd = 700
-senWindowYStart = 53
-senWindowYEnd = 73 # next item begins at 73 + 1(offset window border)
-senWindowFontSize = 12
+sensorWindowXStart = 695
+sensorWindowXEnd = 814
+sensorWindowYStart = 153
+sensorWindowYEnd = 173 # next item begins at 73 + 1(offset window border)
+sensorWindowFontSize = 12
 
-#HDR button
-hdrButtonXStart = 462
-hdrButtonXEnd = 503
-hdrButtonYStart = 43
-hdrButtonYEnd = 76
+#stream window - preview pin, capture pin, etc
+streamWindowXStart = 695
+streamWindowXEnd = 814
+streamWindowYStart = 179
+streamWindowYEnd = 199 # next item begins at 73 + 1(offset window border)
+streamWindowFontSize = 12
 
-#ULL checker
-ullCheckerXStart = 701
-ullCheckerXEnd = 747
-ullCheckerYStart = 377
-ullCheckerYEnd = 397
-ullCheckerFontSize = 12
+#format window - 640x480, yuy2, etc
+formatWindowXStart = 695
+formatWindowXEnd = 814
+formatWindowYStart = 205
+formatWindowYEnd = 225 # next item begins at 73 + 1(offset window border)
+formatWindowFontSize = 12
+
+#Start button
+startButtonXStart = 654
+startButtonXEnd = 717
+startButtonYStart = 261
+startButtonYEnd = 287 
+
+#Stop button
+stopButtonXStart = 720
+stopButtonXEnd = 783
+stopButtonYStart = 261
+stopButtonYEnd = 287 
+
+#SI, aka snapshot, take photo, dumpRaw button
+siButtonXStart = 786
+siButtonXEnd = 849
+siButtonYStart = 261
+siButtonYEnd = 287
+
+#VR button
+vrButtonXStart = 858
+vrButtonXEnd = 939
+vrButtonYStart = 261
+vrButtonYEnd = 287
+
 
 SENSOR_Window = {
-				1: 'front',
-				2: 'rear',
+				1: 'front', #UF
+				2: 'rear', #WF
 				}
 
-ULL_Checker = {
-		1:'Off',
-		2:'On',
+STREAM_Window = {
+				1: 'Preview Pin',
+				2: 'Capture Pin',
+				3: 'Image Pin',
+				4: 'Raw Pin',
+				}
+
+UF_RAW = {
+		1:'2688x1944, GR10',
 		}
 
+WF_RAW = {
+		1:'2176x1376_GR10_60FPS',
+		2:'2176x1560_GR10',
+		3:'4224x3120_GR10',
+		}		
+				
 UF_SI = {
 		1:'2560x1440_YUY2',
 		2:'2560x1440_NV12',
@@ -91,17 +126,15 @@ WF_SI = {
 		 }
 
 WF_VR = {
-		1:'640x360_YUY2',		
-		2:'640x360_YUY2_60fps',
-		3:'640x360_NV12',
+		2:'640x360_YUY2_60fps',		
 		4:'640x360_NV12_60fps',
-		9:'1280x720_YUY2',
+		6:'640x480_YUY2_60fps',		
+		8:'640x480_NV12_60fps',
 		10:'1280x720_YUY2_60fps',
-		11:'1280x720_NV12',
 		12:'1280x720_NV12_60fps',
-		17:'1920X1080_YUY2',
+		14:'1280x960_YUY2_60fps',
+		16:'1280x960_NV12_60fps',
 		18:'1920X1080_YUY2_60fps',
-		19:'1920X1080_NV12',
 		20:'1920X1080_NV12_60fps',
 		}
 
@@ -115,40 +148,61 @@ def GetWindowPosition(title):
 	x, y =  win32ui.FindWindow(None, title).GetWindowRect()[0:2]
 	return x, y	
 	
-def MoveToImageMode():
-	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	user32.SetCursorPos(x+30,y+60)
+# def MoveToImageMode():
+	# x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	# user32.SetCursorPos(x+30,y+60)
 
-def MoveToVideoMode():
-	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	user32.SetCursorPos(x+90,y+60)
+# def MoveToVideoMode():
+	# x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	# user32.SetCursorPos(x+90,y+60)
 
-def MoveToShutter():
-	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	user32.SetCursorPos(x+150,y+60)
+# def MoveToShutter():
+	# x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	# user32.SetCursorPos(x+150,y+60)
 
 def MoveToSelectSensor():
 	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	user32.SetCursorPos(x+650,y+60)
-
-def MoveToSelectResolution():
-	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	xc, yc = WindowCenter(resWindowXStart, resWindowXEnd, resWindowYStart, resWindowYEnd) #move to center of the resolution window
+	xc, yc = WindowCenter(sensorWindowXStart, sensorWindowXEnd, sensorWindowYStart, sensorWindowYEnd) #move to center of the format window
 	user32.SetCursorPos(x+xc,y+yc)
 
-def MoveToHDRbutton():
+def MoveToSelectStream():
 	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	xc, yc = WindowCenter(hdrButtonXStart, hdrButtonXEnd, hdrButtonYStart, hdrButtonYEnd) #move to center of the resolution window
+	xc, yc = WindowCenter(streamWindowXStart, streamWindowXEnd, streamWindowYStart, streamWindowYEnd) #move to center of the format window
+	user32.SetCursorPos(x+xc,y+yc)	
+
+def MoveToSelectFormat():
+	x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	xc, yc = WindowCenter(formatWindowXStart, formatWindowXEnd, formatWindowYStart, formatWindowYEnd) #move to center of the format window
 	user32.SetCursorPos(x+xc,y+yc)
 
-def MoveToULLchecker():
+def MoveToSTARTbutton():
 	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	xc, yc = WindowCenter(ullCheckerXStart, ullCheckerXEnd, ullCheckerYStart, ullCheckerYEnd) #move to center of the resolution window
+	xc, yc = WindowCenter(startButtonXStart, startButtonXEnd, startButtonYStart, startButtonYEnd) 
 	user32.SetCursorPos(x+xc,y+yc)
+
+def MoveToSTOPbutton():
+	x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	xc, yc = WindowCenter(stopButtonXStart, stopButtonXEnd, stopButtonYStart, stopButtonYEnd) 
+	user32.SetCursorPos(x+xc,y+yc)
+
+def MoveToSIbutton(): #aka Dump Raw, 
+	x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	xc, yc = WindowCenter(siButtonXStart, siButtonXEnd, siButtonYStart, siButtonYEnd) 
+	user32.SetCursorPos(x+xc,y+yc)	
+
+def MoveToVRbutton():
+	x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	xc, yc = WindowCenter(vrButtonXStart, vrButtonXEnd, vrButtonYStart, vrButtonYEnd) 
+	user32.SetCursorPos(x+xc,y+yc)		
+
+# def MoveToULLchecker():
+	# x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	# xc, yc = WindowCenter(ullCheckerXStart, ullCheckerXEnd, ullCheckerYStart, ullCheckerYEnd) #move to center of the resolution window
+	# user32.SetCursorPos(x+xc,y+yc)
 	
-def MoveToSave():
-	x, y = GetWindowPosition(titleSocCaptureEngine)	 
-	user32.SetCursorPos(x+580,y+640)
+# def MoveToSave():
+	# x, y = GetWindowPosition(titleSocCaptureEngine)	 
+	# user32.SetCursorPos(x+580,y+640)
 	
 def SendKeys(key):
 	shell.SendKeys(key, 0)
@@ -181,30 +235,38 @@ def DropDownWindowSelector(index, FuncMoveCursor, windowXstart, windowXend, wind
 	MouseClick()
 
 def SelectSensor(sensor):
+	'''
+		1: 'front', #UF
+		2: 'rear', #WF
+	'''
 	for index, content in SENSOR_Window.iteritems():
 		if content == sensor:
-			DropDownWindowSelector(index, MoveToSelectSensor(), senWindowXStart, senWindowXEnd, senWindowYStart, senWindowYEnd, senWindowFontSize)
-#	MoveToSelectSensor()
-#	MouseClick()
-#	x, y = win32api.GetCursorPos()
-#	user32.SetCursorPos(x, y+17)
-#	MouseClick()
+			DropDownWindowSelector(index, MoveToSelectSensor(), sensorWindowXStart, sensorWindowXEnd, sensorWindowYStart, sensorWindowYEnd, sensorWindowFontSize)
 
-#def SelectSecondSensor():
-#	MoveToSelectSensor()
-#	MouseClick()
-#	x, y = win32api.GetCursorPos()
-#	user32.SetCursorPos(x, y+35)
-#	MouseClick()	
+def SelectStream(stream):
+	'''		
+		1: 'Preview Pin',
+		2: 'Capture Pin',
+		3: 'Image Pin',
+		4: 'Raw Pin',
+	'''
+	for index, content in STREAM_Window.iteritems():
+		if content == stream:
+			DropDownWindowSelector(index, MoveToSelectStream(), streamWindowXStart, streamWindowXEnd, streamWindowYStart, streamWindowYEnd, streamWindowFontSize)
+
+def SelectFormatByName(FormatName, FormatSettings):
+	for index, content in FormatSettings.iteritems():
+		if content == stream:
+			DropDownWindowSelector(index, MoveToSelectFormat(), formatWindowXStart, formatWindowXEnd, formatWindowYStart, formatWindowYEnd, formatWindowFontSize)
 	
-def SelectResolution(index):
+def SelectFormat(index): #may not be needed, substituted by DropDownWindowSelector
 	x, y = GetWindowPosition(titleSocCaptureEngine)	
-	MoveToSelectResolution() # Move to center of the resolution window first
+	MoveToSelectFormat() # Move to center of the resolution window first
 	xs, ys = win32api.GetCursorPos()
 	#print xs, ys
 	MouseClick() # Active the drop down window of resolution
-	xc, yc = WindowCenter(resWindowXStart, resWindowXEnd, resWindowYStart, resWindowYEnd)
-	yc = (resWindowYEnd + 2) + (resWindowFontSize / 2) # Y center of the first selection and we go from here
+	xc, yc = WindowCenter(formatWindowXStart, formatWindowXEnd, formatWindowYStart, formatWindowYEnd)
+	yc = (formatWindowYEnd + 2) + (formatWindowFontSize / 2) # Y center of the first selection and we go from here
 	yc = yc + (index - 1) * (12 + 1) 	
 	xn, yn = 0, 0	
 	while ((ys + yn) <= (y + yc)):
@@ -218,113 +280,152 @@ def SelectResolution(index):
 	#user32.SetCursorPos(x + xc, y + yc) #Set cursor to the resolution according to the Cursor Pos.
 	MouseClick()
 
-def VideoRecord(sensor, resList, shutterAttempts = 1, videoLength = 10):
+def VideoRecord(sensor, resList, shutterAttempts = 1, videoLength = 10, optionMSG=' '):
+	t = len(resList.keys())
+	tx = 1
 	for key in resList.keys():	
-		n = 1
+		n = 1		
 		while n <= shutterAttempts:
-			MoveToVideoMode()
-			MouseClick() #Select video mode
-			SelectResolution(key) #select video resolution based on index
-			time.sleep(1)
-			MoveToShutter()
-			time.sleep(0.5)
-			MouseClick() # record video
-			time.sleep(2) #wait 2 seconds before entering title, sometimes it requires it.
-			SendKeys('_'.join([sensor,resList.get(key),str(n)])) # enter video title 
-			time.sleep(1)
-			SendKeys("{ENTER}")
-			#time.sleep(0.5)
-			#SendKeys("{ENTER}") #In case to overwrite 
-			print " ".join(["Recording video", sensor, resList.get(key), str(n)])			
+			SelectFormat(key)
+			#start preview
+			MoveToSTARTbutton()
+			MouseClick() 
+			time.sleep(1)	
+			#start video recording
+			MoveToVRbutton() 
+			MouseClick() 
 			time.sleep(videoLength)
-			MoveToShutter() #stop recording
+			#stop video recording
+			MoveToSTOPbutton()
 			MouseClick()
-			time.sleep(1) #wait for it to save
+			#rename saved video file
+			newFileName = '_'.join([sensor,resList.get(key),str(n)])
+			newFileName = '.'.join([newFileName,'mp4'])
+			newFileName = '\\'.join([mp4FIlePath, newFileName]) 
+			oldFileName = '\\'.join([mp4FIlePath, 'sink.mp4'])
+			print " ".join(filter(None, ["VR:", optionMSG, resList.get(key),"Attempts:",str(n), "Format:", str(tx), "of", str(t)]))	
+			time.sleep(2)
+			if os.path.exists(newFileName):
+				os.remove(newFileName)
+			os.rename(oldFileName, newFileName)
 			n = n + 1
+		tx = tx + 1
 
 def StillImage(sensor, resList, shutterAttempts = 1, optionMSG = ''):
 	for key in resList.keys():	
 		n = 1
 		while n <= shutterAttempts:
-			MoveToImageMode()
-			MouseClick() 
-			SelectResolution(key) #select resolution based on index
+			SelectStream("Image Pin")
 			time.sleep(0.5)
-			MoveToShutter()
+			SelectFormat(key) #select resolution based on index
+			time.sleep(0.5)
+			#MoveToShutter() #This is substituted by image capture
 			MouseClick() # Take image
 			print " ".join(filter(None, ["SI:", optionMSG, str(key), resList.get(key),str(n)]))			
 			n = n + 1
 
-def StillImageHDR(sensor, resList, shutterAttempts = 1, optionMSG = ''):
+def RawImage(sensor, resList, shutterAttempts = 1, optionMSG = ''):
+	t = len(resList.keys())
+	tx = 1
 	for key in resList.keys():	
-		n = 1
+		n = 1		
 		while n <= shutterAttempts:
-			MoveToImageMode()
+			SelectFormat(key)
+			#start preview
+			MoveToSTARTbutton()
 			MouseClick() 
-			time.sleep(0.1)
-			SelectResolution(key) #select resolution based on index
-			time.sleep(1)
-			
-			MoveToHDRbutton() # Enable HDR	
+			time.sleep(0.5)
+			#start Dump Raw
+			MoveToSIbutton()
 			MouseClick()
-			time.sleep(1)
-			
-			MoveToShutter()
-			MouseClick() # Take image
-			print " ".join(filter(None, ["SI:", optionMSG, str(key), resList.get(key),str(n)]))			
+			time.sleep(0.5)
+			#stop preview
+			MoveToSTOPbutton()
+			MouseClick()
+			#rename saved video file
+			print " ".join(filter(None, ["SI:", optionMSG, resList.get(key),"Attempts:",str(n), "Format:", str(tx), "of", str(t)]))	
+			time.sleep(0.5)
 			n = n + 1
-			time.sleep(1)
+		tx = tx + 1
 
+
+#test VR with 60FPS
+if testVR60FPS == True:			
+	sensor = 'rear'
+	SelectSensor(sensor)
+	SelectStream('Capture Pin')
+	time.sleep(2)
+	VideoRecord(sensor, WF_VR)
+
+#test raw capture			
+if testRAW == True:			
+	for sensor in sensors:
+		SelectSensor(sensor)
+		SelectStream('Raw Pin')
+		time.sleep(2)
+		if sensor == 'front':
+			RawImage(sensor, UF_RAW)
+		elif sensor == 'rear':
+			RawImage(sensor, WF_RAW)
+				
+subprocess.call('pause', shell=True)
+
+# def StillImageHDR(sensor, resList, shutterAttempts = 1, optionMSG = ''):
+	# for key in resList.keys():	
+		# n = 1
+		# while n <= shutterAttempts:
+			# MoveToImageMode()
+			# MouseClick() 
+			# time.sleep(0.1)
+			# SelectFormat(key) #select resolution based on index
+			# time.sleep(1)
 			
-#Normal test of SI and VR
-if testSIandVR == True:			
-	for index, sensor in SENSOR_Window.iteritems():
-		SelectSensor(sensor)
-		time.sleep(2)		
-		for testMode in tests:
-			if testMode == 'SI' and sensor == 'front':
-				StillImage(sensor, UF_SI)
-			elif testMode == 'VR' and sensor == 'front':
-				VideoRecord(sensor, UF_VR)
-			elif testMode == 'SI' and sensor == 'rear':
-				StillImage(sensor, WF_SI)				
-			elif testMode == 'VR' and sensor == 'rear':
-				VideoRecord(sensor, WF_VR)
+			# MoveToHDRbutton() # Enable HDR	
+			# MouseClick()
+			# time.sleep(1)
+			
+			# MoveToShutter()
+			# MouseClick() # Take image
+			# print " ".join(filter(None, ["SI:", optionMSG, str(key), resList.get(key),str(n)]))			
+			# n = n + 1
+			# time.sleep(1)
+			
+
 
 				
-#Take HDR image
-if testSIwithHDR == True:
-	for index, sensor in SENSOR_Window.iteritems():
-		SelectSensor(sensor)
-		time.sleep(2)
-		for testMode in tests:									
-			if testMode == 'SI' and sensor == 'front':
-				StillImageHDR(sensor, UF_SI, optionMSG='front HDR')
-			elif testMode == 'SI' and sensor == 'rear':	
-				StillImageHDR(sensor, WF_SI, optionMSG='rear HDR')
-			elif testMode == 'VR':
-				print "HDR Not supported in VR"
-				continue
+# #Take HDR image
+# if testSIwithHDR == True:
+	# for index, sensor in SENSOR_Window.iteritems():
+		# SelectSensor(sensor)
+		# time.sleep(2)
+		# for testMode in tests:									
+			# if testMode == 'SI' and sensor == 'front':
+				# StillImageHDR(sensor, UF_SI, optionMSG='front HDR')
+			# elif testMode == 'SI' and sensor == 'rear':	
+				# StillImageHDR(sensor, WF_SI, optionMSG='rear HDR')
+			# elif testMode == 'VR':
+				# print "HDR Not supported in VR"
+				# continue
 
 				
-#Take ULL image
-if testSIwithULL == True:
-	for index, sensor in SENSOR_Window.iteritems():
-		SelectSensor(sensor)
-		time.sleep(2)
-		#Enable ULL
-		for index, content in ULL_Checker.iteritems():
-			if content == 'On':
-				DropDownWindowSelector(index, MoveToULLchecker(), ullCheckerXStart, ullCheckerXEnd, ullCheckerYStart, ullCheckerYEnd, ullCheckerFontSize)
-				for testMode in tests:							
-					if testMode == 'SI' and sensor == 'front':						
-						StillImage(sensor, UF_SI, optionMSG='front ULL')
-					elif testMode == 'SI' and sensor == 'rear':
-						StillImage(sensor, WF_SI, optionMSG='rear ULL')
-					elif testMode == 'VR':
-						print "ULL Not supported in VR"
-						continue							
-	#Disable ULL
-	for index, content in ULL_Checker.iteritems():
-		if content == 'Off':
-			DropDownWindowSelector(index, MoveToULLchecker(), ullCheckerXStart, ullCheckerXEnd, ullCheckerYStart, ullCheckerYEnd, ullCheckerFontSize)	
+# #Take ULL image
+# if testSIwithULL == True:
+	# for index, sensor in SENSOR_Window.iteritems():
+		# SelectSensor(sensor)
+		# time.sleep(2)
+		# #Enable ULL
+		# for index, content in ULL_Checker.iteritems():
+			# if content == 'On':
+				# DropDownWindowSelector(index, MoveToULLchecker(), ullCheckerXStart, ullCheckerXEnd, ullCheckerYStart, ullCheckerYEnd, ullCheckerFontSize)
+				# for testMode in tests:							
+					# if testMode == 'SI' and sensor == 'front':						
+						# StillImage(sensor, UF_SI, optionMSG='front ULL')
+					# elif testMode == 'SI' and sensor == 'rear':
+						# StillImage(sensor, WF_SI, optionMSG='rear ULL')
+					# elif testMode == 'VR':
+						# print "ULL Not supported in VR"
+						# continue							
+	# #Disable ULL
+	# for index, content in ULL_Checker.iteritems():
+		# if content == 'Off':
+			# DropDownWindowSelector(index, MoveToULLchecker(), ullCheckerXStart, ullCheckerXEnd, ullCheckerYStart, ullCheckerYEnd, ullCheckerFontSize)	
