@@ -564,7 +564,7 @@ class css_merge:
 git checkout %s
 git pull -v
 cd ..
-git pull -v''' % (self.sha, self.path_win_to_unix(self.source_folder))
+git pull -v''' % (self.path_win_to_unix(self.source_folder), self.sha)
 
         self.git_bash_call(self.create_bash(bash_command))
 
