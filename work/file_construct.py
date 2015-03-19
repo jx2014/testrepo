@@ -694,8 +694,19 @@ git log --oneline -n10''' % self.path_win_to_unix(self.source_package_path)
 class BuildFW(css_merge):
     def __init__(self, **kwargs):
         self.source_folder = kwargs.get('source_folder')
-        self.fw = kwargs.get('fw')
+        self.build_script = kwargs.get('build_script')
+        self.folder_name = kwargs.get('folder_name')
+
+    def __del__(self):
+        pass
 
     def Build(self):
-        print 'This is Build func from BuildFW class'
+        print '\nFolder name is: %s' % self.folder_name
+
+        print 'Build script is %s' % self.build_script
+        #subprocess.call(self.build_script)
+        #check_log_error
+
+    def CheckLog(self):
         pass
+

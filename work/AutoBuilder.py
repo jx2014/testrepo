@@ -124,8 +124,9 @@ class AutoBuildPanel(controlPanel):
             for sha in self.drv_shas:
                 #self.Checkout(sha)
                 for fw in self.buildFWs:
-                    print '.'.join([fw, sha])
-                    build = BuildFW(source_folder = self.source_path, fw = fw)
+                    folderName = '.'.join([fw, sha])
+                    buildScript = self.config.get('build_scripts', fw)
+                    build = BuildFW(source_folder = self.source_path, build_script = buildScript, folder_name = folderName)
                     build.Build()
         else:
             print '\nNo FW selected.\nPlease check at least one FW to build'
