@@ -477,13 +477,6 @@ class css_version_file():
 #                           C S S         M E R G E                                                              #
 #                                                                                                                #
 ##################################################################################################################
-class css_checkout:
-    def __init__(self):
-        print 'hi'
-
-    def __del__(self):
-        print 'good bye'
-
 class css_merge:
     def __init__(self, sha = 'master', **kwargs):
         self.Q = Queue()
@@ -691,3 +684,14 @@ git log --oneline -n10''' % self.path_win_to_unix(self.source_package_path)
         self.Q.put(self.check_unique_files())
 
 
+
+##################################################################################################################
+#                                                                                                                #
+#                           B U I L D             F I R M W A R E                                                #
+#                                                                                                                #
+##################################################################################################################
+
+class BuildFW(css_merge):
+    def __init__(self, sha = 'master', **kwargs):
+        self.source_folder = kwargs.get('source_folder')
+        pass

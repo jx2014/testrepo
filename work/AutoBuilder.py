@@ -18,6 +18,7 @@ import subprocess
 import sys
 import os
 from Queue import Queue
+from sets import Set
 
 class AutoBuildPanel(controlPanel):
     def __init__(self, parent):
@@ -27,7 +28,6 @@ class AutoBuildPanel(controlPanel):
         self.File2Memory()
         self.ConstructUI()
         self.parent = parent
-        self.drv_shas = []
 
     def File2Memory(self):#from file to memory AutoBuilder version
         with open(self.ConfigFile) as dcf:
@@ -74,22 +74,23 @@ class AutoBuildPanel(controlPanel):
         shas = self.t_shas.get(1.0, 'end')
         shas = shas.split('\n')
         sha_only = re.compile('([0-9]|[a-f]){7}')
+        self.drv_shas = Set()
         for line in shas:
             sha_string = sha_only.match(line)
             if sha_string:
-                self.drv_shas.append(sha_string.group(0))
-                print sha_string.group(0)
+                self.drv_shas.add(sha_string.group(0))
+                #print sha_string.group(0)
 
     def GetFW(self):
-        self.buildFWs = []
+        self.buildFWs = Set()
         if self.var_2400.get() == 1:
-            self.buildFWs.append('2400')
+            self.buildFWs.add('BYT')
         if self.var_2401c2p.get() == 1:
-            self.buildFWs.append('2401_csi2plus')
+            self.buildFWs.add('CHT')
         if self.var_2500.get() == 1:
-            self.buildFWs.append('2500')
+            self.buildFWs.add('SKC')
         if self.var_2600.get() == 1:
-            self.buildFWs.append('2600')
+            self.buildFWs.add('BXT')
 
     def Checkout(self, sha):
         checkout = css_merge(
@@ -105,11 +106,14 @@ class AutoBuildPanel(controlPanel):
 
         checkout.bs_git_checkout()
         checkout.bs_git_clean_source()
-        checkout.bs_git_log_10_lines()
+        checkout.bs_git_log_1_lines()
 
     def CheckoutMaster(self):
         print 'you pressed CheckoutMaster button'
         #self.Checkout('master')
+
+    def BuildFW(self,fw):
+        pass
 
     def Build(self):
         #text = self.t_shas.get();
@@ -118,11 +122,12 @@ class AutoBuildPanel(controlPanel):
         self.GetFW()
 
         if len(self.buildFWs) > 0:
-            print '\nFW to be built: ', self.buildFWs
+            #print '\nFW to be built: ', self.buildFWs
+            #print '\nDRV SHAs: ', self.drv_shas
             for sha in self.drv_shas:
                 #self.Checkout(sha)
                 for fw in self.buildFWs:
-                    print fw, sha
+                    print '.'.join([fw, sha])
         else:
             print '\nNo FW selected.\nPlease check at least one FW to build'
 
