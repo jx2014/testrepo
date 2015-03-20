@@ -1,3 +1,9 @@
+#to install: 
+#python setup.py py2exe
+#2015 03 20 
+#Jeremy Xue
+#Jeremy.xzm@gmail.com
+
 from distutils.core import setup
 import py2exe, sys, os
 
