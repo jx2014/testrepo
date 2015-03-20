@@ -270,3 +270,25 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+# import re
+# name = re.compile(r'(?<=<tr><td>)[a-z0-9]*(?=</td>)')
+# name_list = []
+#
+# msgbody = [r'<tr><td>salamat123</td>asdasdf<td>shit</td><td>123123</td></tr>',
+#            r'<tr><td>brandon</td>asdasdf<td>shit</td><td>123123</td></tr>',
+#            r'<tr><td>zjerex</td>asdasdf<td>shit</td><td>123123</td></tr>',
+#            'shitshitshit']
+#
+#
+# for msg in msgbody:
+#     name_found = name.search(msg)
+#     if name_found is not None:
+#         name_list.append('@'.join([name_found.group(), 'brandon.com']))
+
+
+
+
+
