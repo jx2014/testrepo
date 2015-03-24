@@ -112,6 +112,10 @@ class AutoBuildPanel(controlPanel):
         print 'you pressed CheckoutMaster button'
         #self.Checkout('master')
 
+    def BuildScript(self):
+        pass
+
+
     def Build(self):
         #text = self.t_shas.get();
         self.t_outputBox.delete(1.0, 'end')
@@ -272,19 +276,27 @@ if __name__ == '__main__':
     main()
 
 
-
+#
 # import re
 # name = re.compile(r'(?<=<tr><td>)[a-z0-9]*(?=</td>)')
 # name_list = []
 #
-# msgbody = [r'<tr><td>salamat123</td>asdasdf<td>shit</td><td>123123</td></tr>',
-#            r'<tr><td>brandon</td>asdasdf<td>shit</td><td>123123</td></tr>',
-#            r'<tr><td>zjerex</td>asdasdf<td>shit</td><td>123123</td></tr>',
-#            'shitshitshit']
+# def html2list(row):
+#     trtd = '<tr><td>|</td></tr>|<td>'
+#     #oneRow = r'<tr><td>salamat123</td><td>column2</td><td>column3</td><td>column4</td></tr>'
+#     listFromRow = re.sub(trtd, '', row).split('</td>')
+#     return listFromRow
+#
+#
+#
+# msgbody = [r'<tr><td>salamat123</td><td>column2</td><td>column3</td><td>column4</td></tr>',
+#            r'<tr><td>brandon</td><td>column2</td><td>column3</td><td></td></tr>',
+#            r'<tr><td>zjerex</td><td>column2</td><td>column3</td><td>column4</td></tr>']
 #
 #
 # for msg in msgbody:
 #     name_found = name.search(msg)
+#     print html2list(msg)
 #     if name_found is not None:
 #         name_list.append('@'.join([name_found.group(), 'brandon.com']))
 
