@@ -304,7 +304,7 @@ class controlPanel(tk.Frame):
         self.c_2500 = tk.Checkbutton(self, text='2500', variable=self.var_2500).grid(row=12, column=4, sticky='w')
         self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=13, column=4, sticky='w')
 
-        self.c_ACC = tk.Checkbutton(self, text='2400 ACC', variable=self.var_ACC)
+        self.c_ACC = tk.Checkbutton(self, text='ACC', variable=self.var_ACC)
         self.c_ACC.select()
         self.c_ACC.grid(row=11, column=0, sticky='w')
 
