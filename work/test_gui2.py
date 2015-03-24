@@ -395,7 +395,7 @@ class controlPanel(tk.Frame):
                           remote_path = self.OTMremote_path,
                           irci = self.irci,
                           local_path = self.OTMlocal_path,
-                          #copy_acc = self.var_ACC.get()
+                          copy_acc = self.var_ACC.get()
                           )
 
             BYT_2401 = fc(
