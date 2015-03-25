@@ -509,12 +509,18 @@ class controlPanel(tk.Frame):
         self.ShowGitCommands()
 
     def ShowGitCommands(self):
-        print "\nexport MY_INTEGRATION=irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
+
+        print "\nexport MY_INTEGRATION=CP_irci_master_%s_%s" % (self.daily_folder, self.package_hr) #CP_Integration_irci_master_20150202_0457
+        print "export MY_INTEGRATION=irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
         print "".join(["export USER=", self.user])
         print "git checkout -b remotes/origin/master/${MY_INTEGRATION}"
         print "\ngit commit -s"
-        print "Integrated_CSSIFW_irci_master_%s_%s_%s" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
+        print "CP_Integrated_irci_master_%s_%s" % (self.daily_folder, self.package_hr) #20150202_0457_1081
+        print "Integrated_CSSIFW_irci_master_%s_%s_%s[BYT][CHT]" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
+        print "Integrated_CSSIFW_irci_master_%s_%s_%s[SKC]" % (self.daily_folder, self.package_hr, self.irci) #20150202_0457_1081
         print "\ngit push origin HEAD:refs/for/master/${MY_INTEGRATION}"
+        print "\ngit branch -m remotes/origin/master/irci_master_%s_%s_%sBYT_CHT" % (self.daily_folder, self.package_hr, self.irci)
+        print "git branch -m remotes/origin/master/irci_master_%s_%s_%sSKC\n" % (self.daily_folder, self.package_hr, self.irci)
 
     def cssVersions(self):
         self.UI2Memory()

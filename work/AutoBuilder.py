@@ -112,6 +112,9 @@ class AutoBuildPanel(controlPanel):
         print 'you pressed CheckoutMaster button'
         #self.Checkout('master')
 
+    def CleanBuilds(self):
+        pass
+
     def BuildScript(self):
         pass
 
@@ -228,11 +231,20 @@ to here:''',
         self.var_2401c2p = tk.IntVar()
         self.var_2500 = tk.IntVar()
         self.var_2600 = tk.IntVar()
+        self.var_win8 = tk.IntVar()
+        self.var_win10 = tk.IntVar()
+        self.var_x86 = tk.IntVar()
+        self.var_x64 = tk.IntVar()
 
         self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400).grid(row=23, column=1, sticky='w')
         self.c_2401C2P = tk.Checkbutton(self, text='2401C2P', variable=self.var_2401c2p).grid(row=23, column=2, sticky='w')
         self.c_2500 = tk.Checkbutton(self, text='2500', variable=self.var_2500).grid(row=24, column=1, sticky='w')
         self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=24, column=2, sticky='w')
+
+        self.c_win8 = tk.Checkbutton(self, text='Win8', variable=self.var_win8).grid(row=21, column=1, sticky='w')
+        self.c_win10 = tk.Checkbutton(self, text='Win10', variable=self.var_win10).grid(row=22, column=1, sticky='w')
+        self.c_x86 = tk.Checkbutton(self, text='x86', variable=self.var_x86).grid(row=21, column=2, sticky='w')
+        self.c_x64 = tk.Checkbutton(self, text='x64', variable=self.var_x64).grid(row=22, column=2, sticky='w')
 
         l_SourcePath = tk.Label(self, text='Source path')
         l_SourcePath.grid(row=25, column=0, sticky='w')
