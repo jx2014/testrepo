@@ -478,9 +478,9 @@ class css_version_file():
 #                                                                                                                #
 ##################################################################################################################
 class css_merge:
-    def __init__(self, sha = 'master', **kwargs):
+    def __init__(self, sha = 'master', verbose = True, **kwargs):
         self.Q = Queue()
-
+        self.verbose = verbose
         self.sha = sha
         self.source_folder = kwargs.get('source_folder') #C:\JX_Projects\vieddrv-trunk\camerasw\Source
         self.fw_name = kwargs.get('fw_name')
@@ -536,18 +536,19 @@ class css_merge:
     def git_bash_call(self, script_path): #call git bash script
         if os.path.exists(script_path) == True:
             final_script = self.cmd_exe + ' /c ' + self.sh_exe + ' --login -i -- ' + script_path
-            print "Executing command: %s" % final_script
+            if self.verbose: print "Executing command: %s" % final_script
             p = subprocess.Popen(final_script, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             o, e = p.communicate()
             if o:
-                print o
+                if self.verbose: print "The command has executed without errors:\n%s" % o
             if e:
-                print "The command encountered an error: %s" % e
+                if self.verbose: print "The command encountered an error:\n%s" % e
 
     def create_bash(self, bash_content): #create git bash script under C:\JX_Projects\git_bash.sh
-        print '\n\nbash command to be created:'
-        print bash_content
-        print '\n'
+        if self.verbose:
+            print '\n\nbash command to be created:'
+            print bash_content
+            print '\n'
         try:
             os.remove(self.git_bash_script) #remove current git bash before creating a new one
         except OSError as e:
@@ -558,10 +559,15 @@ class css_merge:
 
         return self.git_bash_script
 
-
     def bs_git_checkout(self): #bash script for git checkout at source folder and return the path to such script
         bash_command = '''cd %s
-git checkout %s
+git checkout %s''' % (self.path_win_to_unix(self.source_folder), self.sha)
+
+        self.git_bash_call(self.create_bash(bash_command))
+
+    def bs_git_checkout_master(self): #bash script for git checkout at source folder and return the path to such script
+        bash_command = '''cd %s
+git checkout master
 git pull -v
 cd ..
 git pull -v''' % (self.path_win_to_unix(self.source_folder), self.sha)
@@ -582,9 +588,9 @@ git clean -xfd''' % self.path_win_to_unix(self.source_package_path)
 
         self.git_bash_call(self.create_bash(bash_command))
 
-    def bs_git_log_10_lines(self):
+    def bs_git_log_10_lines(self, n=10):
         bash_command = '''cd %s
-git log --oneline -n10''' % self.path_win_to_unix(self.source_package_path)
+git log --oneline -n%d''' % (self.path_win_to_unix(self.source_package_path), n)
 
         self.git_bash_call(self.create_bash(bash_command))
 
@@ -693,19 +699,54 @@ git log --oneline -n10''' % self.path_win_to_unix(self.source_package_path)
 
 class BuildFW(css_merge):
     def __init__(self, **kwargs):
+        self.verbose = kwargs.get('verbose')
+        self.sha = kwargs.get('sha')
         self.source_folder = kwargs.get('source_folder')
+        self.source_package_path = self.source_folder
         self.build_script = kwargs.get('build_script')
         self.folder_name = kwargs.get('folder_name')
+        self.os_version = kwargs.get('os') # win8 or win10
+        self.cmd_exe = r'%systemroot%\system32\cmd.exe'
+        self.sh_exe = r'"C:\Program Files (x86)\Git\bin\sh.exe"'
+        self.git_bash_script = string.join([self.source_folder.split('\\')[0],self.source_folder.split('\\')[1],'git_bash.sh'],'\\') #C:\JX_Projects\git_bash.sh
+        self.git_bash_log = string.join([self.source_folder.split('\\')[0],self.source_folder.split('\\')[1],'git_bash.log'],'\\') #C:\JX_Projects\git_bash.log
+        self.verbose = False
+
+        if self.os_version == 'win10':
+            self.winEnv = {'OSVER':'8.2'}
+        else:
+            self.winEnv = {'OSVER':' '}
 
     def __del__(self):
         pass
 
-    def Build(self):
-        print '\nFolder name is: %s' % self.folder_name
+    def log_path(self):
+        return '\\'.join([self.source_folder, 'Camera\\Platform', self.folder_name + '.log'])
 
+    def Build(self):
+        print '\nBuld parameter: %s %s' %( self.folder_name, self.os_version)
+        #print '\nFolder name is: %s' % self.folder_name
+        #print 'Source Folder name is: %s' % self.source_folder
+        #print 'OS version is: %s' % self.os_version
+        if self.verbose: print self.winEnv
         print 'Build script is %s' % self.build_script
+        log_path = self.log_path()
+        print 'Log path is %s' % log_path
+
+        p = subprocess.Popen('echo OSVEr=%OSVER%', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, env=self.winEnv)
+        o, e = p.communicate()
+        if o:
+            print "The command has executed without errors:\n%s" % o
+        if e:
+            print "The command encountered an error:\n%s" % e
+
         #subprocess.call(self.build_script)
         #check_log_error
+
+    def Checkout(self):
+        self.bs_git_checkout()
+        self.bs_git_clean_source()
+        self.bs_git_log_10_lines(n=1)
 
     def CheckLog(self):
         pass

@@ -41,6 +41,10 @@ class AutoBuildPanel(controlPanel):
             self.share_path = self.config.get('auto_builder', 'share_path')
             self.source_path = self.config.get('auto_builder', 'source_path')
             self.binary_path = self.config.get('auto_builder', 'binary_path')
+            #project = C:\JX_Projects\vieddrv-trunk\camerasw\Source\Camera\Platform\
+            #self.cht_x86 = '\\'.join([self.share_path, 'Camera\\Platform', self.config.get('build_scripts', 'cht_x86')])
+            #self.cht_x64 = '\\'.join([self.share_path, 'Camera\\Platform', self.config.get('build_scripts', 'cht_x64')])
+            #self.skc_x64 = '\\'.join([self.share_path, 'Camera\\Platform', self.config.get('build_scripts', 'skc_x64')])
 
     def Memory2File(self):#from memory to file
         #self.config.read(self.ConfigFile)
@@ -81,18 +85,31 @@ class AutoBuildPanel(controlPanel):
                 self.drv_shas.add(sha_string.group(0))
                 #print sha_string.group(0)
 
+    def GetOS(self):
+        self.buildOS = Set()
+        if self.var_win10.get() == 1:
+            self.buildOS.add('win10')
+        if self.var_win8.get() == 1:
+            self.buildOS.add('win8')
+
     def GetFW(self):
-        self.buildFWs = Set()
+        self.buildFWs = []
         if self.var_2400.get() == 1:
-            self.buildFWs.add('BYT')
-        if self.var_2401c2p.get() == 1:
-            self.buildFWs.add('CHT')
-        if self.var_2500.get() == 1:
-            self.buildFWs.add('SKC')
+            self.buildFWs.append('BYT')
+        if self.var_2401c2p_x64.get() == 1:
+            self.buildFWs.append('CHT_x64')
+        if self.var_2401c2p_x86.get() == 1:
+            self.buildFWs.append('CHT_x86')
+        if self.var_2500_x64.get() == 1:
+            self.buildFWs.append('SKC_x64')
         if self.var_2600.get() == 1:
-            self.buildFWs.add('BXT')
+            self.buildFWs.append('BXT')
 
     def Checkout(self, sha):
+        pass
+
+    def CheckoutMaster(self):
+        print 'you pressed CheckoutMaster button'
         checkout = css_merge(
               #package_code = fw, #probably not needed
               sha = sha,
@@ -104,13 +121,9 @@ class AutoBuildPanel(controlPanel):
               merge_acc = ''
               )
 
-        checkout.bs_git_checkout()
+        checkout.bs_git_checkout_master()
         checkout.bs_git_clean_source()
-        checkout.bs_git_log_1_lines()
-
-    def CheckoutMaster(self):
-        print 'you pressed CheckoutMaster button'
-        #self.Checkout('master')
+        checkout.bs_git_log_10_lines()
 
     def CleanBuilds(self):
         pass
@@ -124,19 +137,26 @@ class AutoBuildPanel(controlPanel):
         self.t_outputBox.delete(1.0, 'end')
         self.GetShas()
         self.GetFW()
+        self.GetOS()
 
-        if len(self.buildFWs) > 0:
-            #print '\nFW to be built: ', self.buildFWs
-            #print '\nDRV SHAs: ', self.drv_shas
-            for sha in self.drv_shas:
-                #self.Checkout(sha)
-                for fw in self.buildFWs:
-                    folderName = '.'.join([fw, sha])
-                    buildScript = self.config.get('build_scripts', fw)
-                    build = BuildFW(source_folder = self.source_path, build_script = buildScript, folder_name = folderName)
-                    build.Build()
+        if len(self.buildOS) > 0:
+            if len(self.buildFWs) > 0:
+                #print '\nFW to be built: ', self.buildFWs
+                #print '\nDRV SHAs: ', self.drv_shas
+                for sha in self.drv_shas:
+                    #self.Checkout(sha)
+                    for fw in self.buildFWs:
+                        for os in self.buildOS:
+                            folderName = '.'.join([fw, sha])
+                            buildScript = '\\'.join([self.source_path, 'Camera\\Platform', self.config.get('build_scripts', fw)])
+                            build = BuildFW(source_folder = self.source_path, build_script = buildScript, folder_name = folderName, os = os, sha = sha)
+                            build.Checkout() #it will checkout the proper sha based on BuildFW(sh = sh)
+                            build.Build()
+
+            else:
+                print '\nNo FW selected.\nPlease check at least one FW to build'
         else:
-            print '\nNo FW selected.\nPlease check at least one FW to build'
+            print '\nNo OS selected.\nPlease check at least one OS to build'
 
 
     def ConstructUI(self):#initialize from File to UI
@@ -224,27 +244,26 @@ to here:''',
         self.t_outputBox.grid(row=15, column=1, columnspan=2, sticky='nswe')
         #end of output text box
 
-
         l_row21 = tk.Label(self, text='', width=10).grid(row=22, column=0)
 
         self.var_2400 = tk.IntVar()
-        self.var_2401c2p = tk.IntVar()
-        self.var_2500 = tk.IntVar()
+        self.var_2401c2p_x86 = tk.IntVar()
+        self.var_2401c2p_x64 = tk.IntVar()
+        self.var_2500_x64 = tk.IntVar()
         self.var_2600 = tk.IntVar()
         self.var_win8 = tk.IntVar()
         self.var_win10 = tk.IntVar()
         self.var_x86 = tk.IntVar()
         self.var_x64 = tk.IntVar()
 
-        self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400).grid(row=23, column=1, sticky='w')
-        self.c_2401C2P = tk.Checkbutton(self, text='2401C2P', variable=self.var_2401c2p).grid(row=23, column=2, sticky='w')
-        self.c_2500 = tk.Checkbutton(self, text='2500', variable=self.var_2500).grid(row=24, column=1, sticky='w')
-        self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=24, column=2, sticky='w')
+        #self.c_2400 = tk.Checkbutton(self, text='2400', variable=self.var_2400).grid(row=23, column=1, sticky='w')
+        self.c_2401C2P_x86 = tk.Checkbutton(self, text='2401C2P_x86', variable=self.var_2401c2p_x86).grid(row=23, column=1, sticky='w')
+        self.c_2401C2P_x64 = tk.Checkbutton(self, text='2401C2P_x64', variable=self.var_2401c2p_x64).grid(row=24, column=1, sticky='w')
+        self.c_2500_x64 = tk.Checkbutton(self, text='2500_x64', variable=self.var_2500_x64).grid(row=23, column=2, sticky='w')
+        #self.c_2600 = tk.Checkbutton(self, text='2600', variable=self.var_2600).grid(row=24, column=2, sticky='w')
 
-        self.c_win8 = tk.Checkbutton(self, text='Win8', variable=self.var_win8).grid(row=21, column=1, sticky='w')
-        self.c_win10 = tk.Checkbutton(self, text='Win10', variable=self.var_win10).grid(row=22, column=1, sticky='w')
-        self.c_x86 = tk.Checkbutton(self, text='x86', variable=self.var_x86).grid(row=21, column=2, sticky='w')
-        self.c_x64 = tk.Checkbutton(self, text='x64', variable=self.var_x64).grid(row=22, column=2, sticky='w')
+        self.c_win8 = tk.Checkbutton(self, text='Win8', variable=self.var_win8).grid(row=22, column=1, sticky='w')
+        self.c_win10 = tk.Checkbutton(self, text='Win10', variable=self.var_win10).grid(row=22, column=2, stick='w')
 
         l_SourcePath = tk.Label(self, text='Source path')
         l_SourcePath.grid(row=25, column=0, sticky='w')
