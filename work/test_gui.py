@@ -1,14 +1,33 @@
-#!/usr/bin/python
 """
 - read output from a subprocess in a background thread
 - show the output in the GUI
 - stop subprocess using a Tkinter button
 """
-from __future__ import print_function
+
 from collections import deque
 from itertools import islice
 from subprocess import Popen, PIPE, STDOUT
 from threading import Thread
+import sys
+
+class StdError_redirector(object):
+    def __init__(self,widget):
+        self.widget = widget
+
+    def write(self,string):
+        self.widget.config(fg='red')
+        self.widget.insert(tk.END,string)
+        self.widget.see(tk.END)
+
+class Std_redirector(object):
+    def __init__(self,widget):
+        self.widget = widget
+
+    def write(self,string):
+        self.widget.config(fg='blue')
+        self.widget.insert(tk.END,string)
+        self.widget.see(tk.END)
+
 
 try:
     import Tkinter as tk
@@ -27,36 +46,54 @@ def iter_except(function, exception):
     try:
         while True:
             yield function()
+
     except exception:
         return
+
+
 
 class StopProcessDemo:
     def __init__(self, root):
         self.root = root
 
-        # start dummy subprocess to generate some output
-        self.proc = Popen(["python", "-u", "-c", """
-import itertools, sys, time
+        try:
 
-for i in itertools.count():
-    print(i)
-    time.sleep(0.5)
-"""], stdout=PIPE, stderr=STDOUT)
+            self.t_outputBox = tk.Text(root, height=10, width=100).pack()
 
-        # launch thread to read the subprocess output
-        #   (put the subprocess output into the queue in a background thread,
-        #    get output from the queue in the GUI thread.
-        #    Output chain: proc.readline -> queue -> stringvar -> label)
-        q = Queue()
-        t = Thread(target=self.reader_thread, args=[q]).start()
+            sys.stderr = StdError_redirector(self.t_outputBox)
+            sys.stdout = Std_redirector(self.t_outputBox)
 
-        # show subprocess' stdout in GUI
-        self._var = tk.StringVar() # put subprocess output here
-        tk.Label(root, textvariable=self._var).pack()
-        self.update(q) # start update loop
+            # start dummy subprocess to generate some output
+    #         self.proc = Popen(["python", "-u", "-c", """
+    # import itertools, sys, time
+    #
+    # for i in itertools.count():
+    #     print(i)
+    #     time.sleep(0.5)
+    # """], stdout=PIPE, stderr=STDOUT)
 
-        # stop subprocess using a button
-        tk.Button(root, text="Stop subprocess", command=self.stop).pack()
+            self.proc = Popen("dir /s", shell=True, stdout=PIPE, stderr=STDOUT)
+
+            # launch thread to read the subprocess output
+            #   (put the subprocess output into the queue in a background thread,
+            #    get output from the queue in the GUI thread.
+            #    Output chain: proc.readline -> queue -> stringvar -> label)
+            q = Queue()
+            t = Thread(target=self.reader_thread, args=[q]).start()
+
+            # show subprocess' stdout in GUI
+            self._var = tk.StringVar() # put subprocess output here
+            #tk.Label(root, textvariable=self._var).pack()
+            self.update(q) # start update loop
+            # stop subprocess using a button
+            tk.Button(root, text="Stop subprocess", command=self.stop).pack()
+        except Exception:
+            import traceback
+            info(traceback.format_exception())
+
+    def printsomething(self):
+        print("someting")
+
 
     def reader_thread(self, q):
         """Read subprocess output and put it into the queue."""
