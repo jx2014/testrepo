@@ -570,7 +570,7 @@ git checkout %s''' % (self.path_win_to_unix(self.source_folder), self.sha)
 git checkout master
 git pull -v
 cd ..
-git pull -v''' % (self.path_win_to_unix(self.source_folder), self.sha)
+git pull -v''' % (self.path_win_to_unix(self.source_folder))
 
         self.git_bash_call(self.create_bash(bash_command))
 
