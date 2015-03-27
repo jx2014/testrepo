@@ -153,6 +153,7 @@ class AutoBuildPanel(controlPanel):
                             build.Checkout() #it will checkout the proper sha based on BuildFW(sh = sh)
                             build.Build()
 
+
             else:
                 print '\nNo FW selected.\nPlease check at least one FW to build'
         else:
@@ -331,7 +332,34 @@ if __name__ == '__main__':
 #     if name_found is not None:
 #         name_list.append('@'.join([name_found.group(), 'brandon.com']))
 
+# class something():
+#     def __init__(self, text):
+#         self.text = text
+#
+#     def execute(self):
+#         print 'this is execute from class something'
+#         print 'this is self.text from class something: %s' % self.text
+#
+# class somethingMore(something):
+#     def __init__(self, text):
+#         self.text = text
+#
+#     def execute(self):
+#         print 'this is execute from class somethingMore'
+#
+# class somethingElse(something):
+#     def __init__( self, *steps ):
+#         self.steps = steps
+#
+#     def execute( self ):
+#         for s in self.steps:
+#             print s
+#
+# puta = somethingElse('''a, b, c''')
+# puta.execute()
 
 
+#Created by Jeremy Xue
+#2015-01-05
 
 

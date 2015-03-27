@@ -374,7 +374,7 @@ class controlPanel(tk.Frame):
               merge_acc = ''
               )
 
-        checkout.bs_git_checkout()
+        checkout.bs_git_checkout_master()
         checkout.bs_git_clean_source()
         checkout.bs_git_log_10_lines()
 

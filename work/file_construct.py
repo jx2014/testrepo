@@ -718,7 +718,7 @@ class BuildFW(css_merge):
             self.winEnv = {'OSVER':' '}
 
     def __del__(self):
-        pass
+        print 'good bye!'
 
     def log_path(self):
         return '\\'.join([self.source_folder, 'Camera\\Platform', self.folder_name + '.log'])
