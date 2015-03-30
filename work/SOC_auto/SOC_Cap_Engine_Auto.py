@@ -1,7 +1,8 @@
 #auto video record
 #author: Jeremy Xue
 #email: jeremy.xzm@gmail.com
-#date: Feb 17th, 2015
+#date: March 30th, 2015
+#comment: add Flash photography
 
 import os
 import logging
@@ -18,11 +19,13 @@ logging.basicConfig(format='%(asctime)s %(levelname)s::: %(message)s',
                     filemode='w',
                     level=logging.INFO,)
 
-testSIandVR = 1
-testSIwithHDR = 1
-testSIwithULL = 1
+testSIandVR = 0
+testSIwithFlash = 1
+testSIwithHDR = 0
+testSIwithULL = 0
 
-recordAttempts = 3
+
+recordAttempts = 1
 
 videoDuration = 30
 tests = ['SI', 'VR']
@@ -54,6 +57,13 @@ hdrButtonXEnd = 503
 hdrButtonYStart = 43
 hdrButtonYEnd = 76
 
+#Flash button
+flashButtonXStart = 248
+flashButtonXEnd = 277
+flashButtonYStart = 43
+flashButtonYEnd = 76
+
+
 #ULL checker
 ullCheckerXStart = 701
 ullCheckerXEnd = 747
@@ -66,6 +76,8 @@ stdTabXStart = 646
 stdTabXEnd = 705
 stdTabYStart = 677
 stdTabYEnd = 678
+
+
 
 
 SENSOR_Window = {
@@ -159,6 +171,11 @@ def MoveToSelectResolution():
 def MoveToHDRbutton():
     x, y = GetWindowPosition(titleSocCaptureEngine)  
     xc, yc = WindowCenter(hdrButtonXStart, hdrButtonXEnd, hdrButtonYStart, hdrButtonYEnd) #move to center of the resolution window
+    user32.SetCursorPos(x+xc,y+yc)
+
+def MoveToFlashbutton():
+    x, y = GetWindowPosition(titleSocCaptureEngine)  
+    xc, yc = WindowCenter(flashButtonXStart, flashButtonXEnd, flashButtonYStart, flashButtonYEnd) #move to center of the resolution window
     user32.SetCursorPos(x+xc,y+yc)
 
 def MoveToULLchecker():
@@ -302,7 +319,7 @@ def StillImageHDR(sensor, resList, shutterAttempts = 1, optionMSG = ''):
             logging.info(outputLine)
             n = n + 1
             time.sleep(1)
-        print "end of shutter attempts"
+        #print "end of shutter attempts"
  
 
 #Normal test of SI and VR
@@ -321,6 +338,23 @@ if testSIandVR == True:
             elif testMode == 'VR' and sensor == 'rear':
                 VideoRecord(sensor, WF_VR, shutterAttempts = recordAttempts)
 
+                
+#Take image with Flash on                
+if testSIwithFlash == True:
+    for index, sensor in SENSOR_Window.iteritems():
+        SelectSensor(sensor)
+        time.sleep(2)
+        MoveToFlashbutton() # Enable Flash
+        MouseClick()
+        for testMode in tests:
+            time.sleep(2)
+            if testMode == 'SI' and sensor == 'front':                      
+                StillImage(sensor, UF_SI, optionMSG='front Flash', shutterAttempts = recordAttempts)
+            elif testMode == 'SI' and sensor == 'rear':
+                StillImage(sensor, WF_SI, optionMSG='rear Flash', shutterAttempts = recordAttempts)
+            elif testMode == 'VR':
+                print "Flash Not supported in VR"
+                continue
                 
 #Take HDR image
 if testSIwithHDR == True:
