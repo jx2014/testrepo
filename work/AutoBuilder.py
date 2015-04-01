@@ -105,9 +105,6 @@ class AutoBuildPanel(controlPanel):
         if self.var_2600.get() == 1:
             self.buildFWs.append('BXT')
 
-    def Checkout(self, sha):
-        pass
-
     def CheckoutMaster(self):
         print 'you pressed CheckoutMaster button'
         checkout = css_merge(
@@ -151,7 +148,9 @@ class AutoBuildPanel(controlPanel):
                             buildScript = '\\'.join([self.source_path, 'Camera\\Platform', self.config.get('build_scripts', fw)])
                             build = BuildFW(source_folder = self.source_path, build_script = buildScript, folder_name = folderName, os = os, sha = sha)
                             build.Checkout() #it will checkout the proper sha based on BuildFW(sh = sh)
-                            build.Build()
+                            build.RemoveOldDrivers()
+                            build.BuildAndSign()
+                            build.RenameBins()
 
 
             else:
@@ -184,9 +183,8 @@ class AutoBuildPanel(controlPanel):
 Copy and Paste a list of Driver commit SHAs into this text box,
 check FW package box, then Click Build (i.e)
 
-b0e8be5a6f6c8ea033afc5ddbae856c76930df2e Merge 'Add auto format C:'
-a06f9fad6ffd0a78c4c674c380ed78f7eff5870a Merge 'Doomsday deadman switch'
-a666f3d Merge 'More regression from Driver team'
+44dd2f9 Merge "[SKC] change flash step calculate"
+cbe5a3b Merge "CP_Integrated_irci_master_20150326_0221"
 
 When build is done, drivers will be copied to: (i.e
 \\winterfell\winterfell-shared\20150318

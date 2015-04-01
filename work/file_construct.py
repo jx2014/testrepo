@@ -723,8 +723,56 @@ class BuildFW(css_merge):
     def log_path(self):
         return '\\'.join([self.source_folder, 'Camera\\Platform', self.folder_name + '.log'])
 
-    def Build(self):
-        print '\nBuld parameter: %s %s' %( self.folder_name, self.os_version)
+    def Sign(self):
+        '''
+        ****sample command:****
+        cd ..\..\..\..\Tools\DigitalSigning
+        SignDriver.bat rwin32 rx64 | tee ..\..\Source\Camera\Platform\2500sign_Win10.log
+        '''
+        if self.verbose: print "Signing driver: %s" % (self.folder_name)
+        signBatchFile = self.source_folder.split('\\')[0:-1]
+        signBatchFile.append('Tools\DigitalSigning\SignDriver.bat')
+        signBatchFile = ('\\').join(signBatchFile)
+        if self.verbose: print "Sign batch file is: %s"  % (self.signBatchFile)
+
+        return signBatchFile
+
+    def SignLogName(self):
+
+        signDriverLog = self.source_folder.split('\\')
+        signDriverLog.append('Camera\\Platform\\%s' % (('.').join([self.folder_name,'sign','log'])))
+        signDriverLog = ('\\').join(signDriverLog)
+        if self.verbose: print "Sign driver log file is: %s"  % (signDriverLog)
+
+        return signDriverLog
+
+    def RemoveOldDrivers(self): #create self.binsFolder and try to remove the directory for clean build
+        binsFolder = self.source_folder.split('\\')[0:-1]
+        binsFolder.append('bins')
+        binsFolder = ('\\').join(binsFolder)
+
+        self.binsFolder = binsFolder
+
+        try:
+            shutil.rmtree(binsFolder)
+        except:
+            print '%s does bot exist' % binsFolder
+
+    def RenameBins(self): #call this function after signing
+        #creating the new folder
+        newBinsFolder = self.source_folder.split('\\')[0:-1]
+        newBinsFolder.append(self.folder_name)
+        newBinsFolder = ('\\').join(newBinsFolder)
+
+        try:
+            if os.path.exists(newBinsFolder): shutil.rmtree(newBinsFolder)
+            os.rename(self.binsFolder, newBinsFolder)
+        except:
+            print 'Problem renaming\n%s\nto\n%s' % (self.binsFolder, newBinsFolder)
+
+
+    def BuildAndSign(self):
+        print '\nBuld parameter: %s %s' % ( self.folder_name, self.os_version)
         #print '\nFolder name is: %s' % self.folder_name
         #print 'Source Folder name is: %s' % self.source_folder
         #print 'OS version is: %s' % self.os_version
@@ -732,13 +780,46 @@ class BuildFW(css_merge):
         print 'Build script is %s' % self.build_script
         log_path = self.log_path()
         print 'Log path is %s' % log_path
+        signBatchFile = self.Sign()
+        print 'Sign batch file path is %s' % signBatchFile
+        sign_log_path = self.SignLogName()
+        print 'Sign Log path is %s' % sign_log_path
 
-        p = subprocess.Popen('echo OSVEr=%OSVER%', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, env=self.winEnv)
-        o, e = p.communicate()
+#         test_build_script = r"C:\JX_Projects\test_build_script.bat"
+#
+#         t = subprocess.Popen('echo OSVER=%OSVER% && {0}'.format(test_build_script),
+#                              stdout=subprocess.PIPE,
+#                              stderr=subprocess.PIPE,
+#                              shell=True,
+#                              env=winEnv)
+#
+#         o, e = t.communicate()
+
+        b = subprocess.Popen('echo OSVER=%OSVER% && {0} > {1}'.format(self.build_script, log_path),
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE,
+                             shell=True,
+                             env=self.winEnv)
+
+        s = subprocess.Popen('{0} rwin32 rx64 > {1}'.format(signBatchFile, sign_log_path),
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE,
+                             shell=True,
+                             )
+
+        o, e = b.communicate()
         if o:
             print "The command has executed without errors:\n%s" % o
         if e:
             print "The command encountered an error:\n%s" % e
+
+
+        o, e = s.communicate()
+        if o:
+            print "The command has executed without errors:\n%s" % o
+        if e:
+            print "The command encountered an error:\n%s" % e
+
 
         #subprocess.call(self.build_script)
         #check_log_error
