@@ -712,10 +712,12 @@ class BuildFW(css_merge):
         self.git_bash_log = string.join([self.source_folder.split('\\')[0],self.source_folder.split('\\')[1],'git_bash.log'],'\\') #C:\JX_Projects\git_bash.log
         self.verbose = False
 
+        self.winEnv = os.environ.copy()
+
         if self.os_version == 'win10':
-            self.winEnv = {'OSVER':'8.2'}
+            self.winEnv['OSVER'] = '8.2'
         else:
-            self.winEnv = {'OSVER':' '}
+            self.winEnv['OSVER'] = ''
 
     def __del__(self):
         print 'good bye!'
@@ -778,6 +780,8 @@ class BuildFW(css_merge):
         #print 'OS version is: %s' % self.os_version
         if self.verbose: print self.winEnv
         print 'Build script is %s' % self.build_script
+        build_script_folder = self.build_script.split('\\')[0:-1]
+        build_script_folder = ('\\').join(build_script_folder)
         log_path = self.log_path()
         print 'Log path is %s' % log_path
         signBatchFile = self.Sign()
@@ -796,16 +800,19 @@ class BuildFW(css_merge):
 #         o, e = t.communicate()
 
         b = subprocess.Popen('echo OSVER=%OSVER% && {0} > {1}'.format(self.build_script, log_path),
+                             cwd=build_script_folder,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              shell=True,
                              env=self.winEnv)
+        b.wait()
 
         s = subprocess.Popen('{0} rwin32 rx64 > {1}'.format(signBatchFile, sign_log_path),
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              shell=True,
                              )
+        s.wait()
 
         o, e = b.communicate()
         if o:
