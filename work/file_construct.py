@@ -833,7 +833,7 @@ class BuildFW(css_merge):
 
     def Checkout(self):
         self.bs_git_checkout()
-        self.bs_git_clean_source()
+        #self.bs_git_clean_source()
         self.bs_git_log_10_lines(n=1)
 
     def CheckLog(self):
