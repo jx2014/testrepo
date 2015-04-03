@@ -742,7 +742,7 @@ class BuildFW(css_merge):
     def SignLogName(self):
 
         signDriverLog = self.source_folder.split('\\')
-        signDriverLog.append('Camera\\Platform\\%s' % (('.').join([self.folder_name,'sign','log'])))
+        signDriverLog.append('Camera\\Platform\\%s' % (('.').join([self.folder_name,os_version,'sign','log'])))
         signDriverLog = ('\\').join(signDriverLog)
         if self.verbose: print "Sign driver log file is: %s"  % (signDriverLog)
 
@@ -763,7 +763,7 @@ class BuildFW(css_merge):
     def RenameBins(self): #call this function after signing
         #creating the new folder
         newBinsFolder = self.source_folder.split('\\')[0:-1]
-        newBinsFolder.append(self.folder_name)
+        newBinsFolder.append('_'.join([self.folder_name,self.os_version]))
         newBinsFolder = ('\\').join(newBinsFolder)
 
         try:
