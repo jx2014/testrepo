@@ -17,7 +17,7 @@ import os
 from Queue import Queue
 
 class StdError_redirector(object):
-    def __init__(self,widget):
+    def __init__(self, widget):
         self.widget = widget
 
     def write(self,string):
