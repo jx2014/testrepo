@@ -742,7 +742,7 @@ class BuildFW(css_merge):
     def SignLogName(self):
 
         signDriverLog = self.source_folder.split('\\')
-        signDriverLog.append('Camera\\Platform\\%s' % (('.').join([self.folder_name,os_version,'sign','log'])))
+        signDriverLog.append('Camera\\Platform\\%s' % (('.').join([self.folder_name,self.os_version,'sign','log'])))
         signDriverLog = ('\\').join(signDriverLog)
         if self.verbose: print "Sign driver log file is: %s"  % (signDriverLog)
 

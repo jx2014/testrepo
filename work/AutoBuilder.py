@@ -144,6 +144,7 @@ class AutoBuildPanel(controlPanel):
                     #self.Checkout(sha)
                     for fw in self.buildFWs:
                         for os in self.buildOS:
+                            print os
                             folderName = '.'.join([fw, sha])
                             buildScript = '\\'.join([self.source_path, 'Camera\\Platform', self.config.get('build_scripts', fw)])
                             build = BuildFW(source_folder = self.source_path, build_script = buildScript, folder_name = folderName, os = os, sha = sha)

@@ -17,12 +17,14 @@ class TestGUI(tk.Frame):
 
     def ConstructUI(self):
         self.text1 = tk.Text(self)
-        self.text1.config(height=100, width=100)
+        self.text1.config(height=20, width=100)
         #b = tk.Button(self, text='dir', command=self.Dir, width=10)
-        b = tk.Button(self, text='dir', command=self.TDir, width=10)
+        b = tk.Button(self, text='dir', command=self.Dir, width=10)
         p = tk.Button(self, text='print', command=self.PrintHi, width=10)
+        c = tk.Button(self, text='3rd button', command=self.Pressing3rdButton, width=20)
         b.pack()
         p.pack()
+        c.pack()
         self.text1.pack()
         self.pack()
         for i in range(3):
@@ -33,11 +35,15 @@ class TestGUI(tk.Frame):
 #             t = Thread(target=self.ForLoop, args=(n,))
 #             t.start()
 
+    def Pressing3rdButton(self):
+        self.text1.insert(tk.END, 'how are you\n')
+
+
     def TDir(self):
-        t = Thread(target=self.Dir)
-        r = Thread(target=self.Reader)
-        t.start()
-        r.start()
+#         t = Thread(target=self.Dir)
+#         r = Thread(target=self.Reader)
+#         t.start()
+#         r.start()
         for i in xrange(10):
             self.text1.insert(tk.END, '..working...\n')
             self.text1.see(tk.END)
@@ -72,8 +78,8 @@ class TestGUI(tk.Frame):
 #         print o
         #self.text1.insert(tk.END, o)
 
-        #for i in self.process.stdout.readlines():
-         #    self.text1.insert(tk.END, i)
+        for i in self.process.stdout.readlines():
+            self.text1.insert(tk.END, i)
 
     def ForLoop(self, n):
         for i in xrange(n):
