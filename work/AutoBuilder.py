@@ -170,7 +170,7 @@ class AutoBuildPanel(controlPanel):
         self.grid_rowconfigure(15,weight=1)
         self.grid_columnconfigure(2,weight=1)
 
-        # Those columns are used to set column width
+        # Those  asf columns are used to set column width
         l_column0 = tk.Label(self, text='', width=10).grid(row=0, column=0)
         l_column1 = tk.Label(self, text='', width=10).grid(row=0, column=1)
         l_column2 = tk.Label(self, text='', width=30).grid(row=0, column=2)
