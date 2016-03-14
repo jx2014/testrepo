@@ -13,24 +13,44 @@ import time
 # my_queue.task_done()
 
 qu = Queue(maxsize=0)
-num_threads = 2
+num_threads = 3
 
 def real_task(q):
     while True:
         item = q.get()
-        for i in xrange(5):
+        for i in xrange(2):
             time.sleep(1)
             print 'real_task() %d\n' % i
         q.task_done()
-        print 'q.task_done() reached'
+        print 'q.task_done() reached\n'
 
 
 for i in range(num_threads):
     #worker = Thread(target=do_stuff, args=(qu,))
     worker = Thread(target=real_task, args=(qu,))
     worker.setDaemon(True)
+    print "tread: ", i
     worker.start()
 
-for x in range(5):    
+print ''
+
+for x in range(5):
     qu.put(x)
-    qu.join()
+    print 'qu.put(x): ', x
+
+print ''
+
+while not qu.empty():
+    print "qu.get_nowait(): ", qu.get_nowait()
+    qu.task_done()
+
+print ''
+
+
+#qu.join()
+
+
+# for x in range(3):
+#     qu.put(x)
+#     print 'x: ', x
+#     qu.join()

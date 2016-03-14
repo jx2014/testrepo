@@ -13,11 +13,15 @@ from test_gui2 import controlPanel, StdError_redirector, Std_redirector
 class TestGUI(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
-        self.ConstructUI()
+        self.Q = Queue(maxsize=0)
+        t = Thread(target=self.ConstructUI)
+        t.setDaemon(True)
+        t.start()
+        #self.ConstructUI()
 
     def ConstructUI(self):
         self.text1 = tk.Text(self)
-        self.text1.config(height=20, width=100)
+        self.text1.config(height=100, width=150)
         #b = tk.Button(self, text='dir', command=self.Dir, width=10)
         b = tk.Button(self, text='dir', command=self.Dir, width=10)
         p = tk.Button(self, text='print', command=self.PrintHi, width=10)
@@ -30,6 +34,8 @@ class TestGUI(tk.Frame):
         for i in range(3):
             print i
             time.sleep(0.5)
+
+
 
 #         for n in [5, 11]:
 #             t = Thread(target=self.ForLoop, args=(n,))
@@ -60,9 +66,17 @@ class TestGUI(tk.Frame):
             self.text1.insert(tk.END, i)
 
     def Dir(self):
+        t = Thread(target=self.Dir)
+        t.setDaemon(True)
+        t.start()
+        #self.Q.put_nowait(1)
+        #self.Q.join()
+
+    def DirCMD(self):
         self.process = subprocess.Popen('dir /s',
                                       #cwd = 'c:\\JX_Projects\\vied-viedifw\\',
-                                      cwd = 'c:\\windows\\',
+                                      #cwd = 'c:\\windows\\',
+                                      cwd = r'E:\FamilyProject',
                                       shell = True,
                                       stdout = subprocess.PIPE,
                                       stdin = subprocess.PIPE,
@@ -80,6 +94,7 @@ class TestGUI(tk.Frame):
 
         for i in self.process.stdout.readlines():
             self.text1.insert(tk.END, i)
+            #yield i
 
     def ForLoop(self, n):
         for i in xrange(n):
